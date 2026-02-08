@@ -1,0 +1,50 @@
+<div class="list-group-item border bg-success bg-opacity-10" id="training-card-create-form">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h6 class="mb-0 text-success inline-flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Yeni Antrenman
+        </h6>
+    </div>
+    <form hx-post="{% url 'team:training_create_inline' %}" 
+          hx-target="#training-card-create-form"
+          hx-swap="outerHTML"
+          class="d-flex gap-2 align-items-end p-2">
+        {% csrf_token %}
+        <div style="flex: 1; min-width: 110px;">
+            {{ form.day_of_week }}
+        </div>
+        <div style="flex: 0.7; min-width: 75px;">
+            {{ form.time }}
+        </div>
+        <div style="flex: 0.7; min-width: 75px;">
+            {{ form.end_time }}
+        </div>
+        <div style="flex: 1.2; min-width: 110px;">
+            {{ form.team }}
+        </div>
+        <div style="flex: 1.2; min-width: 110px;">
+            {{ form.location }}
+        </div>
+        <div style="flex: 1.0; min-width: 110px;">
+            {{ form.trainer }}
+        </div>
+        <div style="flex: 1.3; min-width: 120px;">
+            {{ form.notes }}
+        </div>
+        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded text-sm border-0 cursor-pointer whitespace-nowrap flex-shrink-0 inline-flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Kaydet
+        </button>
+        <button type="button" 
+                hx-get="/static/empty.html"
+                hx-target="#training-card-create-form"
+                hx-swap="outerHTML"
+                onclick="this.closest('.list-group-item').remove()"
+                class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1.5 rounded text-sm border-0 cursor-pointer whitespace-nowrap flex-shrink-0 inline-flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> İptal
+        </button>
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger mb-0">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+    </form>
+</div>

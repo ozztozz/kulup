@@ -1,0 +1,288 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Alpha Academy{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                        secondary: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.3s ease-out',
+                        'bounce-subtle': 'bounceSubtle 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        bounceSubtle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' },
+                        },
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(59, 130, 246, 0.3)',
+                        'glow-lg': '0 0 30px rgba(59, 130, 246, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        .mobile-menu {
+            display: none;
+        }
+        .mobile-menu.active {
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-secondary-50 via-white to-secondary-100 min-h-screen">
+    <nav class="bg-white/80 backdrop-blur-md shadow-lg border-b border-secondary-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center flex-shrink-0">
+                    <a href="{% url 'user:home' %}" class="flex items-center space-x-2 text-primary-700 font-bold text-lg sm:text-xl hover:text-primary-800 transition-colors">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center">
+                            <img src="/media/landing/fk1.png" alt="Logo" class="w-8 h-8">    
+                        </div>
+                        <span class="hidden sm:inline">Alpha Academy</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-secondary-700 hover:text-primary-700 hover:bg-secondary-100 focus:outline-none transition-colors" onclick="toggleMobileMenu()">
+                    <svg class="block h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+
+                <!-- Desktop Menu -->
+                <div class="nav-menu hidden md:flex items-center space-x-2 lg:space-x-4">
+                    {% if user.is_authenticated %}
+                        <div class="hidden lg:flex items-center space-x-2 text-secondary-700 text-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                            <span class="font-medium">{{ user.adi }}</span>
+                        </div>
+                        <a href="{% url 'user:home' %}" class="bg-primary-50 text-primary-700 hover:bg-primary-100 px-3 lg:px-4 py-2 rounded-lg text-xs lg:text-sm font-medium transition-colors flex items-center space-x-1 whitespace-nowrap">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                            </svg>
+                            <span class="hidden sm:inline">Anasayfa</span>
+                        </a>
+                        {% if user.is_staff %}
+                        <a href="{% url 'team:list' %}" class="bg-primary-50 text-primary-700 hover:bg-primary-100 px-3 lg:px-4 py-2 rounded-lg text-xs lg:text-sm font-medium transition-colors flex items-center space-x-1 whitespace-nowrap">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                            <span class="hidden sm:inline">Takımlar</span>
+                        </a>
+                        <a href="{% url 'team:payment_list' %}" class="bg-primary-50 text-primary-700 hover:bg-primary-100 px-3 lg:px-4 py-2 rounded-lg text-xs lg:text-sm font-medium transition-colors flex items-center space-x-1 whitespace-nowrap">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                            </svg>
+                            <span class="hidden sm:inline">Ödemeler</span>
+                        </a>
+                        <a href="{% url 'team:training_weekly' %}" class="bg-primary-50 text-primary-700 hover:bg-primary-100 px-3 lg:px-4 py-2 rounded-lg text-xs lg:text-sm font-medium transition-colors flex items-center space-x-1 whitespace-nowrap">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                            </svg>
+                            <span class="hidden sm:inline">Antrenmanlar</span>
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'user:logout' %}" class="bg-secondary-100 text-secondary-700 hover:bg-secondary-200 px-3 lg:px-4 py-2 rounded-lg text-xs lg:text-sm font-medium transition-colors flex items-center space-x-1 whitespace-nowrap">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                            </svg>
+                            <span class="hidden sm:inline">Çıkış</span>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'user:login' %}" class="text-secondary-700 hover:text-primary-600 px-3 lg:px-4 py-2 rounded-lg text-xs lg:text-sm font-medium transition-colors">
+                            Giriş
+                        </a>
+                        <a href="{% url 'user:register' %}" class="bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:from-primary-600 hover:to-primary-700 px-3 lg:px-4 py-2 rounded-lg text-xs lg:text-sm font-medium transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 whitespace-nowrap">
+                            Kayıt Ol
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-nav-menu" class="md:hidden hidden border-t border-secondary-200 py-4 space-y-3">
+                {% if user.is_authenticated %}
+                    <div class="px-2 py-2 text-secondary-700 text-sm font-medium flex items-center space-x-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        <span>{{ user.adi }}</span>
+                    </div>
+                    <a href="{% url 'user:home' %}" class="block px-3 py-2 rounded-lg text-secondary-700 hover:bg-primary-50 hover:text-primary-700 font-medium transition-colors">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                            </svg>
+                            <span>Anasayfa</span>
+                        </div>
+                    </a>
+                    {% if user.is_staff %}
+                    <a href="{% url 'team:list' %}" class="block px-3 py-2 rounded-lg text-secondary-700 hover:bg-primary-50 hover:text-primary-700 font-medium transition-colors">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                            <span>Takımlar</span>
+                        </div>
+                    </a>
+                    <a href="{% url 'team:payment_list' %}" class="block px-3 py-2 rounded-lg text-secondary-700 hover:bg-primary-50 hover:text-primary-700 font-medium transition-colors">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                            </svg>
+                            <span>Ödemeler</span>
+                        </div>
+                    </a>
+                    <a href="{% url 'team:training_weekly' %}" class="block px-3 py-2 rounded-lg text-secondary-700 hover:bg-primary-50 hover:text-primary-700 font-medium transition-colors">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                            </svg>
+                            <span>Antrenmanlar</span>
+                        </div>
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'user:logout' %}" class="block px-3 py-2 rounded-lg text-secondary-700 hover:bg-secondary-100 hover:text-secondary-900 font-medium transition-colors">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                            </svg>
+                            <span>Çıkış</span>
+                        </div>
+                    </a>
+                {% else %}
+                    <a href="{% url 'user:login' %}" class="block px-3 py-2 rounded-lg text-secondary-700 hover:bg-primary-50 hover:text-primary-700 font-medium transition-colors">
+                        Giriş
+                    </a>
+                    <a href="{% url 'user:register' %}" class="block px-3 py-2 rounded-lg bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:from-primary-600 hover:to-primary-700 font-medium transition-all duration-200 text-center">
+                        Kayıt Ol
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-nav-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+        // Close menu when a link is clicked
+        document.addEventListener('click', function(event) {
+            const mobileMenu = document.getElementById('mobile-nav-menu');
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            if (!mobileMenu.contains(event.target) && !mobileBtn.contains(event.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    </script>
+
+    <div class="max-w-7xl mx-auto py-4 sm:py-6 px-4 sm:px-6 lg:px-8">
+        {% if messages %}
+            <div class="space-y-3 mb-6">
+                {% for message in messages %}
+                    <div class="animate-slide-up {% if message.tags == 'error' %}bg-red-50 border-red-200 text-red-800 shadow-red-100{% elif message.tags == 'success' %}bg-green-50 border-green-200 text-green-800 shadow-green-100{% else %}bg-blue-50 border-blue-200 text-blue-800 shadow-blue-100{% endif %} border-l-4 p-3 sm:p-4 rounded-r-lg shadow-md relative overflow-hidden" role="alert">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mr-2 sm:mr-3">
+                                {% if message.tags == 'error' %}
+                                    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                {% elif message.tags == 'success' %}
+                                    <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                {% else %}
+                                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                {% endif %}
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="font-medium text-sm sm:text-base break-words">{{ message }}</p>
+                            </div>
+                            <button type="button" class="flex-shrink-0 ml-2 sm:ml-3 text-gray-400 hover:text-gray-600 transition-colors" onclick="this.parentElement.parentElement.style.display='none'">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="absolute top-0 left-0 w-1 h-full {% if message.tags == 'error' %}bg-red-500{% elif message.tags == 'success' %}bg-green-500{% else %}bg-blue-500{% endif %}"></div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<div>
+    <form hx-post="{% url 'team:training_create_inline' %}" 
+          hx-target="#modal-form-container"
+          hx-swap="innerHTML"
+          class="space-y-4">
+        {% csrf_token %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Gün</label>
+                {{ form.day_of_week }}
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Saat</label>
+                {{ form.time }}
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Bitiş Saati</label>
+                {{ form.end_time }}
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Takım</label>
+                {{ form.team }}
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Lokasyon</label>
+                {{ form.location }}
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Antrenör</label>
+                {{ form.trainer }}
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Notlar</label>
+                {{ form.notes }}
+            </div>
+        </div>
+        
+        {% if form.errors %}
+        <div class="bg-red-50 border border-red-200 rounded p-3">
+            {% for field in form %}
+                {% if field.errors %}
+                <div class="text-red-600 text-sm mb-1">
+                    <strong>{{ field.label }}:</strong> {{ field.errors|striptags }}
+                </div>
+                {% endif %}
+            {% endfor %}
+            {% if form.non_field_errors %}
+            <div class="text-red-600 text-sm">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <div class="flex justify-end gap-2 pt-4 border-t">
+            <button type="button" 
+                    onclick="closeTrainingModal()"
+                    class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded inline-flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> İptal
+            </button>
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded inline-flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Kaydet
+            </button>
+        </div>
+    </form>
+</div>

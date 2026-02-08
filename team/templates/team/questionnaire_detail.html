@@ -1,0 +1,431 @@
+{% extends 'user/base.html' %}
+{% load team_filters %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<!-- Response Modal -->
+<div id="responseModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+        <div class="bg-gradient-to-r from-primary-500 to-primary-600 p-6 text-white flex items-center justify-between">
+            <div class="flex-1">
+                <h3 id="modalMemberName" class="text-xl font-bold"></h3>
+                <p id="modalMemberTeam" class="text-primary-100 text-sm"></p>
+            </div>
+            <button onclick="closeModal()" class="text-white hover:text-gray-200 p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div id="modalContent" class="p-6 overflow-y-auto flex-1">
+            <div class="flex items-center justify-center py-8">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-5xl mx-auto animate-fade-in">
+    <div class="bg-gradient-to-r from-primary-500 via-primary-600 to-primary-700 rounded-2xl shadow-2xl p-8 mb-8 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                {% if member %}
+                <a href="{% url 'team:questionnaire_list' member.pk %}" class="inline-flex items-center text-primary-100 hover:text-white font-medium mb-2 group">
+                    <svg class="w-4 h-4 mr-1 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                    Anketlere Dön
+                </a>
+                {% endif %}
+                <h1 class="text-2xl md:text-3xl font-bold">{{ questionnaire.title }}</h1>
+                {% if questionnaire.teams.exists %}
+                <p class="text-primary-100 mt-1">
+                    {% for team in questionnaire.teams.all %}
+                        {{ team.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                {% elif member and team %}
+                <p class="text-primary-100 mt-1">{{ member.name }} {{ member.surname }} - {{ team.name }}</p>
+                {% else %}
+                <p class="text-primary-100 mt-1">Tüm takımlar</p>
+                {% endif %}
+                {% if questionnaire.begin_date or questionnaire.end_date %}
+                <p class="text-primary-100 text-sm mt-1">
+                    {% if questionnaire.begin_date %}Başlangıç: {{ questionnaire.begin_date|date:"d.m.Y" }}{% endif %}
+                    {% if questionnaire.begin_date and questionnaire.end_date %} • {% endif %}
+                    {% if questionnaire.end_date %}Bitiş: {{ questionnaire.end_date|date:"d.m.Y" }}{% endif %}
+                </p>
+                {% endif %}
+            </div>
+            <div class="flex gap-2">
+                {% if questionnaire.is_active %}
+                <a href="{% url 'team:questionnaire_respond' questionnaire.pk %}{% if member %}?member={{ member.pk }}{% endif %}" class="px-5 py-2 rounded-lg bg-white/20 text-white font-medium hover:bg-white/30">Yanıtla</a>
+                {% endif %}
+                {% if user.is_staff %}
+                <a href="{% url 'team:questionnaire_update' questionnaire.pk %}{% if member %}?member={{ member.pk }}{% endif %}" class="px-5 py-2 rounded-lg bg-white/10 text-white font-medium hover:bg-white/20">Düzenle</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if questionnaire.description %}
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-6">
+        <p class="text-gray-700">{{ questionnaire.description }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Team Members Response Status -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <!-- Responded Members -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Cevaplayan Üyeler
+                <span class="ml-auto text-sm font-normal text-gray-500">({{ responded_members|length }})</span>
+            </h2>
+            <div class="grid  grid-cols-2 gap-2 max-h-96 overflow-y-auto">
+                {% for item in responded_members %}
+                <div class="flex items-center justify-between p-3 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors">
+                    <div class="flex items-center gap-3 flex-1 min-w-0">
+                        {% if item.member.photo %}
+                        <img src="{{ item.member.photo.url }}" alt="{{ item.member.name }}" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                        {% else %}
+                        <div class="w-10 h-10 rounded-full bg-green-200 flex items-center justify-center flex-shrink-0">
+                            <span class="text-green-700 font-bold text-sm">{{ item.member.name.0 }}{{ item.member.surname.0 }}</span>
+                        </div>
+                        {% endif %}
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-semibold text-gray-900 truncate">{{ item.member.name }} {{ item.member.surname }}</p>
+                            <p class="text-xs text-gray-600 truncate">{{ item.member.team.name }}</p>
+                            <p class="text-xs text-gray-500">{{ item.response.created_at|date:"d.m.Y H:i" }}</p>
+                        </div>
+                    </div>
+                    {% if user.is_staff %}
+                    <button onclick="showResponse({{ item.member.pk }}, '{{ item.member.name }} {{ item.member.surname }}', '{{ item.member.team.name }}')" class="flex-shrink-0 text-green-600 hover:text-green-700 p-1">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </button>
+                    {% endif %}
+                </div>
+                {% empty %}
+                <p class="text-center text-gray-500 text-sm py-4">Henüz cevaplayan üye yok</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Not Responded Members -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Cevaplamayan Üyeler
+                <span class="ml-auto text-sm font-normal text-gray-500">({{ not_responded_members|length }})</span>
+            </h2>
+            <div class="grid grid-cols-2 gap-2 max-h-96 overflow-y-auto">
+                {% for m in not_responded_members %}
+                <div class="flex items-center justify-between p-3 bg-orange-50 border border-orange-200 rounded-lg hover:bg-orange-100 transition-colors">
+                    <div class="flex items-center gap-3 flex-1 min-w-0">
+                        {% if m.photo %}
+                        <img src="{{ m.photo.url }}" alt="{{ m.name }}" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                        {% else %}
+                        <div class="w-10 h-10 rounded-full bg-orange-200 flex items-center justify-center flex-shrink-0">
+                            <span class="text-orange-700 font-bold text-sm">{{ m.name.0 }}{{ m.surname.0 }}</span>
+                        </div>
+                        {% endif %}
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-semibold text-gray-900 truncate">{{ m.name }} {{ m.surname }}</p>
+                            <p class="text-xs text-gray-600 truncate">{{ m.team.name }}</p>
+                        </div>
+                    </div>
+                    {% if user.is_staff and questionnaire.is_active %}
+                    <a href="{% url 'team:questionnaire_respond' questionnaire.pk %}?member={{ m.pk }}" class="flex-shrink-0 text-orange-600 hover:text-orange-700 p-1">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                        </svg>
+                    </a>
+                    {% endif %}
+                </div>
+                {% empty %}
+                <p class="text-center text-green-600 text-sm py-4 font-medium">🎉 Tüm üyeler cevapladı!</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Questions Statistics -->
+    {% if questions_with_stats and user.is_staff %}
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+            Sonuçlar ve İstatistikler
+        </h2>
+        <div class="space-y-6">
+            {% for question in questions_with_stats %}
+            <div class="border border-gray-200 rounded-xl p-4">
+                <p class="font-semibold text-gray-900 mb-3">{{ question.label }}</p>
+                
+                {% if question.choices %}
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {% for choice in question.choices %}
+                    <div class="bg-gray-50  rounded-lg p-3 border border-gray-200">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-2 flex-1">
+                                <span class="text-sm font-medium text-gray-700">{{ choice.label }}</span>
+                                <span class="text-xs font-semibold text-white bg-primary-600 px-2 py-0.5 rounded-full">{{ choice.count }}</span>
+                            </div>
+                            {% if choice.members %}
+                            <button onclick="toggleMembers(this)" class="text-xs text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1">
+                                <span class="member-toggle-text">Göster</span>
+                                <svg class="w-4 h-4 transition-transform member-toggle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            {% endif %}
+                        </div>
+                        
+                        {% if responded_members|length > 0 %}
+                        <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
+                            <div class="bg-primary-500 h-2 rounded-full transition-all" style="width: {% widthratio choice.count responded_members|length 100 %}%"></div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if choice.members %}
+                        <div class="member-list hidden mt-3 pt-3 border-t border-gray-200">
+                            <div class="flex flex-wrap gap-2">
+                                {% for member in choice.members %}
+                                <button onclick="showResponse({{ member.pk }}, '{{ member.name }} {{ member.surname }}', '{{ member.team.name }}')" 
+                                   class="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-lg hover:border-primary-300 hover:bg-primary-50 transition-colors text-xs group">
+                                    {% if member.photo %}
+                                    <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="w-5 h-5 rounded-full object-cover">
+                                    {% else %}
+                                    <div class="w-5 h-5 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0">
+                                        <span class="text-primary-600 font-bold text-[10px]">{{ member.name.0 }}{{ member.surname.0 }}</span>
+                                    </div>
+                                    {% endif %}
+                                    <span class="text-gray-700 group-hover:text-primary-700">{{ member.name }} {{ member.surname }}</span>
+                                    <svg class="w-3 h-3 text-gray-400 group-hover:text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                </button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% elif question.type == 'text' %}
+                <div class="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                    <ul class="space-y-2 text-sm">
+                    {% for item in responded_members %}
+                        {% with answer=item.response.answers|get_item:question.id %}
+                            {% if answer %}
+                            <li class="text-gray-700"><span class="font-semibold text-gray-900">{{ item.member.name }} {{ item.member.surname }}:</span> {{ answer }}</li>
+                            {% endif %}
+                        {% endwith %}
+                    {% empty %}
+                    <li class="text-gray-500 italic">Henüz cevap yok</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+
+    {% if response %}
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mt-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">
+            {% if member %}
+                {{ member.name }} {{ member.surname }} - Cevaplar
+            {% else %}
+                Cevaplar
+            {% endif %}
+        </h2>
+        <div class="space-y-4">
+            {% for question in questions_with_stats|default:questionnaire.schema.questions %}
+            <div class="border border-gray-100 rounded-xl p-4">
+                <p class="text-sm font-semibold text-gray-900">{{ question.label }}</p>
+                
+                {% if question.choices and user.is_staff %}
+                <div class="mt-2 text-sm text-gray-600">
+                    <span class="font-medium">Seçenekler:</span>
+                    <ul class="mt-1 space-y-1">
+                        {% for choice in question.choices %}
+                        <li class="ml-4 flex items-center justify-between">
+                            <span>• {{ choice.label }}</span>
+                            {% if choice.count is not None %}
+                            <span class="text-xs font-semibold text-primary-600 bg-primary-50 px-2 py-0.5 rounded">{{ choice.count }}</span>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                
+                {% if question.type == 'multi' %}
+                    <p class="mt-2 text-sm font-semibold text-gray-900">Cevap: 
+                        <span class="font-normal text-primary-600">
+                            {% with answers=response.answers|get_item:question.id %}
+                                {% for answer_value in answers %}
+                                    {% for choice in question.choices %}
+                                        {% if choice.value == answer_value %}
+                                            {{ choice.label }}{% if not forloop.last %}, {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endwith %}
+                        </span>
+                    </p>
+                {% elif question.type == 'text' %}
+                    <p class="mt-2 text-sm font-semibold text-gray-900">Cevap: <span class="font-normal text-primary-600">{{ response.answers|get_item:question.id }}</span></p>
+                {% else %}
+                    <p class="mt-2 text-sm font-semibold text-gray-900">Cevap: 
+                        <span class="font-normal text-primary-600">
+                            {% with answer_value=response.answers|get_item:question.id %}
+                                {% for choice in question.choices %}
+                                    {% if choice.value == answer_value %}
+                                        {{ choice.label }}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endwith %}
+                        </span>
+                    </p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+// Store all response data
+const responseData = {
+    {% for item in responded_members %}
+    {{ item.member.pk }}: {
+        member: {
+            name: "{{ item.member.name }} {{ item.member.surname }}",
+            team: "{{ item.member.team.name }}",
+            photo: "{% if item.member.photo %}{{ item.member.photo.url }}{% endif %}"
+        },
+        answers: {{ item.response.answers|safe }},
+        created_at: "{{ item.response.created_at|date:'d.m.Y H:i' }}"
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+};
+
+const questions = {{ questionnaire.schema.questions|safe }};
+
+function toggleMembers(button) {
+    const memberList = button.closest('.bg-gray-50').querySelector('.member-list');
+    const toggleText = button.querySelector('.member-toggle-text');
+    const toggleIcon = button.querySelector('.member-toggle-icon');
+    
+    if (memberList.classList.contains('hidden')) {
+        memberList.classList.remove('hidden');
+        toggleText.textContent = 'Gizle';
+        toggleIcon.style.transform = 'rotate(180deg)';
+    } else {
+        memberList.classList.add('hidden');
+        toggleText.textContent = 'Göster';
+        toggleIcon.style.transform = 'rotate(0deg)';
+    }
+}
+
+function showResponse(memberId, memberName, teamName) {
+    const modal = document.getElementById('responseModal');
+    const modalMemberName = document.getElementById('modalMemberName');
+    const modalMemberTeam = document.getElementById('modalMemberTeam');
+    const modalContent = document.getElementById('modalContent');
+    
+    // Show modal
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    
+    // Set member info
+    modalMemberName.textContent = memberName;
+    modalMemberTeam.textContent = teamName;
+    
+    // Get response data
+    const response = responseData[memberId];
+    
+    if (!response) {
+        modalContent.innerHTML = '<p class="text-center text-gray-500 py-8">Cevap bulunamadı</p>';
+        return;
+    }
+    
+    // Build response HTML
+    let html = '<div class="space-y-4">';
+    
+    questions.forEach(question => {
+        html += `
+            <div class="border border-gray-200 rounded-xl p-4">
+                <p class="text-sm font-semibold text-gray-900 mb-2">${question.label}</p>
+        `;
+        
+        const answer = response.answers[question.id];
+        
+        if (question.type === 'multi' && Array.isArray(answer)) {
+            // Multiple choice
+            const selectedLabels = answer.map(val => {
+                const choice = question.choices.find(c => c.value === val);
+                return choice ? choice.label : val;
+            }).join(', ');
+            html += `<p class="text-sm text-primary-600 font-medium">${selectedLabels || 'Cevap verilmedi'}</p>`;
+        } else if (question.type === 'text') {
+            // Free text
+            html += `<p class="text-sm text-gray-700">${answer || 'Cevap verilmedi'}</p>`;
+        } else if (question.choices) {
+            // Single choice
+            const choice = question.choices.find(c => c.value === answer);
+            html += `<p class="text-sm text-primary-600 font-medium">${choice ? choice.label : (answer || 'Cevap verilmedi')}</p>`;
+        }
+        
+        html += '</div>';
+    });
+    
+    html += `
+        <div class="mt-4 pt-4 border-t border-gray-200 text-right">
+            <p class="text-xs text-gray-500">Cevaplandı: ${response.created_at}</p>
+        </div>
+    </div>`;
+    
+    modalContent.innerHTML = html;
+}
+
+function closeModal() {
+    const modal = document.getElementById('responseModal');
+    modal.classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+// Close modal when clicking outside
+document.getElementById('responseModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
+
+// Close modal on ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
+</script>
+{% endblock %}

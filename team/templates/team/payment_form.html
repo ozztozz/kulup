@@ -1,0 +1,151 @@
+{% extends 'user/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto animate-fade-in">
+    <!-- Header Section -->
+    <div class="bg-gradient-to-r from-primary-500 via-primary-600 to-primary-700 rounded-2xl shadow-2xl p-8 mb-8 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="relative z-10">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                        {% if payment %}
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                            </svg>
+                        {% else %}
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-bold">{{ title }}</h1>
+                        <p class="text-primary-100 mt-1">
+                            {% if payment %}
+                                Ödeme bilgilerini güncellemek için formu doldurun
+                            {% else %}
+                                Yeni bir ödeme oluşturmak için formu doldurun
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                <a href="{% url 'team:payment_list' %}" class="group bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 border border-white/20 hover:border-white/40">
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        <span>Ödemelere Dön</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+        <form method="post" class="p-8 space-y-8">
+            {% csrf_token %}
+
+            <!-- Member -->
+            <div class="space-y-2">
+                <label for="{{ form.member.id_for_label }}" class="block text-base md:text-lg font-semibold text-gray-900 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    {{ form.member.label }}
+                </label>
+                <div class="relative">
+                    {{ form.member }}
+                    {% if form.member.errors %}
+                        <div class="text-red-600 text-sm mt-1">
+                            {% for error in form.member.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Month -->
+            <div class="space-y-2">
+                <label for="{{ form.month.id_for_label }}" class="block text-base md:text-lg font-semibold text-gray-900 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    {{ form.month.label }}
+                </label>
+                <div class="relative">
+                    {{ form.month }}
+                    {% if form.month.errors %}
+                        <div class="text-red-600 text-sm mt-1">
+                            {% for error in form.month.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Amount -->
+            <div class="space-y-2">
+                <label for="{{ form.amount.id_for_label }}" class="block text-base md:text-lg font-semibold text-gray-900 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                    </svg>
+                    {{ form.amount.label }}
+                </label>
+                <div class="relative">
+                    {{ form.amount }}
+                    {% if form.amount.errors %}
+                        <div class="text-red-600 text-sm mt-1">
+                            {% for error in form.amount.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Is Paid -->
+            <div class="space-y-2">
+                <div class="flex items-center">
+                    {{ form.is_paid }}
+                    <label for="{{ form.is_paid.id_for_label }}" class="text-base md:text-lg font-semibold text-gray-900 cursor-pointer ml-3">
+                        {{ form.is_paid.label }}
+                    </label>
+                </div>
+                {% if form.is_paid.errors %}
+                    <div class="text-red-600 text-sm mt-1">
+                        {% for error in form.is_paid.errors %}{{ error }}{% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Paid Date -->
+            <div class="space-y-2">
+                <label for="{{ form.paid_date.id_for_label }}" class="block text-base md:text-lg font-semibold text-gray-900 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    {{ form.paid_date.label }}
+                </label>
+                <div class="relative">
+                    {{ form.paid_date }}
+                    {% if form.paid_date.errors %}
+                        <div class="text-red-600 text-sm mt-1">
+                            {% for error in form.paid_date.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-end space-x-4">
+                <a href="{% url 'team:payment_list' %}" class="px-6 py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
+                    İptal
+                </a>
+                <button type="submit" class="px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl hover:from-primary-600 hover:to-primary-700 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                    {% if payment %}Güncelle{% else %}Oluştur{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

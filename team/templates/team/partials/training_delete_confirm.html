@@ -1,0 +1,30 @@
+<tr id="training-{{ training.pk }}-delete">
+    <td colspan="6">
+        <div class="alert alert-warning mb-0">
+            <div class="row align-items-center">
+                <div class="col">
+                    <strong>Dikkat!</strong> "{{ training.team.name }}" takımının 
+                    {{ day_name }}, {{ training.time|time:"H:i" }} saatindeki antrenmanını silmek üzeresiniz.
+                </div>
+                <div class="col-auto">
+                    <form hx-post="{% url 'team:training_delete_inline' training.pk %}" 
+                          hx-target="#training-{{ training.pk }}-delete"
+                          hx-swap="outerHTML swap:1s"
+                          style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger inline-flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Sil
+                        </button>
+                        <button type="button" 
+                                class="btn btn-sm btn-secondary"
+                                hx-get="{% url 'team:training_view_inline' training.pk %}"
+                                hx-target="#training-{{ training.pk }}-delete"
+                                hx-swap="outerHTML">
+                            İptal
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>

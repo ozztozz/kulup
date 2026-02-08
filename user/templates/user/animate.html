@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
+
+body {
+	background-color: #b5b5b5;
+	font-family: 'Source Sans Pro', sans-serif;
+  letter-spacing: -0.8px;
+  overflow:hidden;
+}
+.greensock{
+  position:absolute;
+  width: 165px;
+  height:60px;
+  top:50%;
+  left:50%;
+  overflow: hidden;
+  visibility:hidden;
+}
+.logo{
+  position: relative;
+  width: 170px;
+  font-size: 38px;
+  letter-spacing: -2px;
+  color: green;
+  margin: 0;
+  background: #b5b5b5;
+  float: left;
+}
+.into {
+  position: absolute;
+  width:380px;
+  font-size: 38px;
+  letter-spacing: -1px;
+  color: #656565;
+  font-weight: normal;
+  overflow: hidden;
+  float: right;
+}
+
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TweenLite.min.js"></script>
+</head>
+<body>
+    
+  <div class="greensock">
+    <div class="into">into amazing experiences</div>
+    <h1 class="logo">GreenSock</h1>
+  </div>
+
+<script>
+ 
+TweenLite.set('.greensock',{xPercent:-50, yPercent:-50,perspective:600});
+
+var widthLogo = $(".logo").width();
+var widthInto = $(".into").width();
+var total = widthLogo + widthInto;
+var hidden = -(widthInto - widthLogo);
+console.log(widthLogo, widthInto, total, hidden);
+
+TweenLite.set('.into',{x:hidden});
+
+var lines = new TimelineMax()
+.to('.greensock',2,{autoAlpha:1})
+.to('.greensock',1.5,{width:total, ease: Linear.easeNone},1)
+.to('.into',1.45,{x:widthLogo,ease: Linear.easeNone},1.05) // 1.05: there must be delay !
+//.to('.greensock',2,{autoAlpha:0},"+=1")
+
+
+
+</script>
+
+</body>
+</html>
