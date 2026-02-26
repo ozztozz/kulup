@@ -1,0 +1,79 @@
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.exe
+*.pyo
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+my_env/
+venv/
+env/
+ENV/
+.venv/
+
+# Django
+*.log
+logs/
+db.sqlite3
+*.sqlite3
+*.sqlite3-journal
+
+# Media files (uploaded content)
+media/
+
+# Static files (collected)
+staticfiles/
+static_root/
+
+# Environment variables
+.env
+.env.local
+*.env
+
+# IDE / Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# OS specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Testing / Coverage
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff
+local_settings.py
+
+# If using celery
+celerybeat-schedule
+celerybeat.pid
+
+# Node modules (if using frontend tools)
+node_modules/
+npm-debug.log
+yarn-error.log
