@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="bumblebee">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -454,31 +454,31 @@
 </head>
 <body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-xl border-b border-primary-500/20">
+    <nav class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-xl border-b border-primary/20">
         <div class="w-full lg:w-4/5 mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <div class="w-16 h-16 rounded-full flex items-center justify-center bg-white" >
+                <div class="w-16 h-16 rounded-full flex items-center justify-center bg-base-100" >
                     <img src="/media/landing/fk1.png" alt="Logo" class="">
                 </div>
                 <span class="font-bold text-white text-xl">Alpha Academy</span>
             </div>
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#ozellikler" class="text-gray-300 hover:text-white transition-colors underline-animate">Özellikler</a>
-                <a href="#galeri" class="text-gray-300 hover:text-white transition-colors underline-animate">Antrenörler</a>
-                <a href="#takimlar" class="text-gray-300 hover:text-white transition-colors underline-animate">Takımlar</a>
-                <a href="#instagram" class="text-gray-300 hover:text-white transition-colors underline-animate">Instagram</a>
-                <a href="#hakkimizda" class="text-gray-300 hover:text-white transition-colors underline-animate">Hakkımızda</a>
+                <a href="#ozellikler" class="text-base-content/40 hover:text-white transition-colors underline-animate">Özellikler</a>
+                <a href="#galeri" class="text-base-content/40 hover:text-white transition-colors underline-animate">Antrenörler</a>
+                <a href="#takimlar" class="text-base-content/40 hover:text-white transition-colors underline-animate">Takımlar</a>
+                <a href="#instagram" class="text-base-content/40 hover:text-white transition-colors underline-animate">Instagram</a>
+                <a href="#hakkimizda" class="text-base-content/40 hover:text-white transition-colors underline-animate">Hakkımızda</a>
             </div>
             <div class="flex items-center space-x-3">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'team:list' %}" class="px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg hover:shadow-lg hover:shadow-primary-500/50 transition-all font-medium magnetic-button" style="box-shadow: 0 0 15px rgba(216, 27, 199, 0.4);">
+                    <a href="{% url 'team:list' %}" class="px-4 py-2 bg-gradient-to-r from-primary to-primary text-white rounded-lg hover:shadow-lg hover:shadow-primary-500/50 transition-all font-medium magnetic-button" style="box-shadow: 0 0 15px rgba(216, 27, 199, 0.4);">
                         Panele Git
                     </a>
                 {% else %}
                     <a href="{% url 'user:login' %}" class="px-4 py-2 text-accent-300 hover:text-accent-200 transition-colors font-medium underline-animate">
                         Giriş
                     </a>
-                    <a href="{% url 'user:register' %}" class="px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg hover:shadow-lg hover:shadow-primary-500/50 transition-all font-medium magnetic-button" style="box-shadow: 0 0 15px rgba(216, 27, 199, 0.4);">
+                    <a href="{% url 'user:register' %}" class="px-4 py-2 bg-gradient-to-r from-primary to-primary text-white rounded-lg hover:shadow-lg hover:shadow-primary-500/50 transition-all font-medium magnetic-button" style="box-shadow: 0 0 15px rgba(216, 27, 199, 0.4);">
                         Kayıt Ol
                     </a>
                 {% endif %}
@@ -503,7 +503,7 @@
             <video autoplay muted loop playsinline class="w-full h-full object-cover" preload="metadata">
                 <source src="/media/landing/video1.mp4" type="video/mp4">
             </video>
-            <div class="absolute inset-0 bg-gradient-to-br from-primary-900/30 via-primary-800/20 to-primary-900/30"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary/20 to-primary/30"></div>
         </div>
         
         <!-- Wavy Background SVG -->
@@ -580,8 +580,8 @@
         </svg>
 
         <!-- Blob Elements -->
-        <div class="absolute top-20 left-10 w-72 h-72 bg-primary-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-float blob"></div>
-        <div class="absolute -bottom-40 -right-40 w-80 h-80 bg-primary-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-float blob" style="animation-delay: 2s;"></div>
+        <div class="absolute top-20 left-10 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-float blob"></div>
+        <div class="absolute -bottom-40 -right-40 w-80 h-80 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-float blob" style="animation-delay: 2s;"></div>
 
         <div class="relative w-full lg:w-4/5 mx-auto px-4 sm:px-6 lg:px-8 h-screen flex items-center z-10">
             <div class="w-full">
@@ -597,11 +597,11 @@
 
                     <div class="flex flex-col sm:flex-row gap-4 hero-buttons justify-center">
                         {% if user.is_authenticated %}
-                            <a href="{% url 'team:list' %}" class="px-8 py-4 bg-white text-primary-600 font-bold rounded-lg hover:bg-gray-100 transition-all duration-300 inline-block text-center magnetic-button hover:shadow-xl shadow-lg" style="box-shadow: 0 0 30px rgba(216, 27, 199, 0.3);">
+                            <a href="{% url 'team:list' %}" class="px-8 py-4 bg-base-100 text-primary font-bold rounded-lg hover:bg-base-200 transition-all duration-300 inline-block text-center magnetic-button hover:shadow-xl shadow-lg" style="box-shadow: 0 0 30px rgba(216, 27, 199, 0.3);">
                                 Takımlarımızı Keşfet
                             </a>
                         {% else %}
-                            <a href="{% url 'user:register' %}" class="px-8 py-4 bg-white text-primary-600 font-bold rounded-lg hover:bg-gray-100 transition-all duration-300 inline-block text-center magnetic-button hover:shadow-xl shadow-lg" style="box-shadow: 0 0 30px rgba(216, 27, 199, 0.3);">
+                            <a href="{% url 'user:register' %}" class="px-8 py-4 bg-base-100 text-primary font-bold rounded-lg hover:bg-base-200 transition-all duration-300 inline-block text-center magnetic-button hover:shadow-xl shadow-lg" style="box-shadow: 0 0 30px rgba(216, 27, 199, 0.3);">
                                 Şimdi Başla
                             </a>
 
@@ -622,20 +622,20 @@
     </section>
 
     <!-- Stats Section with Animated Counters -->
-    <section class="bg-white py-12 sm:py-20">
+    <section class="bg-base-100 py-12 sm:py-20">
         <div class="w-full lg:w-4/5 mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="text-center stats-card stagger-delay-1">
-                    <div class="text-5xl font-bold bg-gradient-to-r from-primary-500 to-primary-700 bg-clip-text text-transparent mb-2 counter">{{ team_count }}</div>
-                    <p class="text-gray-600 text-lg">Aktif Takım</p>
+                    <div class="text-5xl font-bold bg-gradient-to-r from-primary to-primary bg-clip-text text-transparent mb-2 counter">{{ team_count }}</div>
+                    <p class="text-base-content/70 text-lg">Aktif Takım</p>
                 </div>
                 <div class="text-center stats-card stagger-delay-2">
-                    <div class="text-5xl font-bold bg-gradient-to-r from-primary-500 to-primary-700 bg-clip-text text-transparent mb-2 counter">{{ member_count }}+</div>
-                    <p class="text-gray-600 text-lg">Üye</p>
+                    <div class="text-5xl font-bold bg-gradient-to-r from-primary to-primary bg-clip-text text-transparent mb-2 counter">{{ member_count }}+</div>
+                    <p class="text-base-content/70 text-lg">Üye</p>
                 </div>
                 <div class="text-center stats-card stagger-delay-3">
-                    <div class="text-5xl font-bold bg-gradient-to-r from-primary-500 to-primary-700 bg-clip-text text-transparent mb-2 counter">1000+</div>
-                    <p class="text-gray-600 text-lg">Mutlu Sporcu</p>
+                    <div class="text-5xl font-bold bg-gradient-to-r from-primary to-primary bg-clip-text text-transparent mb-2 counter">1000+</div>
+                    <p class="text-base-content/70 text-lg">Mutlu Sporcu</p>
                 </div>
             </div>
         </div>
@@ -683,9 +683,9 @@
         </svg>
         <div class="w-full lg:w-4/5 mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 neon-text">Neden Bizi Seçmelisiniz?</h2>
+                <h2 class="text-4xl md:text-5xl font-bold text-base-content mb-4 neon-text">Neden Bizi Seçmelisiniz?</h2>
            
-                                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                                <p class="text-xl text-base-content/70 max-w-2xl mx-auto">
                        Profesyonel bir yüzücü olmanın zaman, çaba ve özveri gerektirdiğini unutmayın. Profesyonel bir yüzücü olmak için teknik, dayanıklılık, güç, esneklik, zihinsel dayanıklılık ve temel ilkeler bilgisi gibi çeşitli yönleri kapsayan kapsamlı bir eğitimden geçmek gerekir. Yüzücülerin mükemmel kardiyovasküler kondisyona ve dayanıklılığa, güçlü üst gövde ve çekirdek kaslara, sakatlanmayı önlemek için esnekliğe ve uzun antrenman seansları ve yarışmalar sırasında odaklanmak ve motive olmak için zihinsel dayanıklılığa sahip olmaları gerekir.
 
                             Yüzücüler genellikle bir antrenör veya eğitim programı rehberliğinde haftada altı gün, günde birkaç saat antrenman yaparlar. Başarılı olmak için yüzmeye erken başlamak, gerçekçi hedefler belirlemek, sağlam bir beslenme planı uygulamak, iyi dinlenmek, yüzme yarışlarına katılmak, iyi bir antrenör bulmak, gerekir. Israr ve azimle, profesyonel bir yüzücü olma hayalinizi bizimle gerçekleştirebilirsiniz.
@@ -695,7 +695,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Feature 1 -->
-                <div class="bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden card-hover feature-card stagger-delay-1">
+                <div class="bg-base-100 rounded-2xl shadow-lg border-2 border-base-100 overflow-hidden card-hover feature-card stagger-delay-1">
                     <div class="h-48 overflow-hidden image-reveal">
                         <video autoplay muted loop playsinline class="w-full h-full object-cover" preload="metadata">
                             <source src="/media/landing/5.mp4" type="video/mp4">
@@ -703,8 +703,8 @@
                     </div>
 
                     <div class="p-6">
-                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Profesyonel Antrenörler</h3>
-                        <p class="text-gray-600">Uluslararası sertifikaya sahip, deneyimli antrenörlerimiz size en iyi eğitimi verecektir.</p>
+                        <h3 class="text-2xl font-bold text-base-content mb-3">Profesyonel Antrenörler</h3>
+                        <p class="text-base-content/70">Uluslararası sertifikaya sahip, deneyimli antrenörlerimiz size en iyi eğitimi verecektir.</p>
                     </div>
                 </div>
 
@@ -712,36 +712,36 @@
 
 
                 <!-- Feature 3 -->
-                <div class="bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden card-hover feature-card stagger-delay-3">
+                <div class="bg-base-100 rounded-2xl shadow-lg border-2 border-base-100 overflow-hidden card-hover feature-card stagger-delay-3">
                     <div class="h-48 overflow-hidden image-reveal">
                         <img src="/media/landing/team.JPG " alt="Profesyonel Antrenörler" class="w-full h-full object-cover">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Takım Ruhu</h3>
-                        <p class="text-gray-600">Dostluklar ve arkadaşlıklarla dolu harika bir topluluğa katılın. Birlikte büyüyelim!</p>
+                        <h3 class="text-2xl font-bold text-base-content mb-3">Takım Ruhu</h3>
+                        <p class="text-base-content/70">Dostluklar ve arkadaşlıklarla dolu harika bir topluluğa katılın. Birlikte büyüyelim!</p>
                     </div>
                 </div>
 
                 <!-- Feature 4 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg border-2 border-gray-100 card-hover feature-card stagger-delay-4">
-                    <div class="w-16 h-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg flex items-center justify-center mb-6">
+                <div class="bg-base-100 p-8 rounded-2xl shadow-lg border-2 border-base-100 card-hover feature-card stagger-delay-4">
+                    <div class="w-16 h-16 bg-gradient-to-r from-primary to-primary rounded-lg flex items-center justify-center mb-6">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Kişisel Gelişim</h3>
-                    <p class="text-gray-600">Her seviyeye uygun programlarla kendi hızınızda gelişim gösterin. Hedeflerinize ulaşın.</p>
+                    <h3 class="text-2xl font-bold text-base-content mb-3">Kişisel Gelişim</h3>
+                    <p class="text-base-content/70">Her seviyeye uygun programlarla kendi hızınızda gelişim gösterin. Hedeflerinize ulaşın.</p>
                 </div>
 
                 <!-- Feature 5 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg border-2 border-gray-100 card-hover feature-card stagger-delay-5">
-                    <div class="w-16 h-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg flex items-center justify-center mb-6">
+                <div class="bg-base-100 p-8 rounded-2xl shadow-lg border-2 border-base-100 card-hover feature-card stagger-delay-5">
+                    <div class="w-16 h-16 bg-gradient-to-r from-primary to-primary rounded-lg flex items-center justify-center mb-6">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Sınırlarınızı Zorlayın</h3>
-                    <p class="text-gray-600">Yerel ve uluslararası yarışmalara katılın. Yeteneklerinizi gösterin ve ödüller kazanın.</p>
+                    <h3 class="text-2xl font-bold text-base-content mb-3">Sınırlarınızı Zorlayın</h3>
+                    <p class="text-base-content/70">Yerel ve uluslararası yarışmalara katılın. Yeteneklerinizi gösterin ve ödüller kazanın.</p>
                 </div>
 
                 <!-- Feature 6 -->
@@ -752,7 +752,7 @@
 
     <!-- Hexagon Gallery Section -->
     <section id="galeri" class="py-20 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 via-vibrant-pink to-accent-400"></div>
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-vibrant-pink to-accent-400"></div>
         <!-- Wavy Background SVG -->
         <svg class="absolute inset-0 w-full h-full opacity-10 pointer-events-none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
             <defs>
@@ -791,8 +791,8 @@
         </svg>
         <div class="w-full lg:w-4/5 mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 neon-text">Antrenörlerimiz</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Her sporcunun uzun vadeli atletik gelişimi için en iyi eğitimi ve koçluğu almasını sağlayan, ulusal çapta örnek bir kulüp olmak için yorulmadan çalışan ekibimizle tanışın</p>
+                <h2 class="text-4xl md:text-5xl font-bold text-base-content mb-4 neon-text">Antrenörlerimiz</h2>
+                <p class="text-xl text-base-content/70 max-w-2xl mx-auto">Her sporcunun uzun vadeli atletik gelişimi için en iyi eğitimi ve koçluğu almasını sağlayan, ulusal çapta örnek bir kulüp olmak için yorulmadan çalışan ekibimizle tanışın</p>
             </div>
 
             <div class="hexagon-container hex-gallery">
@@ -826,11 +826,11 @@
                     </div>
             </div>
         </div>
-        <div class="absolute bottom-0 right-0 w-72 h-72 bg-primary-500/5 rounded-full blur-3xl -z-10"></div>
+        <div class="absolute bottom-0 right-0 w-72 h-72 bg-primary/5 rounded-full blur-3xl -z-10"></div>
     </section>
 
     <!-- Teams Section -->
-    <section id="takimlar" class="py-20 bg-white relative overflow-hidden">
+    <section id="takimlar" class="py-20 bg-base-100 relative overflow-hidden">
         <!-- Wavy Background SVG -->
         <svg class="absolute inset-0 w-full h-full opacity-10 pointer-events-none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
             <defs>
@@ -869,26 +869,26 @@
         </svg>
         <div class="w-full lg:w-4/5 mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 gradient-text-animated">Takımlarımız</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Her yaş ve seviye için tasarlanmış, dinamik takımlarımız sizini bekliyor.</p>
+                <h2 class="text-4xl md:text-5xl font-bold text-base-content mb-4 gradient-text-animated">Takımlarımız</h2>
+                <p class="text-xl text-base-content/70 max-w-2xl mx-auto">Her yaş ve seviye için tasarlanmış, dinamik takımlarımız sizini bekliyor.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
             <!-- First program-->
-                <div class="bg-gradient-to-br from-gray-50 to-white p-8 rounded-2xl shadow-lg border-2 border-gray-100 card-hover team-card">
-                    <div class="w-16 h-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg flex items-center justify-center mb-4">
+                <div class="bg-gradient-to-br from-gray-50 to-white p-8 rounded-2xl shadow-lg border-2 border-base-100 card-hover team-card">
+                    <div class="w-16 h-16 bg-gradient-to-r from-primary to-primary rounded-lg flex items-center justify-center mb-4">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">YAŞLARA UYGUN PERFORMANS GRUPLARI</h3>
+                    <h3 class="text-2xl font-bold text-base-content mb-3">YAŞLARA UYGUN PERFORMANS GRUPLARI</h3>
 
-                    <p class="text-gray-600 mb-6">
+                    <p class="text-base-content/70 mb-6">
                                 Performans yüzme programları, yüzme tekniğinin geliştirilmesi, kondisyonun artırılması ve hızlı yüzme için özel egzersizler içerir. Örneğin, tekniği düzeltme, interval antrenmanları ve yüzme setleri gibi çalışmalar yapılır.
                             </p>
        
-                    <a href="" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold group underline-animate">
+                    <a href="" class="inline-flex items-center text-primary hover:text-primary font-semibold group underline-animate">
                         Detayları Gör
                         <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -896,15 +896,15 @@
                     </a>
                 </div>
             <!-- 2 program-->
-                <div class="bg-gradient-to-br from-gray-50 to-white p-8 rounded-2xl shadow-lg border-2 border-gray-100 card-hover team-card">
-                    <div class="w-16 h-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg flex items-center justify-center mb-4">
+                <div class="bg-gradient-to-br from-gray-50 to-white p-8 rounded-2xl shadow-lg border-2 border-base-100 card-hover team-card">
+                    <div class="w-16 h-16 bg-gradient-to-r from-primary to-primary rounded-lg flex items-center justify-center mb-4">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">3-6 YAŞ VIP KURSİYER GRUPLARI</h3>
+                    <h3 class="text-2xl font-bold text-base-content mb-3">3-6 YAŞ VIP KURSİYER GRUPLARI</h3>
 
-                    <p class="text-gray-600 mb-6">
+                    <p class="text-base-content/70 mb-6">
                                 Özel VIP grup şeklinde gerçekleştirilecek olan eğitimlerimize 3-6 yaşında çocuklarımız katılabilecektir. 
                                 <br>
                                 - Gruplarımız max 5 kişiden oluşmaktadır.( VIP EĞİTİM)
@@ -915,7 +915,7 @@
                             
                             </p>
        
-                    <a href="" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold group underline-animate">
+                    <a href="" class="inline-flex items-center text-primary hover:text-primary font-semibold group underline-animate">
                         Detayları Gör
                         <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -923,8 +923,8 @@
                     </a>
                 </div>
             <!-- 3 program-->
-                <div class="bg-gradient-to-br from-gray-50 to-white p-8 rounded-2xl shadow-lg border-2 border-gray-100 card-hover team-card">
-                    <div class="w-16 h-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg flex items-center justify-center mb-4">
+                <div class="bg-gradient-to-br from-gray-50 to-white p-8 rounded-2xl shadow-lg border-2 border-base-100 card-hover team-card">
+                    <div class="w-16 h-16 bg-gradient-to-r from-primary to-primary rounded-lg flex items-center justify-center mb-4">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
                         </svg>
@@ -933,15 +933,15 @@
 
 
                     
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">4 YAŞ VE ÜZERİ KURSİYER GRUPLARI</h3>
+                    <h3 class="text-2xl font-bold text-base-content mb-3">4 YAŞ VE ÜZERİ KURSİYER GRUPLARI</h3>
 
-                    <p class="text-gray-600 mb-6">- Gruplarımız max 12 kişiden oluşmaktadır.
+                    <p class="text-base-content/70 mb-6">- Gruplarımız max 12 kişiden oluşmaktadır.
                                                     
                                                     <br>- Eğitimlerimiz 12 ay devam etmektedir.
                                                     <br>- Haftada 2 gün olmak üzere ayda toplam 8 dersten oluşmaktadır.
                                                     <br>- Grup çalışmaları yeni yıl ile birlikte başlayacaktır.</p>
                                                         
-                    <a href="" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold group underline-animate">
+                    <a href="" class="inline-flex items-center text-primary hover:text-primary font-semibold group underline-animate">
                         Detayları Gör
                         <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -949,19 +949,19 @@
                     </a>
                 </div>
             <!-- 4 program-->
-                <div class="bg-gradient-to-br from-gray-50 to-white p-8 rounded-2xl shadow-lg border-2 border-gray-100 card-hover team-card">   
-                    <div class="w-16 h-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg flex items-center justify-center mb-4">
+                <div class="bg-gradient-to-br from-gray-50 to-white p-8 rounded-2xl shadow-lg border-2 border-base-100 card-hover team-card">   
+                    <div class="w-16 h-16 bg-gradient-to-r from-primary to-primary rounded-lg flex items-center justify-center mb-4">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
                         </svg>
                     </div>
                     
 
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">ÖZEL TEKNİK PERFORMANS DERSLERİ</h3>
+                    <h3 class="text-2xl font-bold text-base-content mb-3">ÖZEL TEKNİK PERFORMANS DERSLERİ</h3>
 
-                    <p class="text-gray-600 mb-6">Aktif yüzücü olan sporcularımızın teknik yüzme gelişimleri için ihtiyaç duyulan derslerimizdir.</p>
+                    <p class="text-base-content/70 mb-6">Aktif yüzücü olan sporcularımızın teknik yüzme gelişimleri için ihtiyaç duyulan derslerimizdir.</p>
        
-                    <a href="" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold group underline-animate">
+                    <a href="" class="inline-flex items-center text-primary hover:text-primary font-semibold group underline-animate">
                         Detayları Gör
                         <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -969,18 +969,18 @@
                     </a>
                 </div>
             <!-- 5 program-->
-                <div class="bg-gradient-to-br from-gray-50 to-white p-8 rounded-2xl shadow-lg border-2 border-gray-100 card-hover team-card">
-                    <div class="w-16 h-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg flex items-center justify-center mb-4">
+                <div class="bg-gradient-to-br from-gray-50 to-white p-8 rounded-2xl shadow-lg border-2 border-base-100 card-hover team-card">
+                    <div class="w-16 h-16 bg-gradient-to-r from-primary to-primary rounded-lg flex items-center justify-center mb-4">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
                         </svg>
                     </div>
 
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">7 YAŞ VE ÜZERİ ÖZEL DERS</h3>
+                    <h3 class="text-2xl font-bold text-base-content mb-3">7 YAŞ VE ÜZERİ ÖZEL DERS</h3>
 
-                    <p class="text-gray-600 mb-6">Kulübümüzde her yaş grubuna profesyonel eğitmenler eşliğinde özel yüzme eğitimlerimiz yıl boyunca verilmektedir</p>
+                    <p class="text-base-content/70 mb-6">Kulübümüzde her yaş grubuna profesyonel eğitmenler eşliğinde özel yüzme eğitimlerimiz yıl boyunca verilmektedir</p>
        
-                    <a href="" class="inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold group underline-animate">
+                    <a href="" class="inline-flex items-center text-primary hover:text-primary font-semibold group underline-animate">
                         Detayları Gör
                         <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -1036,7 +1036,7 @@
                         Instagram Galerimiz
                     </h2>
                 </div>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                <p class="text-xl text-base-content/70 max-w-3xl mx-auto">
                     Günlük antrenmanlarımızı, başarılarımızı ve kulüp etkinliklerimizi kaçırmayın!
                 </p>
             </div>
@@ -1045,13 +1045,13 @@
             <div class="w-full lg:w-4/5 mx-auto">
                 <div class="relative">
                     <!-- Navigation Buttons -->
-                    <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm hover:bg-white p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 -ml-4 md:-ml-6">
-                        <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm hover:bg-base-100 p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 -ml-4 md:-ml-6">
+                        <svg class="w-6 h-6 text-base-content" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
                     </button>
-                    <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm hover:bg-white p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 -mr-4 md:-mr-6">
-                        <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm hover:bg-base-100 p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 -mr-4 md:-mr-6">
+                        <svg class="w-6 h-6 text-base-content" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </button>
@@ -1092,9 +1092,9 @@
                 <!-- Pagination Dots -->
                 <div class="flex justify-center gap-2 mt-8">
                     <div class="dot w-2 h-2 rounded-full bg-pink-500 transition-all duration-300"></div>
-                    <div class="dot w-2 h-2 rounded-full bg-gray-300 transition-all duration-300"></div>
-                    <div class="dot w-2 h-2 rounded-full bg-gray-300 transition-all duration-300"></div>
-                    <div class="dot w-2 h-2 rounded-full bg-gray-300 transition-all duration-300"></div>
+                    <div class="dot w-2 h-2 rounded-full bg-base-300 transition-all duration-300"></div>
+                    <div class="dot w-2 h-2 rounded-full bg-base-300 transition-all duration-300"></div>
+                    <div class="dot w-2 h-2 rounded-full bg-base-300 transition-all duration-300"></div>
                 </div>
             </div>
             </div>
@@ -1124,11 +1124,11 @@
                         // Update dots
                         dots.forEach((dot, index) => {
                             if (index === currentIndex) {
-                                dot.classList.remove('bg-gray-300');
+                                dot.classList.remove('bg-base-300');
                                 dot.classList.add('bg-pink-500', 'w-8');
                             } else {
                                 dot.classList.remove('bg-pink-500', 'w-8');
-                                dot.classList.add('bg-gray-300');
+                                dot.classList.add('bg-base-300');
                             }
                         });
                     }
@@ -1260,22 +1260,22 @@
         <div class="w-full lg:w-4/5 mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div class="about-content">
-                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 neon-text">Hakkımızda</h2>
-                    <p class="text-lg text-gray-600 mb-4">
+                    <h2 class="text-4xl md:text-5xl font-bold text-base-content mb-6 neon-text">Hakkımızda</h2>
+                    <p class="text-lg text-base-content/70 mb-4">
                         Yüzme Kulübü olarak, 2020'den beri binlerce insanın yüzme hayallerini gerçekleştirmesine yardımcı olduk. Profesyonel antrenörleriyle ve modern tesisleriyle, her yaş ve seviyeye uygun programlar sunuyoruz.
                     </p>
-                    <p class="text-lg text-gray-600 mb-6">
+                    <p class="text-lg text-base-content/70 mb-6">
                         Misyonumuz, yüzmeyi bir spor olarak değil, yaşam tarzı olarak görmektir. Fiziksel sağlık, ruh sağlığı ve sosyal gelişimi birlikte destekleyen bir ortam oluşturma hedefindeyiz.
                     </p>
                     {% if user.is_authenticated %}
-                        <a href="{% url 'team:list' %}" class="inline-flex items-center px-8 py-4 bg-primary-600 text-white font-bold rounded-lg hover:bg-primary-700 transition-all duration-300 shadow-lg hover:shadow-xl magnetic-button">
+                        <a href="{% url 'team:list' %}" class="inline-flex items-center px-8 py-4 bg-primary text-white font-bold rounded-lg hover:bg-primary transition-all duration-300 shadow-lg hover:shadow-xl magnetic-button">
                             Takımlarımızı Keşfet
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                             </svg>
                         </a>
                     {% else %}
-                        <a href="{% url 'user:register' %}" class="inline-flex items-center px-8 py-4 bg-primary-600 text-white font-bold rounded-lg hover:bg-primary-700 transition-all duration-300 shadow-lg hover:shadow-xl magnetic-button">
+                        <a href="{% url 'user:register' %}" class="inline-flex items-center px-8 py-4 bg-primary text-white font-bold rounded-lg hover:bg-primary transition-all duration-300 shadow-lg hover:shadow-xl magnetic-button">
                             Katılmak İstiyorum
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -1307,7 +1307,7 @@
             <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-40" preload="metadata">
                 <source src="/media/landing/5.mp4" type="video/mp4">
             </video>
-            <div class="absolute inset-0 bg-gradient-to-r from-primary-600/90 to-primary-800/90"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/90"></div>
         </div>
         <!-- Wavy Background SVG -->
         <svg class="absolute inset-0 w-full h-full opacity-15 pointer-events-none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
@@ -1348,16 +1348,16 @@
 
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 gradient-text-animated">Bugün Başlayın</h2>
-            <p class="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+            <p class="text-xl text-primary mb-8 max-w-2xl mx-auto">
                 Yüzme yolculuğunuza başlamaya hazır mısınız? Şimdi kaydol ve ilk seninçi antrenmanınızı alın.
             </p>
             {% if user.is_authenticated %}
-                <a href="{% url 'team:list' %}" class="inline-block px-8 py-4 bg-white text-primary-600 font-bold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl magnetic-button" style="box-shadow: 0 0 30px rgba(216, 27, 199, 0.3);">
+                <a href="{% url 'team:list' %}" class="inline-block px-8 py-4 bg-base-100 text-primary font-bold rounded-lg hover:bg-base-200 transition-all duration-300 shadow-lg hover:shadow-xl magnetic-button" style="box-shadow: 0 0 30px rgba(216, 27, 199, 0.3);">
                     Takıma Katıl
                 </a>
             {% else %}
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="{% url 'user:register' %}" class="px-8 py-4 bg-white text-primary-600 font-bold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl magnetic-button" style="box-shadow: 0 0 30px rgba(216, 27, 199, 0.3);">
+                    <a href="{% url 'user:register' %}" class="px-8 py-4 bg-base-100 text-primary font-bold rounded-lg hover:bg-base-200 transition-all duration-300 shadow-lg hover:shadow-xl magnetic-button" style="box-shadow: 0 0 30px rgba(216, 27, 199, 0.3);">
                         Kayıt Ol
                     </a>
                     <a href="{% url 'user:login' %}" class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-lg hover:bg-white/10 transition-all duration-300 magnetic-button">
@@ -1369,12 +1369,12 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-12">
+    <footer class="bg-base-300 text-base-content/70 py-12">
         <div class="w-full lg:w-4/5 mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                 <div>
                     <div class="flex items-center space-x-2 mb-4">
-                        <div class="w-8 h-8 bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
+                        <div class="w-8 h-8 bg-gradient-to-r from-primary to-primary rounded-lg flex items-center justify-center">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
@@ -1408,7 +1408,7 @@
                     </div>
                 </div>
             </div>
-            <div class="border-t border-gray-700 pt-8 text-center text-sm">
+            <div class="border-t border-base-300 pt-8 text-center text-sm">
                 <p>&copy; 2026 Yüzme Kulübü. Tüm hakları saklıdır.</p>
             </div>
         </div>
@@ -1654,3 +1654,4 @@
     </script>
 </body>
 </html>
+

@@ -4,35 +4,35 @@
 {% block title %}Antrenmanlar - Kulup{% endblock %}
 
 {% block content %}
-    <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
+    <div class="max-w-5xl mx-auto bg-base-100 rounded-2xl shadow-xl p-6 border border-base-300">
         <div class="flex items-center justify-between mb-6">
             <h2 class="text-2xl font-bold">Antrenmanlar</h2>
-            <a href="{% url 'team:training_create' %}" class="bg-primary-600 text-white font-bold py-2 px-4 rounded-xl hover:bg-primary-700 transition-all duration-300">Yeni Antrenman Ekle</a>        
+            <a href="{% url 'team:training_create' %}" class="bg-primary text-primary-content font-bold py-2 px-4 rounded-xl hover:bg-primary-focus transition-all duration-300">Yeni Antrenman Ekle</a>        
         </div>
         <div class="space-y-4">
             {% for training in trainings %}
-                <div class="p-4 border border-gray-200 rounded-xl hover:shadow-lg transition-all duration-300">
+                <div class="p-4 border border-base-300 rounded-xl hover:shadow-lg transition-all duration-300">
                     <div class="flex items  justify-between">
                         <div>
                             <h3 class="text-xl font-bold">{{ training.team.name }} Takımı</h3>
-                            <p class="text-gray-600">Yer: {{ training.location }}</p>
-                            <p class="text-gray-600">Gün: {{ training.get_day_of_week_display }}</p>
-                            <p class="text-gray-600">Saat: {{ training.time|time:"H:i" }}{% if training.end_time %} - {{ training.end_time|time:"H:i" }}{% endif %}</p>
+                            <p class="text-base-content/70">Yer: {{ training.location }}</p>
+                            <p class="text-base-content/70">Gün: {{ training.get_day_of_week_display }}</p>
+                            <p class="text-base-content/70">Saat: {{ training.time|time:"H:i" }}{% if training.end_time %} - {{ training.end_time|time:"H:i" }}{% endif %}</p>
                             {% if training.trainer %}
-                                <p class="text-gray-600">Antrenör: {{ training.trainer }}</p>
+                                <p class="text-base-content/70">Antrenör: {{ training.trainer }}</p>
                             {% endif %}
                             {% if training.notes %}
-                                <p class="text-gray-600">Notlar: {{ training.notes }}</p>
+                                <p class="text-base-content/70">Notlar: {{ training.notes }}</p>
                             {% endif %}
                         </div>      
                         <div class="flex space-x-2">
-                            <a href="{% url 'team:training_update' training.id %}" class="bg-yellow-500 text-white font-bold py-2 px-4 rounded-xl hover:bg-yellow-600 transition-all duration-300">Düzenle</a>
-                            <a href="{% url 'team:training_delete' training.id %}" class="bg-red-500 text-white font-bold py-2 px-4 rounded-xl hover:bg-red-600 transition-all duration-300">Sil</a>        
+                            <a href="{% url 'team:training_update' training.id %}" class="bg-warning text-white font-bold py-2 px-4 rounded-xl hover:bg-warning transition-all duration-300">Düzenle</a>
+                            <a href="{% url 'team:training_delete' training.id %}" class="bg-error text-white font-bold py-2 px-4 rounded-xl hover:bg-error transition-all duration-300">Sil</a>        
                         </div>
                     </div>
                 </div>
             {% empty %}
-                <p class="text-gray-600">Henüz antrenman eklenmemiş.</p>
+                <p class="text-base-content/70">Henüz antrenman eklenmemiş.</p>
             {% endfor %}        
         </div>
     </div>

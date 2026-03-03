@@ -5,7 +5,7 @@
 {% block content %}
 <div class="max-w-4xl mx-auto animate-fade-in">
     <!-- Header Section -->
-    <div class="bg-gradient-to-r from-primary-500 via-primary-600 to-primary-700 rounded-2xl shadow-2xl p-8 mb-8 text-white relative overflow-hidden">
+    <div class="bg-primary text-primary-content rounded-2xl shadow-2xl p-8 mb-8 relative overflow-hidden">
         <div class="absolute inset-0 bg-black/10"></div>
         <div class="relative z-10">
             <div class="flex items-center justify-between">
@@ -23,7 +23,7 @@
                     </div>
                     <div>
                         <h1 class="text-2xl md:text-3xl font-bold">{{ title }}</h1>
-                        <p class="text-primary-100 mt-1">
+                        <p class="opacity-90 mt-1">
                             {% if team %}
                                 Takım bilgilerini güncellemek için formu doldurun
                             {% else %}
@@ -45,14 +45,14 @@
     </div>
 
     <!-- Form Card -->
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+    <div class="bg-base-100 rounded-2xl shadow-xl overflow-hidden border border-base-300">
         <form method="post" enctype="multipart/form-data" class="p-8 space-y-8">
             {% csrf_token %}
 
             <!-- Team Name -->
             <div class="space-y-2">
-                <label for="{{ form.name.id_for_label }}" class="block text-base md:text-lg font-semibold text-gray-900 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <label for="{{ form.name.id_for_label }}" class="block text-base md:text-lg font-semibold text-base-content flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                     </svg>
                     {{ form.name.label }}
@@ -60,13 +60,13 @@
                 <div class="relative">
                     {{ form.name }}
                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-base-content/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                         </svg>
                     </div>
                 </div>
                 {% if form.name.errors %}
-                    <div class="flex items-center space-x-2 text-red-600 text-sm bg-red-50 px-3 py-2 rounded-lg border border-red-200">
+                    <div class="flex items-center space-x-2 text-error text-sm bg-error px-3 py-2 rounded-lg border border-error">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
@@ -77,8 +77,8 @@
 
             <!-- Description -->
             <div class="space-y-2">
-                <label for="{{ form.description.id_for_label }}" class="block text-base md:text-lg font-semibold text-gray-900 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <label for="{{ form.description.id_for_label }}" class="block text-base md:text-lg font-semibold text-base-content flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
                     </svg>
                     {{ form.description.label }}
@@ -87,7 +87,7 @@
                     {{ form.description }}
                 </div>
                 {% if form.description.errors %}
-                    <div class="flex items-center space-x-2 text-red-600 text-sm bg-red-50 px-3 py-2 rounded-lg border border-red-200">
+                    <div class="flex items-center space-x-2 text-error text-sm bg-error px-3 py-2 rounded-lg border border-error">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
@@ -98,8 +98,8 @@
 
             <!-- Logo Upload -->
             <div class="space-y-2">
-                <label for="{{ form.logo.id_for_label }}" class="block text-base md:text-lg font-semibold text-gray-900 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <label for="{{ form.logo.id_for_label }}" class="block text-base md:text-lg font-semibold text-base-content flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
                     {{ form.logo.label }}
@@ -108,14 +108,14 @@
                     {{ form.logo }}
                 </div>
                 {% if form.logo.errors %}
-                    <div class="flex items-center space-x-2 text-red-600 text-sm bg-red-50 px-3 py-2 rounded-lg border border-red-200">
+                    <div class="flex items-center space-x-2 text-error text-sm bg-error px-3 py-2 rounded-lg border border-error">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         <span>{% for error in form.logo.errors %}{{ error }}{% endfor %}</span>
                     </div>
                 {% endif %}
-                <p class="text-sm text-gray-500 flex items-center">
+                <p class="text-sm text-base-content/60 flex items-center">
                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
@@ -125,8 +125,8 @@
 
             <!-- Founded Date -->
             <div class="space-y-2">
-                <label for="{{ form.founded_date.id_for_label }}" class="block text-base md:text-lg font-semibold text-gray-900 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <label for="{{ form.founded_date.id_for_label }}" class="block text-base md:text-lg font-semibold text-base-content flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
                     {{ form.founded_date.label }}
@@ -134,13 +134,13 @@
                 <div class="relative">
                     {{ form.founded_date }}
                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-base-content/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
                     </div>
                 </div>
                 {% if form.founded_date.errors %}
-                    <div class="flex items-center space-x-2 text-red-600 text-sm bg-red-50 px-3 py-2 rounded-lg border border-red-200">
+                    <div class="flex items-center space-x-2 text-error text-sm bg-error px-3 py-2 rounded-lg border border-error">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
@@ -150,8 +150,8 @@
             </div>
 
             <!-- Submit Buttons -->
-            <div class="flex justify-end space-x-4 pt-8 border-t border-gray-200">
-                <a href="{% if team %}{% url 'team:detail' team.pk %}{% else %}{% url 'team:list' %}{% endif %}" class="group bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-medium transition-all duration-300 border border-gray-200 hover:border-gray-300 hover-lift">
+            <div class="flex justify-end space-x-4 pt-8 border-t border-base-300">
+                <a href="{% if team %}{% url 'team:detail' team.pk %}{% else %}{% url 'team:list' %}{% endif %}" class="btn btn-ghost">
                     <div class="flex items-center space-x-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -159,7 +159,7 @@
                         <span>İptal</span>
                     </div>
                 </a>
-                <button type="submit" class="group bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 hover-lift shadow-lg hover:shadow-xl">
+                <button type="submit" class="btn btn-primary">
                     <div class="flex items-center space-x-2">
                         {% if team %}
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

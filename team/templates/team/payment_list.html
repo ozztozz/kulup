@@ -5,22 +5,22 @@
 {% block content %}
 <div class="max-w-7xl mx-auto animate-fade-in">
     <!-- Header Section -->
-    <div class="bg-gradient-to-r from-primary-500 via-primary-600 to-primary-700 rounded-2xl shadow-2xl p-8 mb-8 text-white relative overflow-hidden">
-        <div class="absolute inset-0 bg-black/10"></div>
+    <div class="bg-primary text-primary-content rounded-2xl shadow-2xl p-8 mb-8 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/5"></div>
         <div class="relative z-10">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
-                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-16 h-16 bg-base-100/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
                         </svg>
                     </div>
                     <div>
                         <h1 class="text-2xl md:text-3xl font-bold">{{ title }}</h1>
-                        <p class="text-primary-100 mt-1">Üye ödemelerini yönetin</p>
+                        <p class="opacity-90 mt-1">Üye ödemelerini yönetin</p>
                     </div>
                 </div>
-                <a href="{% url 'team:payment_create' %}" class="group bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 border border-white/30 hover:border-white/50 hover-lift">
+                <a href="{% url 'team:payment_create' %}" class="btn btn-ghost btn-sm">
                     <div class="flex items-center space-x-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -35,11 +35,11 @@
     <!-- Payment Summary -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <!-- Total Payments -->
-        <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
+        <div class="bg-base-100 rounded-2xl shadow-xl p-6 border border-base-100">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-medium text-gray-600">Toplam Ödeme</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ total_payments }}</p>
+                    <p class="text-sm font-medium text-base-content/70">Toplam Ödeme</p>
+                    <p class="text-2xl font-bold text-base-content">{{ total_payments }}</p>
                 </div>
                 <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -50,11 +50,11 @@
         </div>
 
         <!-- Paid Payments -->
-        <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
+        <div class="bg-base-100 rounded-2xl shadow-xl p-6 border border-base-100">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-medium text-gray-600">Ödenen</p>
-                    <p class="text-2xl font-bold text-green-600">{{ paid_payments }}</p>
+                    <p class="text-sm font-medium text-base-content/70">Ödenen</p>
+                    <p class="text-2xl font-bold text-success">{{ paid_payments }}</p>
                 </div>
                 <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -65,11 +65,11 @@
         </div>
 
         <!-- Unpaid Payments -->
-        <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
+        <div class="bg-base-100 rounded-2xl shadow-xl p-6 border border-base-100">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-medium text-gray-600">Ödenmeyen</p>
-                    <p class="text-2xl font-bold text-red-600">{{ unpaid_payments }}</p>
+                    <p class="text-sm font-medium text-base-content/70">Ödenmeyen</p>
+                    <p class="text-2xl font-bold text-error">{{ unpaid_payments }}</p>
                 </div>
                 <div class="w-12 h-12 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -80,13 +80,13 @@
         </div>
 
         <!-- Total Amount -->
-        <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
+        <div class="bg-base-100 rounded-2xl shadow-xl p-6 border border-base-100">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-medium text-gray-600">Toplam Tutar</p>
-                    <p class="text-2xl font-bold text-primary-600">{{ total_amount|floatformat:2 }} TL</p>
+                    <p class="text-sm font-medium text-base-content/70">Toplam Tutar</p>
+                    <p class="text-2xl font-bold text-primary">{{ total_amount|floatformat:2 }} TL</p>
                 </div>
-                <div class="w-12 h-12 bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
+                <div class="w-12 h-12 bg-gradient-to-r from-primary to-primary rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
                     </svg>
@@ -97,29 +97,29 @@
 
     {% if team_summaries %}
     <!-- Payments Accordion -->
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 mb-8">
-        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-            <h2 class="text-lg font-semibold text-gray-900">Takım Ödemeleri</h2>
-            <p class="text-sm text-gray-600 mt-1">Takımlara göre gruplanmış ödeme bilgileri</p>
+    <div class="bg-base-100 rounded-2xl shadow-xl overflow-hidden border border-base-100 mb-8">
+        <div class="px-6 py-4 border-b border-base-200 bg-base-100">
+            <h2 class="text-lg font-semibold text-base-content">Takım Ödemeleri</h2>
+            <p class="text-sm text-base-content/70 mt-1">Takımlara göre gruplanmış ödeme bilgileri</p>
         </div>
 
         <div class="divide-y divide-gray-200">
             {% for team_summary in team_summaries %}
             <div class="accordion-item">
-                <button class="accordion-header w-full px-6 py-4 text-left hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition-colors duration-200 flex items-center justify-between"
+                <button class="accordion-header w-full px-6 py-4 text-left hover:bg-base-100 focus:outline-none focus:bg-base-100 transition-colors duration-200 flex items-center justify-between"
                         onclick="toggleAccordion(this)">
                     <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-gradient-to-r from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
+                        <div class="w-10 h-10 bg-gradient-to-r from-primary to-primary rounded-lg flex items-center justify-center">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-base font-semibold text-gray-900">{{ team_summary.name }}</h3>
-                            <div class="flex items-center space-x-4 text-sm text-gray-600">
+                            <h3 class="text-base font-semibold text-base-content">{{ team_summary.name }}</h3>
+                            <div class="flex items-center space-x-4 text-sm text-base-content/70">
                                 <span>{{ team_summary.total_payments }} kayıt</span>
-                                <span class="text-green-600">{{ team_summary.paid_payments }} ödenen</span>
-                                <span class="text-red-600">{{ team_summary.unpaid_payments }} ödenmeyen</span>
+                                <span class="text-success">{{ team_summary.paid_payments }} ödenen</span>
+                                <span class="text-error">{{ team_summary.unpaid_payments }} ödenmeyen</span>
                                 {% if team_summary.total_amount > 0 %}
                                     <span class="font-medium">{{ team_summary.total_amount|floatformat:2 }} TL</span>
                                 {% endif %}
@@ -127,46 +127,46 @@
                         </div>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <div class="text-sm text-gray-500">
+                        <div class="text-sm text-base-content/60">
                             {{ team_summary.total_payments }}%
                         </div>
-                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-base-content/70 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </div>
                 </button>
 
-                <div class="accordion-content hidden bg-gray-50">
+                <div class="accordion-content hidden bg-base-100">
                     <div class="px-6 py-4">
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-white">
+                                <thead class="bg-base-100">
                                     <tr>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Üye</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ay</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tutar</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durum</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ödeme Tarihi</th>
-                                        <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">Üye</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">Ay</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">Tutar</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">Durum</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">Ödeme Tarihi</th>
+                                        <th class="px-4 py-3 text-right text-xs font-medium text-base-content/60 uppercase tracking-wider">İşlemler</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
+                                <tbody class="bg-base-100 divide-y divide-gray-200">
                                     {% for payment in team_summary.payments %}
-                                        <tr class="hover:bg-gray-50">
+                                        <tr class="hover:bg-base-100">
                                             <td class="px-4 py-3 whitespace-nowrap">
-                                                <div class="text-sm font-medium text-gray-900">{{ payment.member.name }} {{ payment.member.surname }}</div>
-                                                <div class="text-sm text-gray-500">{{ payment.member.user.email }}</div>
+                                                <div class="text-sm font-medium text-base-content">{{ payment.member.name }} {{ payment.member.surname }}</div>
+                                                <div class="text-sm text-base-content/60">{{ payment.member.user.email }}</div>
                                             </td>
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">{{ payment.month|date:"F Y" }}</td>
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">{{ payment.amount }} TL</td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-base-content">{{ payment.month|date:"F Y" }}</td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-base-content">{{ payment.amount }} TL</td>
                                             <td class="px-4 py-3 whitespace-nowrap">
                                                 {% if payment.is_paid %}
-                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Ödendi</span>
+                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-success text-success">Ödendi</span>
                                                 {% else %}
-                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Ödenmedi</span>
+                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-error text-error">Ödenmedi</span>
                                                 {% endif %}
                                             </td>
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-base-content">
                                                 {% if payment.paid_date %}
                                                     {{ payment.paid_date|date:"d.m.Y" }}
                                                 {% else %}
@@ -174,8 +174,8 @@
                                                 {% endif %}
                                             </td>
                                             <td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                                <a href="{% url 'team:payment_update' payment.pk %}" class="text-primary-600 hover:text-primary-900 mr-3">Düzenle</a>
-                                                <a href="{% url 'team:payment_delete' payment.pk %}" class="text-red-600 hover:text-red-900">Sil</a>
+                                                <a href="{% url 'team:payment_update' payment.pk %}" class="text-primary hover:text-primary mr-3">Düzenle</a>
+                                                <a href="{% url 'team:payment_delete' payment.pk %}" class="text-error hover:text-error">Sil</a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -189,46 +189,46 @@
         </div>
     </div>
     {% else %}
-                        <div class="text-sm text-gray-500">
+                        <div class="text-sm text-base-content/60">
                             {% widthratio team_payments|length team_payments|length 100 %}%
                         </div>
-                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-base-content/70 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </div>
                 </button>
 
-                <div class="accordion-content hidden bg-gray-50">
+                <div class="accordion-content hidden bg-base-100">
                     <div class="px-6 py-4">
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-white">
+                                <thead class="bg-base-100">
                                     <tr>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Üye</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ay</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tutar</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durum</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ödeme Tarihi</th>
-                                        <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">Üye</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">Ay</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">Tutar</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">Durum</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">Ödeme Tarihi</th>
+                                        <th class="px-4 py-3 text-right text-xs font-medium text-base-content/60 uppercase tracking-wider">İşlemler</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
+                                <tbody class="bg-base-100 divide-y divide-gray-200">
                                     {% for payment in team_summary.payments %}
-                                        <tr class="hover:bg-gray-50">
+                                        <tr class="hover:bg-base-100">
                                             <td class="px-4 py-3 whitespace-nowrap">
-                                                <div class="text-sm font-medium text-gray-900">{{ payment.member.name }} {{ payment.member.surname }}</div>
-                                                <div class="text-sm text-gray-500">{{ payment.member.user.email }}</div>
+                                                <div class="text-sm font-medium text-base-content">{{ payment.member.name }} {{ payment.member.surname }}</div>
+                                                <div class="text-sm text-base-content/60">{{ payment.member.user.email }}</div>
                                             </td>
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">{{ payment.month|date:"F Y" }}</td>
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">{{ payment.amount }} TL</td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-base-content">{{ payment.month|date:"F Y" }}</td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-base-content">{{ payment.amount }} TL</td>
                                             <td class="px-4 py-3 whitespace-nowrap">
                                                 {% if payment.is_paid %}
-                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Ödendi</span>
+                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-success text-success">Ödendi</span>
                                                 {% else %}
-                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Ödenmedi</span>
+                                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-error text-error">Ödenmedi</span>
                                                 {% endif %}
                                             </td>
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-base-content">
                                                 {% if payment.paid_date %}
                                                     {{ payment.paid_date|date:"d.m.Y" }}
                                                 {% else %}
@@ -236,8 +236,8 @@
                                                 {% endif %}
                                             </td>
                                             <td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                                <a href="{% url 'team:payment_update' payment.pk %}" class="text-primary-600 hover:text-primary-900 mr-3">Düzenle</a>
-                                                <a href="{% url 'team:payment_delete' payment.pk %}" class="text-red-600 hover:text-red-900">Sil</a>
+                                                <a href="{% url 'team:payment_update' payment.pk %}" class="text-primary hover:text-primary mr-3">Düzenle</a>
+                                                <a href="{% url 'team:payment_delete' payment.pk %}" class="text-error hover:text-error">Sil</a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -254,15 +254,15 @@
 
     {% if not team_summaries %}
         <!-- No Payments -->
-        <div class="bg-white rounded-2xl shadow-xl p-12 text-center border border-gray-100 mb-8">
-            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="bg-base-100 rounded-2xl shadow-xl p-12 text-center border border-base-100 mb-8">
+            <div class="w-24 h-24 bg-base-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-12 h-12 text-base-content/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
                 </svg>
             </div>
-            <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">Henüz ödeme bulunmuyor</h3>
-            <p class="text-gray-600 mb-6">İlk ödemeyi eklemek için yukarıdaki butona tıklayın.</p>
-            <a href="{% url 'team:payment_create' %}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 transition-colors">
+            <h3 class="text-xl md:text-2xl font-bold text-base-content mb-2">Henüz ödeme bulunmuyor</h3>
+            <p class="text-base-content/70 mb-6">İlk ödemeyi eklemek için yukarıdaki butona tıklayın.</p>
+            <a href="{% url 'team:payment_create' %}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary transition-colors">
                 İlk Ödemeyi Ekle
             </a>
         </div>
@@ -270,16 +270,16 @@
 
     <!-- Unpaid Members Accordion -->
     {% if unpaid_by_team %}
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-        <div class="px-6 py-4 border-b border-gray-200 bg-red-50">
-            <h2 class="text-lg font-semibold text-red-900">Ödeme Yapmayan Üyeler</h2>
-            <p class="text-sm text-red-700 mt-1">{{ current_month|date:"F Y" }} ayı için ödeme yapmayan üyeler</p>
+    <div class="bg-base-100 rounded-2xl shadow-xl overflow-hidden border border-base-100">
+        <div class="px-6 py-4 border-b border-base-200 bg-error">
+            <h2 class="text-lg font-semibold text-error">Ödeme Yapmayan Üyeler</h2>
+            <p class="text-sm text-error mt-1">{{ current_month|date:"F Y" }} ayı için ödeme yapmayan üyeler</p>
         </div>
 
         <div class="divide-y divide-gray-200">
             {% for team_name, team_unpaid in unpaid_by_team.items %}
             <div class="accordion-item">
-                <button class="accordion-header w-full px-6 py-4 text-left hover:bg-red-50 focus:outline-none focus:bg-red-50 transition-colors duration-200 flex items-center justify-between"
+                <button class="accordion-header w-full px-6 py-4 text-left hover:bg-error focus:outline-none focus:bg-error transition-colors duration-200 flex items-center justify-between"
                         onclick="toggleAccordion(this)">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center">
@@ -288,39 +288,39 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-base font-semibold text-gray-900">{{ team_name }}</h3>
-                            <p class="text-sm text-red-600">{{ team_unpaid|length }} üye ödeme yapmamış</p>
+                            <h3 class="text-base font-semibold text-base-content">{{ team_name }}</h3>
+                            <p class="text-sm text-error">{{ team_unpaid|length }} üye ödeme yapmamış</p>
                         </div>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <div class="text-sm text-red-500">
+                        <div class="text-sm text-error">
                             {{ team_unpaid|length }} üye
                         </div>
-                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-base-content/70 transform transition-transform duration-200 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </div>
                 </button>
 
-                <div class="accordion-content hidden bg-red-50/30">
+                <div class="accordion-content hidden bg-error/30">
                     <div class="px-6 py-4">
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-white">
+                                <thead class="bg-base-100">
                                     <tr>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Üye</th>
-                                        <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">Üye</th>
+                                        <th class="px-4 py-3 text-right text-xs font-medium text-base-content/60 uppercase tracking-wider">İşlemler</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
+                                <tbody class="bg-base-100 divide-y divide-gray-200">
                                     {% for member in team_unpaid %}
-                                        <tr class="hover:bg-gray-50">
+                                        <tr class="hover:bg-base-100">
                                             <td class="px-4 py-3 whitespace-nowrap">
-                                                <div class="text-sm font-medium text-gray-900">{{ member.name }} {{ member.surname }}</div>
-                                                <div class="text-sm text-gray-500">{{ member.user.email }}</div>
+                                                <div class="text-sm font-medium text-base-content">{{ member.name }} {{ member.surname }}</div>
+                                                <div class="text-sm text-base-content/60">{{ member.user.email }}</div>
                                             </td>
                                             <td class="px-4 py-3 whitespace-nowrap text-right text-sm font-medium">
-                                                <a href="{% url 'team:payment_create' %}?member={{ member.pk }}&month={{ current_month|date:'Y-m-d' }}" class="text-primary-600 hover:text-primary-900">Ödeme Ekle</a>
+                                                <a href="{% url 'team:payment_create' %}?member={{ member.pk }}&month={{ current_month|date:'Y-m-d' }}" class="text-primary hover:text-primary">Ödeme Ekle</a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -348,7 +348,7 @@ function toggleAccordion(button) {
     icon.classList.toggle('rotate-180');
 
     // Close other accordions in the same container
-    const container = button.closest('.bg-white');
+    const container = button.closest('.bg-base-100');
     const allContents = container.querySelectorAll('.accordion-content');
     const allIcons = container.querySelectorAll('.accordion-icon');
     const allButtons = container.querySelectorAll('.accordion-header');

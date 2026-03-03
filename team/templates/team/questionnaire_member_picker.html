@@ -4,18 +4,18 @@
 
 {% block content %}
 <div class="max-w-6xl mx-auto animate-fade-in">
-    <div class="bg-gradient-to-r from-primary-500 via-primary-600 to-primary-700 rounded-2xl shadow-2xl p-8 mb-8 text-white relative overflow-hidden">
-        <div class="absolute inset-0 bg-black/10"></div>
+    <div class="bg-primary text-primary-content rounded-2xl shadow-2xl p-8 mb-8 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/5"></div>
         <div class="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <a href="{% url 'team:questionnaire_staff_list' %}" class="inline-flex items-center text-primary-100 hover:text-white font-medium mb-2 group">
+                <a href="{% url 'team:questionnaire_staff_list' %}" class="inline-flex items-center text-primary hover:text-white font-medium mb-2 group">
                     <svg class="w-4 h-4 mr-1 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                     </svg>
                     Anketler
                 </a>
                 <h1 class="text-2xl md:text-3xl font-bold">{{ title }}</h1>
-                <p class="text-primary-100 mt-1">Anket olusturmak icin uye secin</p>
+                <p class="text-primary mt-1">Anket olusturmak icin uye secin</p>
             </div>
         </div>
     </div>
@@ -23,13 +23,13 @@
     {% if members %}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         {% for member in members %}
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover-lift">
+        <div class="bg-base-100 rounded-2xl shadow-lg border border-base-100 p-6 hover-lift">
             <div class="flex items-center justify-between gap-4">
                 <div>
-                    <h2 class="text-lg font-semibold text-gray-900">{{ member.name }} {{ member.surname }}</h2>
-                    <p class="text-sm text-gray-600 mt-1">{{ member.team.name }}</p>
+                    <h2 class="text-lg font-semibold text-base-content">{{ member.name }} {{ member.surname }}</h2>
+                    <p class="text-sm text-base-content/70 mt-1">{{ member.team.name }}</p>
                 </div>
-                <a href="{% url 'team:questionnaire_create' member.pk %}" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-600 text-white hover:bg-primary-700 text-sm font-medium">
+                <a href="{% url 'team:questionnaire_create' member.pk %}" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary text-sm font-medium">
                     Yeni Anket
                 </a>
             </div>
@@ -37,10 +37,11 @@
         {% endfor %}
     </div>
     {% else %}
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 text-center">
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">Uye bulunamadi</h3>
-        <p class="text-gray-600">Anket olusturmak icin once uye ekleyin.</p>
+    <div class="bg-base-100 rounded-2xl shadow-lg border border-base-100 p-8 text-center">
+        <h3 class="text-lg font-semibold text-base-content mb-2">Uye bulunamadi</h3>
+        <p class="text-base-content/70">Anket olusturmak icin once uye ekleyin.</p>
     </div>
     {% endif %}
 </div>
 {% endblock %}
+

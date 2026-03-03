@@ -6,20 +6,20 @@
 <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
         <div>
-            <h2 class="mt-6 text-center text-2xl md:text-3xl font-extrabold text-gray-900">
+            <h2 class="mt-6 text-center text-2xl md:text-3xl font-extrabold text-base-content">
                 Hesabınıza giriş yapın
             </h2>
         </div>
-        <form class="mt-8 space-y-6 bg-white py-8 px-6 shadow-lg rounded-lg" method="post">
+        <form class="mt-8 space-y-6 bg-base-100 py-8 px-6 shadow-lg rounded-lg" method="post">
             {% csrf_token %}
             <div class="rounded-md shadow-sm -space-y-px">
                 <div>
                     <label for="{{ form.username.id_for_label }}" class="sr-only">E-posta adresi</label>
                     <input type="email" name="{{ form.username.html_name }}" id="{{ form.username.id_for_label }}"
-                           class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 text-xs sm:text-sm"
+                           class="appearance-none rounded-none relative block w-full px-3 py-2 border border-base-300 placeholder-base-content/40 text-base-content rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 text-xs sm:text-sm"
                            placeholder="E-posta adresi" required value="{{ form.username.value|default:'' }}">
                     {% if form.username.errors %}
-                        <div class="text-red-600 text-sm mt-1">
+                        <div class="text-error text-sm mt-1">
                             {% for error in form.username.errors %}{{ error }}{% endfor %}
                         </div>
                     {% endif %}
@@ -27,10 +27,10 @@
                 <div>
                     <label for="{{ form.password.id_for_label }}" class="sr-only">Şifre</label>
                     <input type="password" name="{{ form.password.html_name }}" id="{{ form.password.id_for_label }}"
-                           class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 text-xs sm:text-sm"
+                           class="appearance-none rounded-none relative block w-full px-3 py-2 border border-base-300 placeholder-base-content/40 text-base-content rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 text-xs sm:text-sm"
                            placeholder="Şifre" required>
                     {% if form.password.errors %}
-                        <div class="text-red-600 text-sm mt-1">
+                        <div class="text-error text-sm mt-1">
                             {% for error in form.password.errors %}{{ error }}{% endfor %}
                         </div>
                     {% endif %}
@@ -38,15 +38,15 @@
             </div>
 
             <div>
-                <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                     Giriş Yap
                 </button>
             </div>
 
             <div class="text-center">
-                <p class="text-sm text-gray-600">
+                <p class="text-sm text-base-content/70">
                     Hesabınız yok mu?
-                    <a href="{% url 'user:register' %}" class="font-medium text-primary-600 hover:text-primary-500">
+                    <a href="{% url 'user:register' %}" class="font-medium text-primary hover:text-primary">
                         Buradan kayıt olun
                     </a>
                 </p>

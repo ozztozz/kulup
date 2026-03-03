@@ -49,11 +49,11 @@
 </style>
 
 <div class="max-w-4xl mx-auto animate-fade-in">
-    <div class="bg-gradient-to-r from-primary-500 via-primary-600 to-primary-700 rounded-2xl shadow-2xl p-8 mb-8 text-white relative overflow-hidden">
+    <div class="bg-primary text-primary-content rounded-2xl shadow-2xl p-8 mb-8 relative overflow-hidden">
         <div class="absolute inset-0 bg-black/10"></div>
         <div class="relative z-10">
             {% if member %}
-            <a href="{% url 'team:questionnaire_list' member.pk %}" class="inline-flex items-center text-primary-100 hover:text-white font-medium mb-2 group">
+            <a href="{% url 'team:questionnaire_list' member.pk %}" class="inline-flex items-center opacity-90 hover:opacity-100 font-medium mb-2 group">
                 <svg class="w-4 h-4 mr-1 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                 </svg>
@@ -62,57 +62,57 @@
             {% endif %}
             <h1 class="text-2xl md:text-3xl font-bold">{{ title }}</h1>
             {% if member and team %}
-            <p class="text-primary-100 mt-1">{{ member.name }} {{ member.surname }} - {{ team.name }}</p>
+            <p class="opacity-90 mt-1">{{ member.name }} {{ member.surname }} - {{ team.name }}</p>
             {% endif %}
         </div>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+    <div class="bg-base-100 rounded-2xl shadow-xl overflow-hidden border border-base-300">
         <form method="post" class="p-8 space-y-6" id="questionnaireForm">
             {% csrf_token %}
 
             <div class="space-y-2">
-                <label for="{{ form.title.id_for_label }}" class="block text-base font-semibold text-gray-900">{{ form.title.label }}</label>
+                <label for="{{ form.title.id_for_label }}" class="block text-base font-semibold text-base-content">{{ form.title.label }}</label>
                 {{ form.title }}
                 {% if form.title.errors %}
-                    <p class="text-sm text-red-600">{% for error in form.title.errors %}{{ error }}{% endfor %}</p>
+                    <p class="text-sm text-error">{% for error in form.title.errors %}{{ error }}{% endfor %}</p>
                 {% endif %}
             </div>
 
             <div class="space-y-2">
-                <label for="{{ form.description.id_for_label }}" class="block text-base font-semibold text-gray-900">{{ form.description.label }}</label>
+                <label for="{{ form.description.id_for_label }}" class="block text-base font-semibold text-base-content">{{ form.description.label }}</label>
                 {{ form.description }}
                 {% if form.description.errors %}
-                    <p class="text-sm text-red-600">{% for error in form.description.errors %}{{ error }}{% endfor %}</p>
+                    <p class="text-sm text-error">{% for error in form.description.errors %}{{ error }}{% endfor %}</p>
                 {% endif %}
             </div>
 
             <div class="space-y-3">
                 <div class="flex items-center justify-between">
-                    <label class="block text-base font-semibold text-gray-900">{{ form.teams.label }}</label>
+                    <label class="block text-base font-semibold text-base-content">{{ form.teams.label }}</label>
                     <div class="flex items-center gap-2">
-                        <span id="teamCount" class="text-xs text-gray-500 px-2 py-1 bg-gray-100 rounded-full"></span>
-                        <button type="button" onclick="toggleAllTeams(true)" class="text-xs text-primary-600 hover:text-primary-700 font-medium">
+                        <span id="teamCount" class="text-xs text-base-content/60 px-2 py-1 bg-base-200 rounded-full"></span>
+                        <button type="button" onclick="toggleAllTeams(true)" class="text-xs text-primary hover:text-primary-focus font-medium">
                             Tümünü Seç
                         </button>
-                        <span class="text-gray-300">|</span>
-                        <button type="button" onclick="toggleAllTeams(false)" class="text-xs text-gray-500 hover:text-gray-700 font-medium">
+                        <span class="text-base-content/40">|</span>
+                        <button type="button" onclick="toggleAllTeams(false)" class="text-xs text-base-content/60 hover:text-base-content/80 font-medium">
                             Temizle
                         </button>
                     </div>
                 </div>
-                <div class="bg-gray-50 border-2 border-gray-200 rounded-xl p-4 space-y-2 max-h-64 overflow-y-auto">
+                <div class="bg-base-200 border-2 border-base-300 rounded-xl p-4 space-y-2 max-h-64 overflow-y-auto">
                     {% for choice in form.teams %}
-                    <label class="flex items-center space-x-3 p-2 hover:bg-white rounded-lg transition-colors cursor-pointer group">
+                    <label class="flex items-center space-x-3 p-2 hover:bg-base-100 rounded-lg transition-colors cursor-pointer group">
                         {{ choice.tag }}
-                        <span class="text-sm text-gray-700 group-hover:text-gray-900">{{ choice.choice_label }}</span>
+                        <span class="text-sm text-base-content/80 group-hover:text-base-content">{{ choice.choice_label }}</span>
                     </label>
                     {% endfor %}
                 </div>
                 {% if form.teams.errors %}
-                    <p class="text-sm text-red-600">{% for error in form.teams.errors %}{{ error }}{% endfor %}</p>
+                    <p class="text-sm text-error">{% for error in form.teams.errors %}{{ error }}{% endfor %}</p>
                 {% endif %}
-                <p class="text-sm text-gray-600">
+                <p class="text-sm text-base-content/70">
                     <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
@@ -122,29 +122,29 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-2">
-                    <label for="{{ form.begin_date.id_for_label }}" class="block text-base font-semibold text-gray-900">{{ form.begin_date.label }}</label>
+                    <label for="{{ form.begin_date.id_for_label }}" class="block text-base font-semibold text-base-content">{{ form.begin_date.label }}</label>
                     {{ form.begin_date }}
                     {% if form.begin_date.errors %}
-                        <p class="text-sm text-red-600">{% for error in form.begin_date.errors %}{{ error }}{% endfor %}</p>
+                        <p class="text-sm text-error">{% for error in form.begin_date.errors %}{{ error }}{% endfor %}</p>
                     {% endif %}
-                    <p class="text-sm text-gray-600">Anketin başlangıç tarihi (isteğe bağlı)</p>
+                    <p class="text-sm text-base-content/70">Anketin başlangıç tarihi (isteğe bağlı)</p>
                 </div>
 
                 <div class="space-y-2">
-                    <label for="{{ form.end_date.id_for_label }}" class="block text-base font-semibold text-gray-900">{{ form.end_date.label }}</label>
+                    <label for="{{ form.end_date.id_for_label }}" class="block text-base font-semibold text-base-content">{{ form.end_date.label }}</label>
                     {{ form.end_date }}
                     {% if form.end_date.errors %}
-                        <p class="text-sm text-red-600">{% for error in form.end_date.errors %}{{ error }}{% endfor %}</p>
+                        <p class="text-sm text-error">{% for error in form.end_date.errors %}{{ error }}{% endfor %}</p>
                     {% endif %}
-                    <p class="text-sm text-gray-600">Anketin bitiş tarihi (isteğe bağlı)</p>
+                    <p class="text-sm text-base-content/70">Anketin bitiş tarihi (isteğe bağlı)</p>
                 </div>
             </div>
 
             <!-- Dynamic Questions Builder -->
             <div class="space-y-4">
                 <div class="flex items-center justify-between">
-                    <label class="block text-base font-semibold text-gray-900">Sorular</label>
-                    <button type="button" onclick="addQuestion()" class="inline-flex items-center px-4 py-2 rounded-lg bg-primary-600 text-white text-sm font-medium hover:bg-primary-700">
+                    <label class="block text-base font-semibold text-base-content">Sorular</label>
+                    <button type="button" onclick="addQuestion()" class="inline-flex items-center px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-primary">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                         </svg>
@@ -156,16 +156,16 @@
 
             {{ form.schema }}
             {% if form.schema.errors %}
-                <p class="text-sm text-red-600">{% for error in form.schema.errors %}{{ error }}{% endfor %}</p>
+                <p class="text-sm text-error">{% for error in form.schema.errors %}{{ error }}{% endfor %}</p>
             {% endif %}
 
             <div class="flex items-center gap-3">
                 {{ form.is_active }}
-                <label for="{{ form.is_active.id_for_label }}" class="text-sm font-medium text-gray-700">{{ form.is_active.label }}</label>
+                <label for="{{ form.is_active.id_for_label }}" class="text-sm font-medium text-base-content/80">{{ form.is_active.label }}</label>
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3">
-                <button type="submit" class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-primary-600 text-white font-medium hover:bg-primary-700 transition-all">Kaydet</button>
+                <button type="submit" class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-primary text-white font-medium hover:bg-primary transition-all">Kaydet</button>
                 {% if member %}
                 <a href="{% url 'team:questionnaire_list' member.pk %}" class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-secondary-100 text-secondary-700 font-medium hover:bg-secondary-200 transition-all">İptal</a>
                 {% else %}
@@ -196,12 +196,12 @@
         
         if (checkedCount === 0) {
             countElement.textContent = 'Tüm takımlar';
-            countElement.classList.remove('bg-primary-100', 'text-primary-700');
-            countElement.classList.add('bg-gray-100', 'text-gray-500');
+            countElement.classList.remove('bg-primary', 'text-primary');
+            countElement.classList.add('bg-base-200', 'text-base-content/60');
         } else {
             countElement.textContent = `${checkedCount} / ${totalCount} takım seçili`;
-            countElement.classList.remove('bg-gray-100', 'text-gray-500');
-            countElement.classList.add('bg-primary-100', 'text-primary-700');
+            countElement.classList.remove('bg-base-200', 'text-base-content/60');
+            countElement.classList.add('bg-primary', 'text-primary');
         }
     }
 
@@ -240,17 +240,17 @@
         const questionType = data?.type || 'single';
         
         const questionDiv = document.createElement('div');
-        questionDiv.className = 'border-2 border-gray-200 rounded-xl p-4 space-y-3';
+        questionDiv.className = 'border-2 border-base-200 rounded-xl p-4 space-y-3';
         questionDiv.dataset.questionId = questionId;
         
         questionDiv.innerHTML = `
             <div class="flex items-start justify-between gap-2">
                 <div class="flex-1 space-y-3">
                     <input type="text" placeholder="Soru metni" value="${questionLabel}" 
-                           class="question-label w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                           class="question-label w-full px-3 py-2 border border-base-300 rounded-lg text-sm"
                            onchange="updateSchema()">
                     
-                    <select class="question-type px-3 py-2 border border-gray-300 rounded-lg text-sm" onchange="handleTypeChange(this)">
+                    <select class="question-type px-3 py-2 border border-base-300 rounded-lg text-sm" onchange="handleTypeChange(this)">
                         <option value="single" ${questionType === 'single' ? 'selected' : ''}>Tek Seçim</option>
                         <option value="multi" ${questionType === 'multi' ? 'selected' : ''}>Çoklu Seçim</option>
                         <option value="text" ${questionType === 'text' ? 'selected' : ''}>Serbest Metin</option>
@@ -258,12 +258,12 @@
                     
                     <div class="choices-container space-y-2"></div>
                     
-                    <button type="button" onclick="addChoice(this)" class="add-choice-btn text-sm text-primary-600 hover:text-primary-700 font-medium">
+                    <button type="button" onclick="addChoice(this)" class="add-choice-btn text-sm text-primary hover:text-primary font-medium">
                         + Seçenek Ekle
                     </button>
                 </div>
                 
-                <button type="button" onclick="removeQuestion(this)" class="text-red-600 hover:text-red-700 p-1">
+                <button type="button" onclick="removeQuestion(this)" class="text-error hover:text-error p-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                     </svg>
@@ -306,9 +306,9 @@
         choiceDiv.className = 'flex items-center gap-2';
         choiceDiv.innerHTML = `
             <input type="text" placeholder="Seçenek metni" value="${data?.label || ''}"
-                   class="choice-label flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                   class="choice-label flex-1 px-3 py-2 border border-base-300 rounded-lg text-sm"
                    onchange="updateSchema()">
-            <button type="button" onclick="removeChoice(this)" class="text-red-600 hover:text-red-700 p-1">
+            <button type="button" onclick="removeChoice(this)" class="text-error hover:text-error p-1">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
@@ -375,3 +375,4 @@
     </script>
 </div>
 {% endblock %}
+

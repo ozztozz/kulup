@@ -6,7 +6,7 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
     <div class="flex flex-wrap items-center justify-between mb-6">
         <div class="w-full md:w-2/3">
-            <h1 class="text-3xl font-bold text-gray-800">Haftalık Antrenman Programı</h1>
+            <h1 class="text-3xl font-bold text-base-content">Haftalık Antrenman Programı</h1>
         </div>
 
     </div>
@@ -16,45 +16,45 @@
 
     <!-- Statistics Section -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div class="bg-white rounded-lg shadow p-6 border-t-4 border-sky-500">
+        <div class="bg-base-100 rounded-lg shadow p-6 border-t-4 border-sky-500">
             <h5 class="text-sky-700 text-sm font-semibold mb-3">Sıradaki 3 Antrenman</h5>
             {% if upcoming_trainings %}
             <ul class="space-y-2">
                 {% for item in upcoming_trainings %}
                 <li class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
-                        <span class="bg-red-500 text-white text-xs px-2 py-0.5 rounded">{{ item.day_name }}</span>
-                            <span class="text-sm font-medium text-gray-800">{{ item.training.time|time:"H:i" }}{% if item.training.end_time %} - {{ item.training.end_time|time:"H:i" }}{% endif %}</span>
-                            <span class="text-sm text-gray-600">{{ item.training.team.name }}</span>
+                        <span class="bg-error text-white text-xs px-2 py-0.5 rounded">{{ item.day_name }}</span>
+                            <span class="text-sm font-medium text-base-content">{{ item.training.time|time:"H:i" }}{% if item.training.end_time %} - {{ item.training.end_time|time:"H:i" }}{% endif %}</span>
+                            <span class="text-sm text-base-content/70">{{ item.training.team.name }}</span>
                     </div>
-                    <span class="text-xs text-gray-500 inline-flex items-center gap-1"><svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> {{ item.training.location }}</span>
+                    <span class="text-xs text-base-content/60 inline-flex items-center gap-1"><svg class="w-4 h-4 text-base-content/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> {{ item.training.location }}</span>
                         {% if training.trainer.adi %}
-                        <span class="text-xs text-gray-500 inline-flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 10-6 0 3 3 0 006 0z"></path></svg> {{ training.trainer.adi }}</span>
+                        <span class="text-xs text-base-content/60 inline-flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 10-6 0 3 3 0 006 0z"></path></svg> {{ training.trainer.adi }}</span>
                         {% endif %}
                 </li>
                 {% endfor %}
             </ul>
             {% else %}
-            <p class="text-gray-500 text-sm">Yaklaşan antrenman bulunmuyor.</p>
+            <p class="text-base-content/60 text-sm">Yaklaşan antrenman bulunmuyor.</p>
             {% endif %}
         </div>
-        <div class="bg-white rounded-lg shadow p-6 border-t-4 border-slate-600">
+        <div class="bg-base-100 rounded-lg shadow p-6 border-t-4 border-slate-600">
             <h5 class="text-slate-700 text-sm font-semibold mb-3">Takıma Göre Antrenmanlar</h5>
             {% if training_stats_by_team %}
-            <ul class="space-y-2 text-sm text-gray-700">
+            <ul class="space-y-2 text-sm text-base-content/80">
                 {% for stat in training_stats_by_team %}
                 <li class="flex items-center justify-between border-b last:border-0 pb-2 last:pb-0">
                     <span class="font-semibold">{{ stat.name }}</span>
-                    <span class="text-gray-600">{{ stat.count }} antrenman{% if stat.count > 1 %}{% endif %}</span>
-                    <span class="text-gray-600">{% if stat.minutes %}{{ stat.minutes }} dk{% else %}-{% endif %}</span>
+                    <span class="text-base-content/70">{{ stat.count }} antrenman{% if stat.count > 1 %}{% endif %}</span>
+                    <span class="text-base-content/70">{% if stat.minutes %}{{ stat.minutes }} dk{% else %}-{% endif %}</span>
                 </li>
                 {% endfor %}
             </ul>
             {% else %}
-            <p class="text-gray-500 text-sm">Kayıtlı antrenman yok.</p>
+            <p class="text-base-content/60 text-sm">Kayıtlı antrenman yok.</p>
             {% endif %}
         </div>
-        <div class="bg-white rounded-lg shadow p-6 border-t-4 border-orange-400">
+        <div class="bg-base-100 rounded-lg shadow p-6 border-t-4 border-orange-400">
             <h5 class="text-orange-700 text-sm font-semibold mb-3">Antrenman Lokasyonları</h5>
             <div class="flex flex-wrap gap-2">
                 {% for location in locations %}
@@ -65,69 +65,71 @@
     </div>
 
     <!-- Weekly Schedule -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
         {% for day in weekly_schedule %}
         <div>
-            <div class="bg-white rounded-lg shadow overflow-hidden h-full {% if day.is_today %}ring-2 ring-blue-300{% endif %}">
-                <div class="px-4 py-3 border-b-4 flex justify-between items-center {% if day.is_today %} bg-gradient-to-r from-blue-400 to-blue-300 border-blue-400{% else %} bg-gradient-to-r from-blue-400 to-blue-300 border-blue-400{% endif %}">
+            <div class="bg-base-100 rounded-lg shadow overflow-hidden h-full {% if day.is_today %}ring-2 ring-blue-300{% endif %}">
+                <div class="px-4 py-3 border-b-4 flex justify-between items-center {% if day.is_today %} bg-gradient-to-r from-blue-400 to-blue-300 border-info{% else %} bg-gradient-to-r from-blue-400 to-blue-300 border-info{% endif %}">
                     <h5 class="text-lg font-semibold mb-0 flex items-center gap-2">
                         {{ day.name }}
                         {% if day.is_today %}
-                        <span class="bg-orange-300 text-gray-900 text-xs px-2 py-0.5 rounded font-semibold">Bugün</span>
+                        <span class="bg-orange-300 text-base-content text-xs px-2 py-0.5 rounded font-semibold">Bugün</span>
                         {% endif %}
+                    </h5>
                     {% if user.is_staff %}
                     <button type="button"
-                            class="bg-white text-red-600 hover:bg-red-50 px-2 py-1 rounded text-xs font-semibold inline-flex items-center gap-1"
+                            class="bg-base-100 text-error hover:bg-error px-2 py-1 rounded text-xs font-semibold inline-flex items-center gap-1"
                             onclick="openTrainingModal({{ day.number }})"
                             title="Antrenman Ekle">
-                        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        <svg class="w-4 h-4 text-base-content/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                     </button>
                     {% endif %}
-                </h5></div>
+                </div>
+                <div id="day-{{ day.number }}-form" class="px-4 py-2 border-b border-base-200"></div>
                 <div class="p-4">
                     {% if day.trainings %}
                     <div class="space-y-2" id="day-{{ day.number }}-trainings">
                     {% for training in day.trainings %}
                     {% if training.show_pm_separator %}
-                    <div class="flex items-center gap-2 text-xs text-gray-500 uppercase tracking-wide py-1">
-                        <span class="h-px flex-1 bg-gray-200"></span>
+                    <div class="flex items-center gap-2 text-xs text-base-content/60 uppercase tracking-wide py-1">
+                        <span class="h-px flex-1 bg-base-200"></span>
                         <span>AKŞAM</span>
-                        <span class="h-px flex-1 bg-gray-200"></span>
+                        <span class="h-px flex-1 bg-base-200"></span>
                     </div>
                     {% endif %}
-                    <div class="border-b border-gray-200 pb-3 pt-2 last:border-0 pl-4 pr-2  {% with colors=training.team.name|team_color_dict %}  {{ colors.bg }}{% endwith %} hover:shadow-lg transition-all duration-200" id="training-card-{{ training.pk }}">
+                    <div class="border-b border-base-200 pb-3 pt-2 last:border-0 pl-4 pr-2  {% with colors=training.team.name|team_color_dict %}  {{ colors.bg }}{% endwith %} hover:shadow-lg transition-all duration-200" id="training-card-{{ training.pk }}">
                         <div class="flex justify-between items-center gap-2">
                             <div class="flex items-center gap-2 flex-wrap flex-grow text-xs">
-                                <span class="{% with colors=training.team.name|team_color_dict %}{{ colors.badge }}{% endwith %} text-white px-2 py-1 rounded font-semibold text-xs whitespace-nowrap">{{ training.time|time:"H:i" }}{% if training.end_time %} - {{ training.end_time|time:"H:i" }}{% endif %}</span>
+                                <span class="{% with colors=training.team.name|team_color_dict %}{{ colors.badge }}{% endwith %} px-2 py-1 rounded font-semibold text-xs whitespace-nowrap">{{ training.time|time:"H:i" }}{% if training.end_time %} - {{ training.end_time|time:"H:i" }}{% endif %}</span>
                                 <span class="font-bold {% with colors=training.team.name|team_color_dict %}{{ colors.text }}{% endwith %} text-sm">{{ training.team.name }}</span>
-                                <span class="text-gray-500 text-xs inline-flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> {{ training.location }}</span>
+                                <span class="text-base-content/60 text-xs inline-flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> {{ training.location }}</span>
                                 {% if training.trainer.adi %}
-                                <span class="text-gray-500 text-xs inline-flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 10-6 0 3 3 0 006 0z"></path></svg> {{ training.trainer.adi }}</span>
+                                <span class="text-base-content/60 text-xs inline-flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 10-6 0 3 3 0 006 0z"></path></svg> {{ training.trainer.adi }}</span>
                                 {% endif %}
                                 {% if training.notes %}
-                                <span class="text-xs text-gray-500">- {{ training.notes }}</span>
+                                <span class="text-xs text-base-content/60">- {{ training.notes }}</span>
                                 {% endif %}
                             </div>
                             {% if user.is_staff %}
                             <div class="flex gap-1 flex-shrink-0">
                                 <button 
                                     type="button"
-                                    class="border border-gray-300 text-gray-600 hover:bg-gray-50 px-1.5 py-0.5 rounded text-xs inline-flex items-center gap-1"
+                                    class="border border-base-300 text-base-content/70 hover:bg-base-100 px-1.5 py-0.5 rounded text-xs inline-flex items-center gap-1"
                                     hx-get="{% url 'team:training_edit_inline' training.pk %}"
                                     hx-target="#training-card-{{ training.pk }}"
                                     hx-swap="outerHTML"
                                     title="Düzenle">
-                                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                    <svg class="w-4 h-4 text-base-content/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                 </button>
                                 <button 
                                     type="button"
-                                    class="border border-gray-300 text-gray-600 hover:bg-gray-50 px-1.5 py-0.5 rounded text-xs inline-flex items-center gap-1"
+                                    class="border border-base-300 text-base-content/70 hover:bg-base-100 px-1.5 py-0.5 rounded text-xs inline-flex items-center gap-1"
                                     hx-get="{% url 'team:training_delete_inline' training.pk %}"
                                     hx-target="#training-card-{{ training.pk }}"
                                     hx-swap="outerHTML swap:1s"
                                     hx-confirm="Bu antrenmanı silmek istediğinizden emin misiniz?"
                                     title="Sil">
-                                    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    <svg class="w-4 h-4 text-base-content/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                 </button>
                             </div>
                             {% endif %}
@@ -137,14 +139,13 @@
                 </div>
                 {% else %}
                 <div id="day-{{ day.number }}-trainings">
-                    <p class="text-gray-500 text-center mb-0 text-xs inline-flex items-center gap-1 justify-center w-full">
+                    <p class="text-base-content/60 text-center mb-0 text-xs inline-flex items-center gap-1 justify-center w-full">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m0 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Iyi dinlenmeler!
                     </p>
                 </div>
                 {% endif %}
             </div>
         </div>
-        <div id="day-{{ day.number }}-form" class="mt-2"></div>
         </div>
         {% endfor %}
     </div>
@@ -152,54 +153,51 @@
 
 </div>
 
-<!-- Training Modal -->
-<div id="trainingModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-    <div class="relative top-20 mx-auto p-5 border w-full max-w-2xl shadow-lg rounded-md bg-white">
-        <div class="flex justify-between items-center pb-3 border-b">
-            <h3 class="text-xl font-semibold text-gray-800">Yeni Antrenman Ekle</h3>
-            <button type="button" onclick="closeTrainingModal()" class="text-gray-400 hover:text-gray-600 inline-flex items-center gap-1">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-        </div>
-        <div id="modal-form-container" class="mt-4"></div>
-    </div>
-</div>
-
 <script>
 function openTrainingModal(dayNumber) {
-    const modal = document.getElementById('trainingModal');
-    modal.classList.remove('hidden');
-    
-    // Load form via HTMX
+    // Clear any previously opened day form
+    document.querySelectorAll('div[id$="-form"]').forEach((container) => {
+        container.innerHTML = '';
+    });
+
+    const targetSelector = `#day-${dayNumber}-form`;
+
+    // Load form inline directly under the day title
     htmx.ajax('GET', '{% url "team:training_create_inline" %}', {
-        target: '#modal-form-container',
+        target: targetSelector,
         swap: 'innerHTML'
     }).then(() => {
+        // Set the form's hx-target to the correct day container
+        const form = document.querySelector(`${targetSelector} form`);
+        if (form) {
+            form.setAttribute('hx-target', targetSelector);
+            form.setAttribute('hx-swap', 'innerHTML');
+            // Re-initialize HTMX on the newly loaded form
+            htmx.process(form);
+        }
+
         // Pre-fill day_of_week field
-        const daySelect = document.querySelector('#modal-form-container select[name="day_of_week"]');
+        const daySelect = document.querySelector(`${targetSelector} select[name="day_of_week"]`);
         if (daySelect) {
             daySelect.value = dayNumber;
+        }
+
+        const formContainer = document.querySelector(targetSelector);
+        if (formContainer) {
+            formContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     });
 }
 
 function closeTrainingModal() {
-    const modal = document.getElementById('trainingModal');
-    modal.classList.add('hidden');
-    document.getElementById('modal-form-container').innerHTML = '';
+    document.querySelectorAll('div[id$="-form"]').forEach((container) => {
+        container.innerHTML = '';
+    });
 }
-
-// Close modal on background click
-document.addEventListener('click', function(event) {
-    const modal = document.getElementById('trainingModal');
-    if (event.target === modal) {
-        closeTrainingModal();
-    }
-});
 
 // Listen for successful form submission
 document.body.addEventListener('htmx:afterSwap', function(event) {
-    if (event.detail.target.id === 'modal-form-container') {
+    if (event.detail.target.id && event.detail.target.id.endsWith('-form')) {
         // Check if response contains a training card (successful creation)
         if (!event.detail.xhr.responseText.includes('form')) {
             closeTrainingModal();
@@ -210,157 +208,6 @@ document.body.addEventListener('htmx:afterSwap', function(event) {
 });
 </script>
 
-<style>
-    /* Inline edit form compact styling */
-    form[hx-post] input,
-    form[hx-post] select,
-    form[hx-post] textarea {
-        font-size: 0.75rem !important; /* text-xs */
-        padding: 0.25rem 0.5rem !important; /* px-2 py-1 */
-        height: 28px !important; /* compact */
-        line-height: 1.2 !important;
-    }
 
-    form[hx-post] textarea {
-        height: auto !important;
-        min-height: 28px !important;
-        resize: vertical !important;
-    }
-
-    /* Reduce native time input chrome */
-    form[hx-post] input[type="time"] {
-        -webkit-appearance: none;
-        -moz-appearance: textfield;
-        appearance: none;
-    }
-    form[hx-post] input[type="time"]::-webkit-calendar-picker-indicator,
-    form[hx-post] input[type="time"]::-webkit-clear-button,
-    form[hx-post] input[type="time"]::-webkit-inner-spin-button,
-    form[hx-post] input[type="time"]::-webkit-outer-spin-button {
-        display: none;
-    }
-
-    /* HTMX Loading States */
-    .htmx-swapping {
-        opacity: 0;
-        transition: opacity 0.3s ease-out;
-    }
-
-    .htmx-settling {
-        opacity: 1;
-        transition: opacity 0.3s ease-in;
-    }
-
-    .htmx-request .htmx-indicator {
-        display: inline-block;
-    }
-
-    .htmx-indicator {
-        display: none;
-        margin-left: 0.5rem;
-    }
-
-    /* Inline edit form styling - Override Bootstrap and Tailwind */
-    form[hx-post] input,
-    form[hx-post] select,
-    form[hx-post] textarea {
-        all: revert !important;
-        width: 100% !important;
-        font-size: 0.85rem !important;
-        padding: 0.35rem 0.5rem !important;
-        height: 32px !important;
-        border: 1px solid #dee2e6 !important;
-        border-radius: 0.375rem !important;
-        box-sizing: border-box !important;
-        margin: 0 !important;
-        font-family: inherit !important;
-        line-height: 1.5 !important;
-    }
-
-    form[hx-post] .form-control,
-    form[hx-post] .form-select {
-        all: revert !important;
-        width: 100% !important;
-        font-size: 0.85rem !important;
-        padding: 0.35rem 0.5rem !important;
-        height: 32px !important;
-        display: block !important;
-        font-family: inherit !important;
-        line-height: 1.5 !important;
-        border: 1px solid #dee2e6 !important;
-        border-radius: 0.375rem !important;
-        box-sizing: border-box !important;
-        background: white !important;
-        color: #333 !important;
-    }
-
-    form[hx-post] textarea {
-        height: auto !important;
-        resize: none !important;
-        min-height: 32px !important;
-        overflow-y: auto !important;
-    }
-
-    form[hx-post] input:focus,
-    form[hx-post] select:focus,
-    form[hx-post] textarea:focus,
-    form[hx-post] .form-control:focus,
-    form[hx-post] .form-select:focus {
-        border-color: #0d6efd !important;
-        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25) !important;
-        outline: none !important;
-    }
-
-    /* Single-line form layout */
-    form[hx-post].d-flex {
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        align-items: flex-end !important;
-        gap: 0.5rem !important;
-        width: 100% !important;
-    }
-
-    form[hx-post].d-flex > div {
-        display: flex !important;
-        flex-direction: column !important;
-        min-width: 0 !important;
-        flex-basis: auto !important;
-    }
-
-    form[hx-post].d-flex > button {
-        align-self: flex-end !important;
-        white-space: nowrap !important;
-        margin: 0 !important;
-    }
-
-    /* Animation for row updates */
-    @keyframes highlightRow {
-        0% {
-            background-color: #fff3cd;
-        }
-        100% {
-            background-color: transparent;
-        }
-    }
-
-    tr.htmx-settling {
-        animation: highlightRow 1s ease-out;
-    }
-
-    /* Success/Error animations */
-    .alert {
-        animation: slideDown 0.3s ease-out;
-    }
-
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
 {% endblock %}
+

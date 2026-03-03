@@ -1,66 +1,68 @@
-<div>
+<div class="bg-info-200 rounded p-2">
     <form hx-post="{% url 'team:training_create_inline' %}" 
           hx-target="#modal-form-container"
           hx-swap="innerHTML"
-          class="space-y-4">
+          class="">
         {% csrf_token %}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-0.5">
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Gün</label>
+                <label class="block text-xs font-medium text-base-content/80">Gün</label>
                 {{ form.day_of_week }}
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Saat</label>
-                {{ form.time }}
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Bitiş Saati</label>
-                {{ form.end_time }}
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Takım</label>
+                <label class="block text-xs font-medium text-base-content/80">Takım</label>
                 {{ form.team }}
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Lokasyon</label>
+                <label class="block text-xs font-medium text-base-content/80">Saat</label>
+                {{ form.time }}
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-base-content/80">Bitiş Saati</label>
+                {{ form.end_time }}
+            </div>
+
+            <div>
+                <label class="block text-xs font-medium text-base-content/80">Lokasyon</label>
                 {{ form.location }}
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Antrenör</label>
+                <label class="block text-xs font-medium text-base-content/80">Antrenör</label>
                 {{ form.trainer }}
             </div>
             <div class="md:col-span-2">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Notlar</label>
+                <label class="block text-xs font-medium text-base-content/80">Notlar</label>
                 {{ form.notes }}
             </div>
         </div>
         
         {% if form.errors %}
-        <div class="bg-red-50 border border-red-200 rounded p-3">
+        <div class="bg-error border border-error rounded p-1.5 mt-1">
             {% for field in form %}
                 {% if field.errors %}
-                <div class="text-red-600 text-sm mb-1">
+                <div class="text-error text-xs">
                     <strong>{{ field.label }}:</strong> {{ field.errors|striptags }}
                 </div>
                 {% endif %}
             {% endfor %}
             {% if form.non_field_errors %}
-            <div class="text-red-600 text-sm">
+            <div class="text-error text-xs">
                 {{ form.non_field_errors }}
             </div>
             {% endif %}
         </div>
         {% endif %}
         
-        <div class="flex justify-end gap-2 pt-4 border-t">
+        <div class="flex justify-end gap-1.5 pt-1.5 border-t">
             <button type="button" 
                     onclick="closeTrainingModal()"
-                    class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded inline-flex items-center gap-1">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> İptal
+                    class="bg-base-300 hover:bg-base-300 text-white px-2 py-0.5 rounded text-xs inline-flex items-center gap-1">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg> İptal
             </button>
-            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded inline-flex items-center gap-1">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Kaydet
+            <button type="submit" class="bg-success hover:bg-success text-white px-2 py-0.5 rounded text-xs inline-flex items-center gap-1">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Kaydet
             </button>
         </div>
     </form>
 </div>
+

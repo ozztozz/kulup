@@ -5,12 +5,12 @@
 
 {% block content %}
 <div class="max-w-6xl mx-auto animate-fade-in">
-    <div class="bg-gradient-to-r from-primary-500 via-primary-600 to-primary-700 rounded-2xl shadow-2xl p-8 mb-8 text-white relative overflow-hidden">
+    <div class="bg-primary text-primary-content rounded-2xl shadow-2xl p-8 mb-8 relative overflow-hidden">
         <div class="absolute inset-0 bg-black/10"></div>
         <div class="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
                 <h1 class="text-2xl md:text-3xl font-bold">{{ title }}</h1>
-                <p class="text-primary-100 mt-1">Kulup genelindeki tum anketler</p>
+                <p class="opacity-90 mt-1">Kulup genelindeki tum anketler</p>
             </div>
             <a href="{% url 'team:questionnaire_create_global' %}" class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-white/20 backdrop-blur-sm text-white font-medium border border-white/30 hover:bg-white/30 transition-all">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -24,27 +24,27 @@
     {% if questionnaires %}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         {% for questionnaire in questionnaires %}
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover-lift">
+        <div class="bg-base-100 rounded-2xl shadow-lg border border-base-300 p-6 hover-lift">
             <div class="flex items-start justify-between gap-4">
                 <div>
-                    <h2 class="text-lg font-semibold text-gray-900">{{ questionnaire.title }}</h2>
+                    <h2 class="text-lg font-semibold text-base-content">{{ questionnaire.title }}</h2>
                     {% if questionnaire.teams.exists %}
-                    <p class="text-xs text-primary-600 font-medium mt-1">
+                    <p class="text-xs text-primary font-medium mt-1">
                         {% for team in questionnaire.teams.all %}
                             {{ team.name }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                     </p>
                     {% else %}
-                    <p class="text-xs text-gray-500 mt-1">Tüm takımlar</p>
+                    <p class="text-xs text-base-content/60 mt-1">Tüm takımlar</p>
                     {% endif %}
                     {% if questionnaire.description %}
-                    <p class="text-sm text-gray-600 mt-1">{{ questionnaire.description }}</p>
+                    <p class="text-sm text-base-content/70 mt-1">{{ questionnaire.description }}</p>
                     {% endif %}
                     <div class="flex items-center gap-2 mt-2">
-                        <p class="text-xs text-gray-500">{{ questionnaire.created_at|date:"d.m.Y" }}</p>
+                        <p class="text-xs text-base-content/60">{{ questionnaire.created_at|date:"d.m.Y" }}</p>
                         {% if questionnaire.begin_date or questionnaire.end_date %}
-                        <span class="text-xs text-gray-400">•</span>
-                        <p class="text-xs text-gray-500">
+                        <span class="text-xs text-base-content/70">•</span>
+                        <p class="text-xs text-base-content/60">
                             {% if questionnaire.begin_date %}{{ questionnaire.begin_date|date:"d.m.Y" }}{% endif %}
                             {% if questionnaire.begin_date and questionnaire.end_date %} - {% endif %}
                             {% if questionnaire.end_date %}{{ questionnaire.end_date|date:"d.m.Y" }}{% endif %}
@@ -53,31 +53,32 @@
                     </div>
                 </div>
                 {% if questionnaire.is_active %}
-                <span class="inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Aktif</span>
+                <span class="inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-success text-success">Aktif</span>
                 {% else %}
-                <span class="inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700">Pasif</span>
+                <span class="inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-base-200 text-base-content/80">Pasif</span>
                 {% endif %}
             </div>
 
-            <div class="mt-3 text-xs text-gray-500">
+            <div class="mt-3 text-xs text-base-content/60">
                 Cevap sayisi: {{ questionnaire.response_count }}
             </div>
 
             <div class="mt-4 flex flex-wrap gap-2">
-                <a href="{% url 'team:questionnaire_detail' questionnaire.pk %}" class="px-4 py-2 rounded-lg bg-primary-50 text-primary-700 hover:bg-primary-100 text-sm font-medium">Detay</a>
+                <a href="{% url 'team:questionnaire_detail' questionnaire.pk %}" class="px-4 py-2 rounded-lg bg-primary text-primary hover:bg-primary text-sm font-medium">Detay</a>
                 {% if user.is_staff or questionnaire.created_by == user %}
-                <a href="{% url 'team:questionnaire_update' questionnaire.pk %}" class="px-4 py-2 rounded-lg bg-gray-50 text-gray-700 hover:bg-gray-100 text-sm font-medium">Duzenle</a>
-                <a href="{% url 'team:questionnaire_delete' questionnaire.pk %}" class="px-4 py-2 rounded-lg bg-red-50 text-red-700 hover:bg-red-100 text-sm font-medium">Sil</a>
+                <a href="{% url 'team:questionnaire_update' questionnaire.pk %}" class="px-4 py-2 rounded-lg bg-base-100 text-base-content/80 hover:bg-base-200 text-sm font-medium">Duzenle</a>
+                <a href="{% url 'team:questionnaire_delete' questionnaire.pk %}" class="px-4 py-2 rounded-lg bg-error text-error hover:bg-error text-sm font-medium">Sil</a>
                 {% endif %}
             </div>
         </div>
         {% endfor %}
     </div>
     {% else %}
-    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 text-center">
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">Henuz anket yok</h3>
-        <p class="text-gray-600">Henuz hic anket olusturulmadi.</p>
+    <div class="bg-base-100 rounded-2xl shadow-lg border border-base-100 p-8 text-center">
+        <h3 class="text-lg font-semibold text-base-content mb-2">Henuz anket yok</h3>
+        <p class="text-base-content/70">Henuz hic anket olusturulmadi.</p>
     </div>
     {% endif %}
 </div>
 {% endblock %}
+

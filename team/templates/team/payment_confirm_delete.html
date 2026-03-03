@@ -4,39 +4,39 @@
 
 {% block content %}
 <div class="max-w-md mx-auto">
-    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h1 class="text-xl font-semibold text-gray-900">{{ title }}</h1>
+    <div class="bg-base-100 shadow-lg rounded-lg overflow-hidden">
+        <div class="px-6 py-4 border-b border-base-200">
+            <h1 class="text-xl font-semibold text-base-content">{{ title }}</h1>
         </div>
 
         <div class="px-6 py-4">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
-                    <div class="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center">
-                        <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="h-10 w-10 rounded-full bg-error flex items-center justify-center">
+                        <svg class="h-6 w-6 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
                         </svg>
                     </div>
                 </div>
                 <div class="ml-4">
-                    <h3 class="text-sm font-medium text-gray-900">Ödemeyi sil</h3>
-                    <p class="mt-1 text-sm text-gray-500">
+                    <h3 class="text-sm font-medium text-base-content">Ödemeyi sil</h3>
+                    <p class="mt-1 text-sm text-base-content/60">
                         <strong>{{ payment.member.name }} {{ payment.member.surname }}</strong> için <strong>{{ payment.month|date:"F Y" }}</strong> ayındaki {{ payment.amount }} TL tutarındaki ödemeyi silmek istediğinizden emin misiniz?
                     </p>
-                    <p class="mt-2 text-sm text-gray-500">
+                    <p class="mt-2 text-sm text-base-content/60">
                         Bu işlem geri alınamaz.
                     </p>
                 </div>
             </div>
         </div>
 
-        <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
+        <div class="px-6 py-4 bg-base-100 border-t border-base-200">
             <form method="post" class="flex justify-end space-x-4">
                 {% csrf_token %}
-                <a href="{% url 'team:payment_list' %}" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-md text-sm font-medium">
+                <a href="{% url 'team:payment_list' %}" class="bg-base-200 hover:bg-base-200 text-base-content/80 px-4 py-2 rounded-md text-sm font-medium">
                     İptal
                 </a>
-                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                <button type="submit" class="bg-error hover:bg-error text-white px-4 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                     Ödemeyi Sil
                 </button>
             </form>

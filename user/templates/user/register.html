@@ -6,20 +6,20 @@
 <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-2xl w-full space-y-8">
         <div>
-            <h2 class="mt-6 text-center text-2xl md:text-3xl font-extrabold text-gray-900">
+            <h2 class="mt-6 text-center text-2xl md:text-3xl font-extrabold text-base-content">
                 Hesabınızı oluşturun
             </h2>
         </div>
-        <form class="mt-8 space-y-6 bg-white py-8 px-6 shadow-lg rounded-lg" method="post">
+        <form class="mt-8 space-y-6 bg-base-100 py-8 px-6 shadow-lg rounded-lg" method="post">
             {% csrf_token %}
 
             <div>
-                <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700">E-posta</label>
+                <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-base-content/80">E-posta</label>
                 <input type="email" name="{{ form.email.html_name }}" id="{{ form.email.id_for_label }}"
-                       class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 text-xs sm:text-sm"
+                       class="mt-1 appearance-none relative block w-full px-3 py-2 border border-base-300 placeholder-base-content/40 text-base-content rounded-md focus:outline-none focus:ring-primary focus:border-primary text-xs sm:text-sm"
                        placeholder="E-posta adresi" required value="{{ form.email.value|default:'' }}">
                 {% if form.email.errors %}
-                    <div class="text-red-600 text-sm mt-1">
+                    <div class="text-error text-sm mt-1">
                         {% for error in form.email.errors %}{{ error }}{% endfor %}
                     </div>
                 {% endif %}
@@ -27,23 +27,23 @@
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                    <label for="{{ form.adi.id_for_label }}" class="block text-sm font-medium text-gray-700">Ad</label>
+                    <label for="{{ form.adi.id_for_label }}" class="block text-sm font-medium text-base-content/80">Ad</label>
                     <input type="text" name="{{ form.adi.html_name }}" id="{{ form.adi.id_for_label }}"
-                           class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 text-xs sm:text-sm"
+                           class="mt-1 appearance-none relative block w-full px-3 py-2 border border-base-300 placeholder-base-content/40 text-base-content rounded-md focus:outline-none focus:ring-primary focus:border-primary text-xs sm:text-sm"
                            placeholder="Ad" required value="{{ form.adi.value|default:'' }}">
                     {% if form.adi.errors %}
-                        <div class="text-red-600 text-sm mt-1">
+                        <div class="text-error text-sm mt-1">
                             {% for error in form.adi.errors %}{{ error }}{% endfor %}
                         </div>
                     {% endif %}
                 </div>
                 <div>
-                    <label for="{{ form.soyadi.id_for_label }}" class="block text-sm font-medium text-gray-700">Soyad</label>
+                    <label for="{{ form.soyadi.id_for_label }}" class="block text-sm font-medium text-base-content/80">Soyad</label>
                     <input type="text" name="{{ form.soyadi.html_name }}" id="{{ form.soyadi.id_for_label }}"
-                           class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 text-xs sm:text-sm"
+                           class="mt-1 appearance-none relative block w-full px-3 py-2 border border-base-300 placeholder-base-content/40 text-base-content rounded-md focus:outline-none focus:ring-primary focus:border-primary text-xs sm:text-sm"
                            placeholder="Soyad" required value="{{ form.soyadi.value|default:'' }}">
                     {% if form.soyadi.errors %}
-                        <div class="text-red-600 text-sm mt-1">
+                        <div class="text-error text-sm mt-1">
                             {% for error in form.soyadi.errors %}{{ error }}{% endfor %}
                         </div>
                     {% endif %}
@@ -52,12 +52,12 @@
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                    <label for="{{ form.telefon.id_for_label }}" class="block text-sm font-medium text-gray-700">Telefon</label>
+                    <label for="{{ form.telefon.id_for_label }}" class="block text-sm font-medium text-base-content/80">Telefon</label>
                     <input type="text" name="{{ form.telefon.html_name }}" id="{{ form.telefon.id_for_label }}"
-                           class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 text-xs sm:text-sm"
+                           class="mt-1 appearance-none relative block w-full px-3 py-2 border border-base-300 placeholder-base-content/40 text-base-content rounded-md focus:outline-none focus:ring-primary focus:border-primary text-xs sm:text-sm"
                            placeholder="Telefon (isteğe bağlı)" value="{{ form.telefon.value|default:'' }}">
                     {% if form.telefon.errors %}
-                        <div class="text-red-600 text-sm mt-1">
+                        <div class="text-error text-sm mt-1">
                             {% for error in form.telefon.errors %}{{ error }}{% endfor %}
                         </div>
                     {% endif %}
@@ -66,24 +66,24 @@
             </div>
 
             <div>
-                <label for="{{ form.password1.id_for_label }}" class="block text-sm font-medium text-gray-700">Şifre</label>
+                <label for="{{ form.password1.id_for_label }}" class="block text-sm font-medium text-base-content/80">Şifre</label>
                 <input type="password" name="{{ form.password1.html_name }}" id="{{ form.password1.id_for_label }}"
-                       class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 text-xs sm:text-sm"
+                       class="mt-1 appearance-none relative block w-full px-3 py-2 border border-base-300 placeholder-base-content/40 text-base-content rounded-md focus:outline-none focus:ring-primary focus:border-primary text-xs sm:text-sm"
                        placeholder="Şifre" required>
                 {% if form.password1.errors %}
-                    <div class="text-red-600 text-sm mt-1">
+                    <div class="text-error text-sm mt-1">
                         {% for error in form.password1.errors %}{{ error }}{% endfor %}
                     </div>
                 {% endif %}
             </div>
 
             <div>
-                <label for="{{ form.password2.id_for_label }}" class="block text-sm font-medium text-gray-700">Şifreyi Onayla</label>
+                <label for="{{ form.password2.id_for_label }}" class="block text-sm font-medium text-base-content/80">Şifreyi Onayla</label>
                 <input type="password" name="{{ form.password2.html_name }}" id="{{ form.password2.id_for_label }}"
-                       class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 text-xs sm:text-sm"
+                       class="mt-1 appearance-none relative block w-full px-3 py-2 border border-base-300 placeholder-base-content/40 text-base-content rounded-md focus:outline-none focus:ring-primary focus:border-primary text-xs sm:text-sm"
                        placeholder="Şifreyi Onayla" required>
                 {% if form.password2.errors %}
-                    <div class="text-red-600 text-sm mt-1">
+                    <div class="text-error text-sm mt-1">
                         {% for error in form.password2.errors %}{{ error }}{% endfor %}
                     </div>
                 {% endif %}
@@ -91,27 +91,27 @@
 
             <div class="flex items-center">
                 <input type="checkbox" name="{{ form.kabul.html_name }}" id="{{ form.kabul.id_for_label }}"
-                       class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded" required>
-                <label for="{{ form.kabul.id_for_label }}" class="ml-2 block text-sm text-gray-900">
+                       class="h-4 w-4 text-primary focus:ring-primary border-base-300 rounded" required>
+                <label for="{{ form.kabul.id_for_label }}" class="ml-2 block text-sm text-base-content">
                     {{ form.kabul.label }}
                 </label>
                 {% if form.kabul.errors %}
-                    <div class="text-red-600 text-sm ml-6">
+                    <div class="text-error text-sm ml-6">
                         {% for error in form.kabul.errors %}{{ error }}{% endfor %}
                     </div>
                 {% endif %}
             </div>
 
             <div>
-                <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md btn btn-success">
                     Hesap Oluştur
                 </button>
             </div>
 
             <div class="text-center">
-                <p class="text-sm text-gray-600">
+                <p class="text-sm text-base-content/70">
                     Zaten hesabınız var mı?
-                    <a href="{% url 'user:login' %}" class="font-medium text-primary-600 hover:text-primary-500">
+                    <a href="{% url 'user:login' %}" class="font-medium text-primary hover:text-primary">
                         Buradan giriş yapın
                     </a>
                 </p>

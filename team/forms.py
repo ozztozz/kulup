@@ -151,33 +151,33 @@ class TrainingForm(forms.ModelForm):
         fields = ['team', 'location','day_of_week','time','end_time','trainer','notes']
         widgets = {
             'team': forms.Select(attrs={
-                'class': 'form-select form-select-sm w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 text-gray-900 bg-gray-50 focus:bg-white text-sm md:text-base'
+                'class': 'w-full px-2 py-1 border border-base-300 rounded-md text-xs bg-base-100 text-base-content focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary'
             }),
             'day_of_week': forms.Select(attrs={
-                'class': 'form-select form-select-sm w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 text-gray-900 bg-gray-50 focus:bg-white text-sm md:text-base'
+                'class': 'w-full px-2 py-1 border border-base-300 rounded-md text-xs bg-base-100 text-base-content focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary'
             }),
             'time': forms.TimeInput(attrs={
-                'class': 'form-control w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 text-gray-900 bg-gray-50 focus:bg-white text-sm md:text-base',
+                'class': 'w-full px-2 py-1 border border-base-300 rounded-md text-xs bg-base-100 text-base-content focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary',
                 'type': 'time',
                 'step': '60'
             }),
             'end_time': forms.TimeInput(attrs={
-                'class': 'form-control w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 text-gray-900 bg-gray-50 focus:bg-white text-sm md:text-base',
+                'class': 'w-full px-2 py-1 border border-base-300 rounded-md text-xs bg-base-100 text-base-content focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary',
                 'type': 'time',
                 'step': '60'
             }),
             'location': forms.TextInput(attrs={
-                'class': 'form-control w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 text-gray-900 placeholder-gray-500 bg-gray-50 focus:bg-white text-sm md:text-base',
+                'class': 'w-full px-2 py-1 border border-base-300 rounded-md text-xs bg-base-100 text-base-content placeholder-base-content/40 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary',
                 'placeholder': 'Antrenman yeri'
             }),
             'trainer': forms.Select(attrs={
-                'class': 'form-control w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 text-gray-900 placeholder-gray-500 bg-gray-50 focus:bg-white text-sm md:text-base',
+                'class': 'w-full px-2 py-1 border border-base-300 rounded-md text-xs bg-base-100 text-base-content focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary',
                 'placeholder': 'Antrenör seçin'
             }),
             'notes': forms.Textarea(attrs={
-                'class': 'form-control w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 text-gray-900 placeholder-gray-500 bg-gray-50 focus:bg-white resize-none text-sm md:text-base',
+                'class': 'w-full px-2 py-1 border border-base-300 rounded-md text-xs bg-base-100 text-base-content placeholder-base-content/40 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary resize-y',
                 'placeholder': 'Ek notlar',
-                'rows': 3
+                'rows': 2
             }),
         }
         labels = {

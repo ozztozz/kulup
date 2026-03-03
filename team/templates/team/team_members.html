@@ -5,7 +5,7 @@
 {% block content %}
 <div class="max-w-7xl mx-auto animate-fade-in">
     <!-- Header Section -->
-    <div class="bg-gradient-to-r from-primary-500 via-primary-600 to-primary-700 rounded-2xl shadow-2xl p-8 mb-8 text-white relative overflow-hidden">
+    <div class="bg-primary text-primary-content rounded-2xl shadow-2xl p-8 mb-8 relative overflow-hidden">
         <div class="absolute inset-0 bg-black/10"></div>
         <div class="relative z-10">
             <div class="flex items-center justify-between">
@@ -17,7 +17,7 @@
                     </div>
                     <div>
                         <h1 class="text-2xl md:text-3xl font-bold">{{ team.name }}</h1>
-                        <p class="text-primary-100 mt-1">Takım Üyeleri Yönetimi</p>
+                        <p class="opacity-90 mt-1">Takım Üyeleri Yönetimi</p>
                     </div>
                 </div>
                 <div class="flex space-x-3">
@@ -45,73 +45,73 @@
     </div>
 
     <!-- Members List -->
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+    <div class="bg-base-100 rounded-2xl shadow-xl overflow-hidden border border-base-300">
         {% if members %}
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
+                <table class="min-w-full divide-y divide-base-300">
+                    <thead class="bg-base-200">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">
                                 Üye
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">
                                 Fotoğraf
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">
                                 Adı
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">
                                 Soyadı
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">
                                 Okul
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">
                                 Doğum Tarihi
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">
                                 Durum
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-base-content/60 uppercase tracking-wider">
                                 İşlemler
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tbody class="bg-base-100 divide-y divide-base-300">
                         {% load tz %}
                         {% for member in members %}
                             {% ifchanged member.birthdate|date:"F Y" %}
-                                <tr class="bg-gradient-to-r from-primary-50 to-primary-100">
+                                <tr class="bg-gradient-to-r from-primary to-primary">
                                     <td colspan="8" class="px-6 py-4">
                                         <div class="flex items-center space-x-3">
-                                            <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
+                                            <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                                                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                                 </svg>
                                             </div>
                                             <div>
-                                                <h3 class="text-lg font-semibold text-primary-800">{{ member.birthdate|date:"Y" }}</h3>
+                                                <h3 class="text-lg font-semibold text-primary">{{ member.birthdate|date:"Y" }}</h3>
                                              
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                             {% endifchanged %}
-                            <tr class="hover:bg-gray-50">
+                            <tr class="hover:bg-base-100">
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <a href="{% url 'team:member_detail' member.pk %}" class="flex items-center hover:text-primary-600 transition-colors">
+                                    <a href="{% url 'team:member_detail' member.pk %}" class="flex items-center hover:text-primary transition-colors">
                                         <div class="flex-shrink-0 h-10 w-10">
-                                            <div class="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center">
-                                                <span class="text-primary-600 font-medium text-sm">
+                                            <div class="h-10 w-10 rounded-full bg-primary flex items-center justify-center">
+                                                <span class="text-primary font-medium text-sm">
                                                     {{ member.name|first }}{{ member.surname|first }}
                                                 </span>
                                             </div>
                                         </div>
                                         <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">
+                                            <div class="text-sm font-medium text-base-content">
                                                 {{ member.user.name }} {{ member.user.surname }}
                                             </div>
-                                            <div class="text-sm text-gray-500">
+                                            <div class="text-sm text-base-content/60">
                                                 {{ member.user.email }}
                                             </div>
                                         </div>
@@ -121,48 +121,48 @@
                                     {% if member.photo %}
                                         <img src="{{ member.photo.url }}" alt="{{ member.name }} {{ member.surname }} fotoğrafı" class="h-10 w-10 rounded-full object-cover">
                                     {% else %}
-                                        <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-                                            <span class="text-gray-500 text-xs">Fotoğraf Yok</span>
+                                        <div class="h-10 w-10 rounded-full bg-base-200 flex items-center justify-center">
+                                            <span class="text-base-content/60 text-xs">Fotoğraf Yok</span>
                                         </div>
                                     {% endif %}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                    <a href="{% url 'team:member_detail' member.pk %}" class="hover:text-primary-600 hover:underline">{{ member.name }}</a>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-base-content">
+                                    <a href="{% url 'team:member_detail' member.pk %}" class="hover:text-primary hover:underline">{{ member.name }}</a>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-base-content">
                                     {{ member.surname }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-base-content">
                                     {{ member.school|default:"-" }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-base-content/60">
                                     {% if member.birthdate %}{{ member.birthdate|date:"d.m.Y" }}{% else %}-{% endif %}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {% if member.is_active %}
-                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-success text-success">
                                             Aktif
                                         </span>
                                     {% else %}
-                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-error text-error">
                                             Pasif
                                         </span>
                                     {% endif %}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <div class="flex space-x-2">
-                                        <a href="{% url 'team:member_detail' member.pk %}" class="text-primary-600 hover:text-primary-900" title="Detayları Görüntüle">
+                                        <a href="{% url 'team:member_detail' member.pk %}" class="text-primary hover:text-primary" title="Detayları Görüntüle">
                                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                             </svg>
                                         </a>
-                                        <a href="{% url 'team:member_update' member.pk %}" class="text-primary-600 hover:text-primary-900" title="Düzenle">
+                                        <a href="{% url 'team:member_update' member.pk %}" class="text-primary hover:text-primary" title="Düzenle">
                                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                             </svg>
                                         </a>
-                                        <a href="{% url 'team:member_delete' member.pk %}" class="text-red-600 hover:text-red-900" onclick="return confirm('Bu üyeyi takımdan çıkarmak istediğinizden emin misiniz?')" title="Sil">
+                                        <a href="{% url 'team:member_delete' member.pk %}" class="text-error hover:text-error" onclick="return confirm('Bu üyeyi takımdan çıkarmak istediğinizden emin misiniz?')" title="Sil">
                                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                             </svg>
@@ -176,15 +176,15 @@
             </div>
         {% else %}
             <div class="text-center py-16">
-                <div class="w-20 h-20 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-20 h-20 bg-base-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-base-content/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-2">Henüz üye bulunmuyor</h3>
-                <p class="text-gray-600 mb-6 max-w-md mx-auto">Bu takıma henüz üye eklenmemiş. İlk üyeyi eklemek için yukarıdaki butona tıklayın.</p>
+                <h3 class="text-xl md:text-2xl font-bold text-base-content mb-2">Henüz üye bulunmuyor</h3>
+                <p class="text-base-content/70 mb-6 max-w-md mx-auto">Bu takıma henüz üye eklenmemiş. İlk üyeyi eklemek için yukarıdaki butona tıklayın.</p>
                 {% if user.is_staff %}
-                    <a href="{% url 'team:member_create' team.pk %}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white font-medium rounded-xl transition-all duration-300 hover-lift">
+                    <a href="{% url 'team:member_create' team.pk %}" class="inline-flex items-center px-6 py-3 bg-primary hover:bg-primary-focus text-primary-content font-medium rounded-xl transition-all duration-300 hover-lift">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                         </svg>
