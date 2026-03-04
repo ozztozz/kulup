@@ -16,9 +16,7 @@ ENV/
 # Django
 *.log
 logs/
-db.sqlite3
-*.sqlite3
-*.sqlite3-journal
+
 
 # Media files (uploaded content)
 media/
