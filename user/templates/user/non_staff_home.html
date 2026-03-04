@@ -1,0 +1,288 @@
+{% extends 'user/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto animate-fade-in">
+    <div class="bg-primary rounded-2xl shadow-2xl p-8 mb-8 text-primary-content relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/5"></div>
+        <div class="relative z-10">
+            <h1 class="text-3xl md:text-4xl font-bold mb-2">Hoş Geldiniz, {{ user.adi }} {{ user.soyadi }}</h1>
+            <p class="opacity-90 text-lg">Sporcu bilgileri ve anket durumlarınız aşağıda listelenmiştir.</p>
+        </div>
+    </div>
+
+    {% if user_team_members %}
+    <div class="bg-base-100 rounded-2xl shadow-lg border border-base-300 p-6 mb-8">
+        <h2 class="text-xl font-bold text-base-content mb-4">Sporcularım</h2>
+        <div class="space-y-2">
+            {% for member in user_team_members %}
+            <a href="{% url 'team:member_detail' member.pk %}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/10 transition-colors border border-base-300 hover:border-primary">
+                {% if member.photo %}
+                <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="w-12 h-12 rounded-full object-cover flex-shrink-0">
+                {% else %}
+                <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <span class="text-primary font-bold text-sm">{{ member.name.0 }}{{ member.surname.0 }}</span>
+                </div>
+                {% endif %}
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-semibold text-base-content text-sm">{{ member.name|title }} {{ member.surname|title }}</h3>
+                    <p class="text-xs opacity-70">{{ member.team.name|title }}</p>
+                </div>
+                <svg class="w-5 h-5 text-base-content opacity-50 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <div class="bg-warning border border-warning rounded-2xl p-6 mb-8">
+        <h3 class="font-semibold text-warning">Henüz bir takıma kayıtlı değilsiniz</h3>
+        <p class="text-sm text-warning mt-1">Lütfen yöneticinizle iletişime geçin.</p>
+    </div>
+    {% endif %}
+
+    {% if training_calendar %}
+    <div class="bg-base-100 rounded-2xl shadow-lg border border-base-300 p-6 mb-8">
+        <h2 class="text-xl font-bold text-base-content mb-4 flex items-center gap-2">
+            <svg class="w-6 h-6 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Bugünkü Antrenmanlar ({{ today_day_name }})
+        </h2>
+        <div class="space-y-2">
+            {% if today_trainings.morning_trainings %}
+                {% for item in today_trainings.morning_trainings %}
+                <div class="bg-primary/10 border border-primary/30 rounded p-2 text-xs flex items-center gap-2">
+                    <p class="font-semibold text-primary min-w-fit">
+                        {% if item.training.end_time %}
+                            {{ item.training.time|date:"H:i" }}-{{ item.training.end_time|date:"H:i" }}
+                        {% else %}
+                            {{ item.training.time|date:"H:i" }}
+                        {% endif %}
+                    </p>
+                    <span class="text-gray-400">|</span>
+                    <p class="opacity-70 truncate min-w-fit" title="{{ item.training.location }}">{{ item.training.location|truncatewords:1 }}</p>
+                    <span class="text-gray-400">|</span>
+                    <div class="flex gap-1 flex-wrap min-w-0">
+                        {% for member in item.members %}
+                        <p class="bg-primary/20 rounded px-1 py-0 text-xs font-medium text-primary truncate flex-shrink-0">
+                            {{ member.name|truncatewords:1 }}
+                        </p>
+                        {% endfor %}
+                    </div>
+                    {% if item.training.trainer %}
+                    <span class="text-gray-400">|</span>
+                    <p class="opacity-60 truncate text-xs min-w-fit">{{ item.training.trainer.adi|truncatewords:1 }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if today_trainings.evening_trainings %}
+                {% if today_trainings.morning_trainings %}
+            <div class="flex items-center gap-2 text-xs text-base-content/60 uppercase tracking-wide py-1">
+                <span class="h-px flex-1 bg-base-200"></span>
+                <span>AKŞAM</span>
+                <span class="h-px flex-1 bg-base-200"></span>
+            </div>
+                {% endif %}
+                {% for item in today_trainings.evening_trainings %}
+                <div class="bg-primary/10 border border-primary/30 rounded p-2 text-xs flex items-center gap-2">
+                    <p class="font-semibold text-primary min-w-fit">
+                        {% if item.training.end_time %}
+                            {{ item.training.time|date:"H:i" }}-{{ item.training.end_time|date:"H:i" }}
+                        {% else %}
+                            {{ item.training.time|date:"H:i" }}
+                        {% endif %}
+                    </p>
+                    <span class="text-gray-400">|</span>
+                    <p class="opacity-70 truncate min-w-fit" title="{{ item.training.location }}">{{ item.training.location|truncatewords:1 }}</p>
+                    <span class="text-gray-400">|</span>
+                    <div class="flex gap-1 flex-wrap min-w-0">
+                        {% for member in item.members %}
+                        <p class="bg-primary/20 rounded px-1 py-0 text-xs font-medium text-primary truncate flex-shrink-0">
+                            {{ member.name|truncatewords:1 }}
+                        </p>
+                        {% endfor %}
+                    </div>
+                    {% if item.training.trainer %}
+                    <span class="text-gray-400">|</span>
+                    <p class="opacity-60 truncate text-xs min-w-fit">{{ item.training.trainer.adi|truncatewords:1 }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% elif not today_trainings.morning_trainings %}
+                <p class="text-xs opacity-40 text-center p-2">Bugün antrenman yok.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="bg-base-100 rounded-2xl shadow-lg border border-base-300 p-6 mb-8">
+        <h2 class="text-xl font-bold text-base-content mb-4 flex items-center gap-2">
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            Haftalık Antrenmanlar
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-1 bg-base-200 rounded-lg overflow-hidden border border-base-300">
+            {% for day in training_calendar.calendar %}
+            <div class="flex flex-col min-h-[300px]">
+                <!-- Day Header -->
+                <div class="bg-primary text-primary-content p-2 text-center border-b border-base-300">
+
+                    <p class="text-xs">{{ day.day_name|truncatewords:1 }}</p>
+                </div>
+                
+                <!-- Trainings -->
+                <div class="flex-1 bg-base-100 p-1 overflow-y-auto space-y-1">
+                    {% if day.morning_trainings %}
+                        {% for item in day.morning_trainings %}
+                        <div class="bg-primary/10 border border-primary/30 rounded p-2 text-xs flex items-center gap-2">
+                            <p class="font-semibold text-primary min-w-fit">
+                                {% if item.training.end_time %}
+                                    {{ item.training.time|date:"H:i" }}-{{ item.training.end_time|date:"H:i" }}
+                                {% else %}
+                                    {{ item.training.time|date:"H:i" }}
+                                {% endif %}
+                            </p>
+                            <span class="text-gray-400">|</span>
+                            <p class="opacity-70 truncate min-w-fit" title="{{ item.training.location }}">{{ item.training.location|truncatewords:1 }}</p>
+                            <span class="text-gray-400">|</span>
+                            <div class="flex gap-1 flex-wrap min-w-0">
+                                {% for member in item.members %}
+                                <p class="bg-primary/20 rounded px-1 py-0 text-xs font-medium text-primary truncate flex-shrink-0">
+                                    {{ member.name|truncatewords:1 }}
+                                </p>
+                                {% endfor %}
+                            </div>
+                            {% if item.training.trainer %}
+                            <span class="text-gray-400">|</span>
+                            <p class="opacity-60 truncate text-xs min-w-fit">{{ item.training.trainer.adi|truncatewords:1 }}</p>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if day.evening_trainings %}
+                        {% if day.morning_trainings %}
+                    <div class="flex items-center gap-2 text-xs text-base-content/60 uppercase tracking-wide py-1">
+                        <span class="h-px flex-1 bg-base-200"></span>
+                        <span>AKŞAM</span>
+                        <span class="h-px flex-1 bg-base-200"></span>
+                    </div>
+                        {% endif %}
+                        {% for item in day.evening_trainings %}
+                        <div class="bg-primary/10 border border-primary/30 rounded p-2 text-xs flex items-center gap-2">
+                            <p class="font-semibold text-primary min-w-fit">
+                                {% if item.training.end_time %}
+                                    {{ item.training.time|date:"H:i" }}-{{ item.training.end_time|date:"H:i" }}
+                                {% else %}
+                                    {{ item.training.time|date:"H:i" }}
+                                {% endif %}
+                            </p>
+                            <span class="text-gray-400">|</span>
+                            <p class="opacity-70 truncate min-w-fit" title="{{ item.training.location }}">{{ item.training.location|truncatewords:1 }}</p>
+                            <span class="text-gray-400">|</span>
+                            <div class="flex gap-1 flex-wrap min-w-0">
+                                {% for member in item.members %}
+                                <p class="bg-primary/20 rounded px-1 py-0 text-xs font-medium text-primary truncate flex-shrink-0">
+                                    {{ member.name|truncatewords:1 }}
+                                </p>
+                                {% endfor %}
+                            </div>
+                            {% if item.training.trainer %}
+                            <span class="text-gray-400">|</span>
+                            <p class="opacity-60 truncate text-xs min-w-fit">{{ item.training.trainer.adi|truncatewords:1 }}</p>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    {% elif not day.morning_trainings %}
+                        <p class="text-xs opacity-40 text-center p-2">-</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if unanswered_by_member %}
+    <div class="bg-base-100 rounded-2xl shadow-lg border border-base-300 p-6 mb-8">
+        <h2 class="text-xl font-bold text-base-content mb-4">Cevaplanmayan Anketler</h2>
+        <div class="space-y-6">
+            {% for item in unanswered_by_member %}
+            <div class="border-l-4 border-primary pl-4">
+                <h3 class="font-semibold text-base-content mb-3">
+                    {{ item.member.name|title }} {{ item.member.surname|title }} - {{ item.member.team.name|title }}
+                </h3>
+                <div class="space-y-3">
+                    {% for questionnaire in item.questionnaires %}
+                    <div class="bg-base-200 rounded-xl p-4 hover:bg-base-300 transition-colors">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="flex-1">
+                                <h4 class="font-medium text-base-content">{{ questionnaire.title }}</h4>
+                                {% if questionnaire.description %}
+                                <p class="text-sm opacity-70 mt-1">{{ questionnaire.description|truncatewords:20 }}</p>
+                                {% endif %}
+                            </div>
+                            <a href="{% url 'team:questionnaire_respond' questionnaire.pk %}?member={{ item.member.pk }}" class="btn btn-primary btn-sm">
+                                Yanıtla
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if answered_by_member %}
+    <div class="bg-base-100 rounded-2xl shadow-lg border border-base-300 p-6 mb-8">
+        <h2 class="text-xl font-bold text-base-content mb-4 flex items-center gap-2">
+            <svg class="w-6 h-6 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Cevaplanmış Anketler
+        </h2>
+        <div class="space-y-6">
+            {% for item in answered_by_member %}
+            <div class="border-l-4 border-success pl-4">
+                <h3 class="font-semibold text-base-content mb-3">
+                    {{ item.member.name|title }} {{ item.member.surname|title }} - {{ item.member.team.name|title }}
+                </h3>
+                <div class="space-y-3">
+                    {% for response in item.responses %}
+                    <div class="bg-success/10 border border-success/30 rounded-xl p-4 hover:border-success/60 transition-colors">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="flex-1">
+                                <h4 class="font-medium text-base-content">{{ response.questionnaire.title }}</h4>
+                                {% if response.questionnaire.description %}
+                                <p class="text-sm opacity-70 mt-1">{{ response.questionnaire.description|truncatewords:20 }}</p>
+                                {% endif %}
+                                <p class="text-xs opacity-60 mt-2">Cevaplandı: {{ response.created_at|date:"d.m.Y H:i" }}</p>
+                            </div>
+                            <a href="{% url 'team:questionnaire_detail' response.questionnaire.pk %}" class="btn btn-success btn-sm">
+                                Detaylar
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if not unanswered_by_member and not answered_by_member %}
+    <div class="bg-success border border-success rounded-2xl p-6">
+        <h3 class="font-semibold">Harika!</h3>
+        <p class="text-sm  mt-1">Tüm anketleri tamamladınız.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

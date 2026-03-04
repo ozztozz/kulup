@@ -74,7 +74,9 @@ class Payment(models.Model):
 class Training (models.Model):
     LOCATIONS = [
             ('TOBB', 'TOBB'), 
-            ('AYTEN SABAN', 'AYTEN SABAN'), 
+            ('AYTEN SABAN', 'AYTEN SABAN'),
+            ('SPORTIF YASAM', 'SPORTIF YASAM'), 
+            ('FENERBAHCE', 'FENERBAHCE'), 
             ('Diğer', 'Diğer'),]
     DAYS_OF_WEEK = [
             (1, 'Pazartesi'),
