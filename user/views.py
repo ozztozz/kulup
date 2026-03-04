@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegistrationForm, UserLoginForm
 from django.db import models
-from team.models import TeamMember, Team, Questionnaire, QuestionnaireResponse, Training
+from team.models import TeamMember, Team, Questionnaire, QuestionnaireResponse, Training, Payment
 
 from datetime import date, time as time_obj
 # Create your views here.
@@ -102,6 +102,7 @@ def home_view(request):
             team_ids = list(user_team_members.values_list('team_id', flat=True))
             member_ids = list(user_team_members.values_list('id', flat=True))
             today = date.today()
+            current_month = today.replace(day=1)
 
             questionnaires = Questionnaire.objects.filter(
                 (models.Q(teams__id__in=team_ids) | models.Q(teams__isnull=True)) &
@@ -206,6 +207,20 @@ def home_view(request):
                 'evening_trainings': today_evening_trainings,
             }
 
+            monthly_payments = Payment.objects.filter(
+                member_id__in=member_ids,
+                month=current_month
+            ).select_related('member')
+            payment_by_member_id = {payment.member_id: payment for payment in monthly_payments}
+
+            payment_info_by_member = []
+            for member in user_team_members:
+                payment = payment_by_member_id.get(member.id)
+                payment_info_by_member.append({
+                    'member': member,
+                    'payment': payment,
+                })
+
             context = {
                 'user': request.user,
                 'user_team_members': user_team_members,
@@ -214,6 +229,8 @@ def home_view(request):
                 'training_calendar': training_calendar,
                 'today_day_name': today_day_name,
                 'today_trainings': today_trainings,
+                'current_month': current_month,
+                'payment_info_by_member': payment_info_by_member,
                 'title': 'Anasayfa'
             }
             return render(request, 'user/non_staff_home.html', context)
