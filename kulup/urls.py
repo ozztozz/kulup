@@ -16,14 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.schemas import get_schema_view
 
 from django.conf import settings
 from django.conf.urls.static import static
+
+schema_view = get_schema_view(
+    title='Kulup API',
+    description='API schema for Flutter client integration',
+    version='1.0.0',
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('user.urls')),
     path('teams/', include('team.urls')),
+    path('api/', include('user.api_urls')),
+    path('api/', include('team.api_urls')),
+    path('api/schema/', schema_view, name='api-schema'),
 ]
 
 if settings.DEBUG:
