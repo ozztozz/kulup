@@ -1,0 +1,6 @@
+email=fkalpha_academy@outlook.com
+pass=Alpha.123!
+
+pythonanywhere:
+user=alphaacademy
+pass=Alpha.123!

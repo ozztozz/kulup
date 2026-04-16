@@ -2,23 +2,36 @@ from datetime import date, datetime
 
 from django.db.models import Q
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 
 from .api_serializers import (
     ActiveQuestionnaireForMemberSerializer,
+    PaymentCreateSerializer,
     PaymentSerializer,
     QuestionnaireResponseCreateSerializer,
+    TeamCreateSerializer,
+    TeamMemberCreateSerializer,
     TeamMemberSerializer,
     TeamSerializer,
+    TrainingCreateSerializer,
     TrainingSerializer,
 )
 from .models import Payment, Questionnaire, QuestionnaireResponse, Team, TeamMember, Training
 
 
-class TeamListAPIView(generics.ListAPIView):
-    serializer_class = TeamSerializer
+class TeamListAPIView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.request.method == "POST":
+            return [IsAuthenticated(), IsAdminUser()]
+        return [IsAuthenticated()]
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return TeamCreateSerializer
+        return TeamSerializer
 
     def get_queryset(self):
         user = self.request.user
@@ -28,9 +41,18 @@ class TeamListAPIView(generics.ListAPIView):
         return queryset.filter(members__user=user, members__is_active=True).distinct()
 
 
-class TeamMembersAPIView(generics.ListAPIView):
-    serializer_class = TeamMemberSerializer
+class TeamMembersAPIView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.request.method == "POST":
+            return [IsAuthenticated(), IsAdminUser()]
+        return [IsAuthenticated()]
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return TeamMemberCreateSerializer
+        return TeamMemberSerializer
 
     def get_queryset(self):
         user = self.request.user
@@ -40,10 +62,22 @@ class TeamMembersAPIView(generics.ListAPIView):
             return queryset.order_by("name", "surname")
         return queryset.filter(user=user, is_active=True).order_by("name", "surname")
 
+    def perform_create(self, serializer):
+        serializer.save(team_id=self.kwargs["team_id"])
 
-class TrainingListAPIView(generics.ListAPIView):
-    serializer_class = TrainingSerializer
+
+class TrainingListAPIView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.request.method == "POST":
+            return [IsAuthenticated(), IsAdminUser()]
+        return [IsAuthenticated()]
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return TrainingCreateSerializer
+        return TrainingSerializer
 
     def get_queryset(self):
         user = self.request.user
@@ -57,10 +91,26 @@ class TrainingListAPIView(generics.ListAPIView):
             return queryset
         return queryset.filter(team__members__user=user, team__members__is_active=True).distinct()
 
+    def perform_create(self, serializer):
+        trainer = serializer.validated_data.get("trainer")
+        if trainer is None:
+            serializer.save(trainer=self.request.user)
+            return
+        serializer.save()
 
-class PaymentListAPIView(generics.ListAPIView):
-    serializer_class = PaymentSerializer
+
+class PaymentListAPIView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.request.method == "POST":
+            return [IsAuthenticated(), IsAdminUser()]
+        return [IsAuthenticated()]
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return PaymentCreateSerializer
+        return PaymentSerializer
 
     def get_queryset(self):
         user = self.request.user

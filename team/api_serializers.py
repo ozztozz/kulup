@@ -29,6 +29,21 @@ class TeamSerializer(serializers.ModelSerializer):
         return obj.logo.url
 
 
+class TeamCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = [
+            "id",
+            "name",
+            "description",
+            "logo",
+            "founded_date",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["id", "created_at", "updated_at"]
+
+
 class TeamMemberSerializer(serializers.ModelSerializer):
     team = TeamSerializer(read_only=True)
     photo_url = serializers.SerializerMethodField()
@@ -55,6 +70,25 @@ class TeamMemberSerializer(serializers.ModelSerializer):
         if request:
             return request.build_absolute_uri(obj.photo.url)
         return obj.photo.url
+
+
+class TeamMemberCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TeamMember
+        fields = [
+            "id",
+            "team",
+            "user",
+            "name",
+            "surname",
+            "photo",
+            "birthdate",
+            "school",
+            "is_active",
+            "notes",
+            "joined_date",
+        ]
+        read_only_fields = ["id", "joined_date"]
 
 
 class TrainingSerializer(serializers.ModelSerializer):
@@ -85,6 +119,24 @@ class TrainingSerializer(serializers.ModelSerializer):
         return f"{obj.trainer.adi} {obj.trainer.soyadi}".strip()
 
 
+class TrainingCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Training
+        fields = [
+            "id",
+            "team",
+            "day_of_week",
+            "time",
+            "end_time",
+            "location",
+            "trainer",
+            "notes",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["id", "created_at", "updated_at"]
+
+
 class PaymentSerializer(serializers.ModelSerializer):
     member = TeamMemberSerializer(read_only=True)
 
@@ -100,6 +152,34 @@ class PaymentSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
+
+
+class PaymentCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = [
+            "id",
+            "member",
+            "month",
+            "amount",
+            "is_paid",
+            "paid_date",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["id", "created_at", "updated_at"]
+
+    def validate(self, attrs):
+        is_paid = attrs.get("is_paid", False)
+        paid_date = attrs.get("paid_date")
+
+        if is_paid and not paid_date:
+            raise serializers.ValidationError({"paid_date": "Paid date is required when payment is marked as paid."})
+
+        if not is_paid and paid_date:
+            raise serializers.ValidationError({"paid_date": "Paid date must be empty when payment is not paid."})
+
+        return attrs
 
 
 class QuestionnaireSerializer(serializers.ModelSerializer):
