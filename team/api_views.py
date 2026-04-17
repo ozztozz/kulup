@@ -80,16 +80,13 @@ class TrainingListAPIView(generics.ListCreateAPIView):
         return TrainingSerializer
 
     def get_queryset(self):
-        user = self.request.user
         queryset = Training.objects.select_related("team", "trainer").order_by("day_of_week", "time")
 
         team_id = self.request.query_params.get("team")
         if team_id:
             queryset = queryset.filter(team_id=team_id)
 
-        if user.is_staff:
-            return queryset
-        return queryset.filter(team__members__user=user, team__members__is_active=True).distinct()
+        return queryset
 
     def perform_create(self, serializer):
         trainer = serializer.validated_data.get("trainer")
