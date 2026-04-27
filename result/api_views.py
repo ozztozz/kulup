@@ -56,6 +56,9 @@ class StartListImportAPIView(APIView):
 
             objects_to_create.append(
                 StartListEntry(
+                    event_title=str(entry.get("event_title", "")).strip(),
+                    event_location=str(entry.get("event_location", "")).strip(),
+                    event_date=str(entry.get("event_date", "")).strip(),
                     name_raw=str(entry.get("name_raw", "")).strip(),
                     birth_year=entry.get("birth_year"),
                     gender=gender,

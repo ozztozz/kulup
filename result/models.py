@@ -8,7 +8,9 @@ class StartListEntry(models.Model):
                 (GENDER_MALE, "Male"),
                 (GENDER_FEMALE, "Female"),
         )
-
+        event_title = models.CharField(max_length=255,null=True, blank=True)
+        event_location = models.CharField(max_length=255,null=True, blank=True)
+        event_date = models.CharField(null=True, blank=True)
         name_raw = models.CharField(max_length=255)
         birth_year = models.PositiveSmallIntegerField(null=True, blank=True)
         gender = models.CharField(max_length=1, choices=GENDER_CHOICES)

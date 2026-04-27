@@ -2,6 +2,9 @@ from rest_framework import serializers
 
 
 class ParsedStartListEntrySerializer(serializers.Serializer):
+    event_title = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    event_location = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    event_date = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     name_raw = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     birth_year = serializers.IntegerField(required=False, allow_null=True)
     gender = serializers.CharField(required=False, allow_blank=True, allow_null=True)
