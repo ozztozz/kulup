@@ -33,6 +33,7 @@ urlpatterns = [
     path('teams/', include('team.urls')),
     path('api/', include('user.api_urls')),
     path('api/', include('team.api_urls')),
+    path('api/', include('result.api_urls')),
     path('api/schema/', schema_view, name='api-schema'),
 ]
 

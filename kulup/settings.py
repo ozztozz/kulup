@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'user.apps.UserConfig',
     'team',
+    'result',
 ]
 
 MIDDLEWARE = [
