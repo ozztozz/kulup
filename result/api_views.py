@@ -1,10 +1,110 @@
+from django.db.models import Q
 from rest_framework import status
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .api_serializers import StartListImportRequestSerializer
 from .models import StartListEntry
+
+
+def _event_filters(queryset, request):
+    event_title = request.query_params.get("event_title")
+    event_location = request.query_params.get("event_location")
+    event_date = request.query_params.get("event_date")
+
+    if event_title:
+        queryset = queryset.filter(event_title=event_title)
+    if event_location:
+        queryset = queryset.filter(event_location=event_location)
+    if event_date:
+        queryset = queryset.filter(event_date=event_date)
+    return queryset
+
+
+def _club_filter(queryset, request):
+    queryset = _event_filters(queryset, request)
+    club_raw = request.query_params.get("club_raw")
+    if club_raw:
+        queryset = queryset.filter(club_raw=club_raw)
+    return queryset
+
+
+def _item_filter(queryset, request):
+    queryset = _club_filter(queryset, request)
+    gender = request.query_params.get("gender")
+    stroke = request.query_params.get("stroke")
+    distance = request.query_params.get("distance")
+
+    if gender:
+        queryset = queryset.filter(gender=gender)
+    if stroke:
+        queryset = queryset.filter(stroke=stroke)
+    if distance:
+        queryset = queryset.filter(distance=distance)
+    return queryset
+
+
+class StartListEventListAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        queryset = (
+            StartListEntry.objects.exclude(event_title__isnull=True)
+            .exclude(event_title="")
+            .values("event_title", "event_location", "event_date")
+            .distinct()
+            .order_by("event_title", "event_location", "event_date")
+        )
+        return Response(list(queryset))
+
+
+class StartListClubListAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        queryset = _event_filters(StartListEntry.objects.all(), request)
+        queryset = (
+            queryset.exclude(club_raw__isnull=True)
+            .exclude(club_raw="")
+            .values("club_raw")
+            .distinct()
+            .order_by("club_raw")
+        )
+        return Response(list(queryset))
+
+
+class StartListItemListAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        queryset = _club_filter(StartListEntry.objects.all(), request)
+        queryset = (
+            queryset.exclude(gender__isnull=True)
+            .exclude(gender="")
+            .exclude(stroke__isnull=True)
+            .exclude(stroke="")
+            .values("gender", "stroke", "distance")
+            .distinct()
+            .order_by("gender", "stroke", "distance")
+        )
+        return Response(list(queryset))
+
+
+class StartListEntryListAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        queryset = _item_filter(StartListEntry.objects.all(), request)
+        queryset = queryset.values(
+            "name_raw",
+            "serie",
+            "start_line",
+            "entry_time_txt",
+            "race_number",
+        ).distinct().order_by("name_raw", "start_line")
+        return Response(list(queryset))
 
 
 
@@ -64,6 +164,7 @@ class StartListImportAPIView(APIView):
                     gender=gender,
                     stroke=str(entry.get("stroke", "")).strip(),
                     distance=distance,
+                    race_number=str(entry.get("race_number", "")).strip(),
                     serie=str(entry.get("serie", "")).strip(),
                     series_total=str(entry.get("series_total", "")).strip(),
                     start_line=str(entry.get("start_line", "")).strip(),
