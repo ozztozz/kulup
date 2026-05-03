@@ -10,7 +10,11 @@ class ParsedStartListEntrySerializer(serializers.Serializer):
     gender = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     stroke = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     distance = serializers.IntegerField(required=False, allow_null=True)
+<<<<<<< HEAD
     race_number= serializers.CharField(required=False, allow_blank=True, allow_null=True)
+=======
+    race_number = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+>>>>>>> b5956502a06b6e54593360a553dceb25c1ffa2ac
     serie = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     series_total = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     start_line = serializers.CharField(required=False, allow_blank=True, allow_null=True)
