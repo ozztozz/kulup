@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .api_serializers import StartListImportRequestSerializer
+from .api_serializers import StartListImportRequestSerializer, ResultImportRequestSerializer
 from .models import StartListEntry
 
 
@@ -15,15 +15,17 @@ class StartListImportAPIView(APIView):
         serializer = StartListImportRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        event_url = serializer.validated_data.get("event_url")
+
         parsed_entries = serializer.validated_data.get("parsed_entries")
         replace_existing = serializer.validated_data["replace_existing"]
+
+
 
 
         if not parsed_entries:
             return Response(
                 {
-                    "event_url": event_url,
+           
                     "parsed_count": 0,
                     "created_count": 0,
                     "message": "No start list entries parsed from provided URL.",
@@ -56,6 +58,7 @@ class StartListImportAPIView(APIView):
 
             objects_to_create.append(
                 StartListEntry(
+                
                     event_title=str(entry.get("event_title", "")).strip(),
                     event_location=str(entry.get("event_location", "")).strip(),
                     event_date=str(entry.get("event_date", "")).strip(),
@@ -64,6 +67,7 @@ class StartListImportAPIView(APIView):
                     gender=gender,
                     stroke=str(entry.get("stroke", "")).strip(),
                     distance=distance,
+                    race_number=str(entry.get("race_number", "")).strip(),
                     serie=str(entry.get("serie", "")).strip(),
                     series_total=str(entry.get("series_total", "")).strip(),
                     start_line=str(entry.get("start_line", "")).strip(),
@@ -79,7 +83,7 @@ class StartListImportAPIView(APIView):
 
         return Response(
             {
-                "event_url": event_url,
+
                 "parsed_count": len(parsed_entries),
                 "created_count": len(created),
                 "skipped_count": skipped_count,
@@ -87,3 +91,49 @@ class StartListImportAPIView(APIView):
             },
             status=status.HTTP_201_CREATED,
         )
+
+
+class ResultImportAPIView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+
+    def post(self, request):
+        serializer = ResultImportRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+   
+        parsed_entries = serializer.validated_data.get("parsed_entries")
+        replace_existing = serializer.validated_data["replace_existing"]
+
+        for result in parsed_entries:
+            #print("Processing result:", result)
+
+            result_time_sec = result.get("time_sec")
+            result_name_raw = result.get("name_raw")
+            result_time_txt = result.get("time_txt")
+            result_birth_year = result.get("birth_year")
+            result_gender = result.get("gender")
+            result_stroke = result.get("stroke")
+            result_distance = result.get("distance")
+            result_race_number = result.get("race_number")
+            result_club_raw = result.get("club_raw")
+
+            start=StartListEntry.objects.filter(
+                name_raw=result_name_raw,
+                birth_year=result_birth_year,
+                race_number=result_race_number,
+                club_raw=result_club_raw,)
+            print("Matching start entries found:", start.count())
+            if start.exists():
+                start_entry = start.first()
+                start_entry.time_sec = result_time_sec
+                start_entry.time_txt = result_time_txt
+                start_entry.save()
+
+
+            
+    
+        return Response(
+                    {'message': 'Result import functionality is not implemented yet.'},
+                    status=status.HTTP_200_OK,
+                        )

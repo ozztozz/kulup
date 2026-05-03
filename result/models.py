@@ -16,6 +16,7 @@ class StartListEntry(models.Model):
         gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
         stroke = models.CharField(max_length=64)
         distance = models.PositiveSmallIntegerField()
+        race_number = models.CharField(max_length=16, blank=True, default="")
         serie = models.CharField(max_length=16, blank=True, default="")
         series_total = models.CharField(max_length=16, blank=True, default="")
         start_line = models.CharField(max_length=16, blank=True, default="")
