@@ -406,7 +406,7 @@
         const active = state.item && state.item.stroke === item.stroke && String(state.item.distance) === String(item.distance)  ? 'active' : '';
         return `
           <button class="card-btn ${active}" data-item="${esc(JSON.stringify(item))}">
-            <div class="card-title">${esc(item.stroke || 'Unknown stroke')} - ${esc(item.distance)}m</div>
+            <div class="card-title">${esc(item.gender || 'Unknown gender')} -${esc(item.stroke || 'Unknown stroke')} - ${esc(item.distance)}m</div>
 
           </button>
         `;
@@ -437,7 +437,7 @@
       detailsListEl.innerHTML = state.details.map((detail) => `
         <div class="detail-row">
           <strong>${esc(detail.name_raw || 'Unknown swimmer')}</strong>
-          <span>Serie: ${esc(detail.serie || '—')} | Start line: ${esc(detail.start_line || '—')} | Time: ${esc(detail.entry_time_txt || '—')}</span>
+          <span>Serie: ${esc(detail.serie || '—')} | Start line: ${esc(detail.start_line || '—')} | Time: ${esc(detail.entry_time_txt || '—')} | Time: ${esc(detail.time_txt || '—')}</span>
         </div>
       `).join('');
     }
@@ -499,6 +499,7 @@
         stroke: state.item.stroke || '',
         distance: String(state.item.distance || ''),
         serie: state.item.serie || '',
+        gender: state.item.gender || '',
       });
       state.details = await fetchJson(`/api/results/start-list/entries/?${params.toString()}`);
     }

@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 
 class ParsedStartListEntrySerializer(serializers.Serializer):
+    event_url = serializers.URLField(required=False, allow_blank=True, allow_null=True)
     event_title = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     event_location = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     event_date = serializers.CharField(required=False, allow_blank=True, allow_null=True)
@@ -10,11 +11,7 @@ class ParsedStartListEntrySerializer(serializers.Serializer):
     gender = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     stroke = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     distance = serializers.IntegerField(required=False, allow_null=True)
-<<<<<<< HEAD
-    race_number= serializers.CharField(required=False, allow_blank=True, allow_null=True)
-=======
     race_number = serializers.CharField(required=False, allow_blank=True, allow_null=True)
->>>>>>> b5956502a06b6e54593360a553dceb25c1ffa2ac
     serie = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     series_total = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     start_line = serializers.CharField(required=False, allow_blank=True, allow_null=True)
@@ -42,6 +39,7 @@ class StartListImportRequestSerializer(serializers.Serializer):
         return attrs
 
 class ParsedResultEntrySerializer(serializers.Serializer):
+    event_url = serializers.URLField(required=False, allow_blank=True, allow_null=True)
     name_raw = serializers.CharField(required=False, allow_blank=True, allow_null=True)
     birth_year = serializers.IntegerField(required=False, allow_null=True)
     club_raw = serializers.CharField(required=False, allow_blank=True, allow_null=True)

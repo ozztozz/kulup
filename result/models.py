@@ -8,6 +8,7 @@ class StartListEntry(models.Model):
                 (GENDER_MALE, "Male"),
                 (GENDER_FEMALE, "Female"),
         )
+        event_url = models.URLField(max_length=2048, null=True, blank=True)
         event_title = models.CharField(max_length=255,null=True, blank=True)
         event_location = models.CharField(max_length=255,null=True, blank=True)
         event_date = models.CharField(null=True, blank=True)
@@ -16,10 +17,10 @@ class StartListEntry(models.Model):
         gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
         stroke = models.CharField(max_length=64)
         distance = models.PositiveSmallIntegerField()
-        race_number = models.CharField(max_length=16, blank=True, default="")
-        serie = models.CharField(max_length=16, blank=True, default="")
-        series_total = models.CharField(max_length=16, blank=True, default="")
-        start_line = models.CharField(max_length=16, blank=True, default="")
+        race_number = models.PositiveSmallIntegerField(max_length=16, blank=True, default=0)
+        serie = models.PositiveSmallIntegerField(max_length=16, blank=True, default=0)
+        series_total = models.PositiveSmallIntegerField(max_length=16, blank=True, default=0)
+        start_line = models.PositiveSmallIntegerField(max_length=16, blank=True, default="")
         club_raw = models.CharField(max_length=255, blank=True, default="")
         entry_time_sec = models.FloatField(null=True, blank=True)
         entry_time_txt = models.CharField(max_length=32, blank=True, default="")

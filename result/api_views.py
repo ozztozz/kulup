@@ -85,9 +85,9 @@ class StartListItemListAPIView(APIView):
             .exclude(gender="")
             .exclude(stroke__isnull=True)
             .exclude(stroke="")
-            .values("gender", "stroke", "distance")
+            .values("race_number","gender", "stroke", "distance")
             .distinct()
-            .order_by("gender", "stroke", "distance")
+            .order_by("race_number","gender", "stroke", "distance")
         )
         return Response(list(queryset))
 
@@ -102,8 +102,9 @@ class StartListEntryListAPIView(APIView):
             "serie",
             "start_line",
             "entry_time_txt",
+            "time_txt",
             "race_number",
-        ).distinct().order_by("name_raw", "start_line")
+        ).distinct().order_by("start_line","name_raw", )
         return Response(list(queryset))
 
 
@@ -138,35 +139,20 @@ class StartListImportAPIView(APIView):
 
         objects_to_create = []
         skipped_count = 0
-
+        print("Parsed entries to import:", len(parsed_entries))
         for entry in parsed_entries:
-            gender = str(entry.get("gender", "")).strip().upper()
-            if gender not in {"M", "F"}:
-                skipped_count += 1
-                continue
-
-            distance = entry.get("distance")
-            if distance is None:
-                skipped_count += 1
-                continue
-
-            try:
-                distance = int(distance)
-            except (TypeError, ValueError):
-                skipped_count += 1
-                continue
 
             objects_to_create.append(
                 StartListEntry(
-                
+                    event_url=entry.get("event_url"),
                     event_title=str(entry.get("event_title", "")).strip(),
                     event_location=str(entry.get("event_location", "")).strip(),
                     event_date=str(entry.get("event_date", "")).strip(),
                     name_raw=str(entry.get("name_raw", "")).strip(),
                     birth_year=entry.get("birth_year"),
-                    gender=gender,
+                    gender=entry.get("gender"),
                     stroke=str(entry.get("stroke", "")).strip(),
-                    distance=distance,
+                    distance=entry.get("distance"),
                     race_number=str(entry.get("race_number", "")).strip(),
                     serie=str(entry.get("serie", "")).strip(),
                     series_total=str(entry.get("series_total", "")).strip(),
@@ -193,6 +179,19 @@ class StartListImportAPIView(APIView):
         )
 
 
+class LastResultListAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        requested_event_url = request.POST.get("event_url")
+        print("Received event_url:", requested_event_url)
+        queryset = StartListEntry.objects.filter(event_url=requested_event_url).order_by("-race_number")[:1]
+        queryset = queryset.values(
+         "race_number",
+        )
+        return Response(list(queryset))
+
+
 class ResultImportAPIView(APIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 
@@ -212,9 +211,7 @@ class ResultImportAPIView(APIView):
             result_name_raw = result.get("name_raw")
             result_time_txt = result.get("time_txt")
             result_birth_year = result.get("birth_year")
-            result_gender = result.get("gender")
-            result_stroke = result.get("stroke")
-            result_distance = result.get("distance")
+            result_event_url = result.get("event_url")
             result_race_number = result.get("race_number")
             result_club_raw = result.get("club_raw")
 
@@ -222,7 +219,8 @@ class ResultImportAPIView(APIView):
                 name_raw=result_name_raw,
                 birth_year=result_birth_year,
                 race_number=result_race_number,
-                club_raw=result_club_raw,)
+                club_raw=result_club_raw,
+                event_url=result_event_url,)
             print("Matching start entries found:", start.count())
             if start.exists():
                 start_entry = start.first()
@@ -234,6 +232,6 @@ class ResultImportAPIView(APIView):
             
     
         return Response(
-                    {'message': 'Result import functionality is not implemented yet.'},
+                    {'message': f'{start.count()} Result import completed.' },
                     status=status.HTTP_200_OK,
                         )
