@@ -406,7 +406,7 @@
         const active = state.item && state.item.stroke === item.stroke && String(state.item.distance) === String(item.distance)  ? 'active' : '';
         return `
           <button class="card-btn ${active}" data-item="${esc(JSON.stringify(item))}">
-            <div class="card-title">${esc(item.gender || 'Unknown gender')} -${esc(item.stroke || 'Unknown stroke')} - ${esc(item.distance)}m</div>
+            <div class="card-title">${esc(item.race_number || 'Unknown race number')}-${esc(item.cinsiyet || 'Unknown gender')} -${esc(item.stroke || 'Unknown stroke')} - ${esc(item.distance)}m</div>
 
           </button>
         `;

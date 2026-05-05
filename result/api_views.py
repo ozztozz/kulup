@@ -33,6 +33,7 @@ def _club_filter(queryset, request):
 
 def _item_filter(queryset, request):
     queryset = _club_filter(queryset, request)
+    print("Filtering items with query params:", request.query_params)
     gender = request.query_params.get("gender")
     stroke = request.query_params.get("stroke")
     distance = request.query_params.get("distance")
@@ -89,6 +90,8 @@ class StartListItemListAPIView(APIView):
             .distinct()
             .order_by("race_number","gender", "stroke", "distance")
         )
+        for entry in queryset:
+            entry["cinsiyet"] ="Erkekler" if entry["gender"] == "M" else "Kadınlar"    
         return Response(list(queryset))
 
 

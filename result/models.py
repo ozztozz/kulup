@@ -5,8 +5,8 @@ class StartListEntry(models.Model):
         GENDER_MALE = "M"
         GENDER_FEMALE = "F"
         GENDER_CHOICES = (
-                (GENDER_MALE, "Male"),
-                (GENDER_FEMALE, "Female"),
+                (GENDER_MALE, "Erkek"),
+                (GENDER_FEMALE, "Kadın"),
         )
         event_url = models.URLField(max_length=2048, null=True, blank=True)
         event_title = models.CharField(max_length=255,null=True, blank=True)
