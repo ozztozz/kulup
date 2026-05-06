@@ -51,7 +51,7 @@
     }
 
     .hero p {
-      margin: 8px 0 0;
+      margin: 6px 0 0;
       color: var(--muted);
       max-width: 760px;
     }
@@ -66,25 +66,43 @@
       white-space: nowrap;
     }
 
-    .crumbs {
+    /* crumbs removed: compact filter UI used instead */
+
+    .filters {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 16px 0 20px;
+      gap: 16px;
+      margin: 12px 0 20px;
+      align-items: stretch;
     }
 
-    .crumb {
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.04);
+    .panel.filter {
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
       border: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 13px;
+      border-radius: 14px;
+      padding: 10px;
+      min-height: 64px;
+      flex: 1 1 0;
+      overflow: hidden;
     }
+
+    .panel.filter .panel-head { padding: 8px 10px; }
+    .panel.filter .panel-body { padding: 8px; max-height:160px; overflow:auto; }
+
+    .club-search {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.02);
+      color: var(--text);
+      margin-bottom: 8px;
+      outline: none;
+    }
+    .club-search::placeholder { color: var(--muted); }
 
     .grid {
       display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+      grid-template-columns: 1.4fr 1fr;
       gap: 16px;
     }
 
@@ -128,6 +146,13 @@
       gap: 10px;
     }
 
+    /* Fixed height for items list with scroll */
+    #itemsList {
+      max-height: 520px;
+      overflow: auto;
+      padding-right: 6px; /* give room for scrollbar */
+    }
+
     .card-btn {
       width: 100%;
       text-align: left;
@@ -135,7 +160,7 @@
       background: rgba(16,23,38,.9);
       color: var(--text);
       border-radius: 16px;
-      padding: 14px;
+      padding: 6px;
       cursor: pointer;
       transition: transform .15s ease, border-color .15s ease, background .15s ease;
     }
@@ -148,17 +173,17 @@
     }
 
     .card-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 6px;
+      font-size: 10px;
+      font-weight: 500;
+      margin-bottom: 4px;
     }
 
     .meta {
-      font-size: 13px;
+      font-size: 8px;
       color: var(--muted);
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 2px;
     }
 
     .chip {
@@ -206,6 +231,7 @@
 
     @media (max-width: 1300px) {
       .grid { grid-template-columns: 1fr 1fr; }
+      #itemsList { max-height: 200px; }
       .panel { min-height: auto; }
     }
 
@@ -220,61 +246,57 @@
   <div class="page">
     <div class="hero">
       <div>
-        <h1>Start List Explorer</h1>
-        <p>Pick an event, then a club, then an event group. The last panel shows the swimmers inside the selected item.</p>
+        <h1>Yarış Listesi</h1>
+        
       </div>
       <div class="status" id="status">Loading events...</div>
     </div>
 
-    <div class="crumbs" id="crumbs">
-      <div class="crumb">Event: none</div>
-      <div class="crumb">Club: none</div>
-      <div class="crumb">Item: none</div>
-    </div>
-
-    <div class="grid">
-      <section class="panel">
+    <!-- crumbs removed -->
+    <div class="filters">
+      <section class="panel filter">
         <div class="panel-head">
-          <h2>1. Events</h2>
-          <small>Distinct event_title, event_location, event_date</small>
+          <h2>Yarışlar</h2>
         </div>
         <div class="panel-body">
           <div id="eventsList" class="list"></div>
         </div>
       </section>
 
-      <section class="panel">
+      <section class="panel filter">
         <div class="panel-head">
-          <h2>2. Clubs</h2>
-          <small>Distinct club_raw in the selected event</small>
+          <h2>Takımlar</h2>
         </div>
         <div class="panel-body">
+          <input id="clubSearch" class="club-search" placeholder="Search clubs..." aria-label="Search clubs">
           <div id="clubsList" class="list">
             <div class="empty">Select an event first</div>
           </div>
         </div>
       </section>
+    </div>
 
+    <div class="grid">
       <section class="panel">
         <div class="panel-head">
-          <h2>3. Event Groups</h2>
-          <small>Distinct stroke, distance, serie for the selected club</small>
+          <h2>Seriler</h2>
+
         </div>
         <div class="panel-body">
           <div id="itemsList" class="list">
-            <div class="empty">Select a club first</div>
+            <div class="empty">Kulüp seçiniz</div>
           </div>
         </div>
       </section>
 
       <section class="panel">
         <div class="panel-head">
-          <h2>4. Swimmers</h2>
-          <small>name_raw, serie, start_line, entry_time_txt</small>
+          <h2>Yüzücüler</h2>
+
         </div>
         <div class="panel-body">
           <div id="detailsList" class="detail-box">
-            <div class="empty">Select an item first</div>
+            <div class="empty">Önce bir kulüp ve seri seçiniz</div>
           </div>
         </div>
       </section>
@@ -290,12 +312,13 @@
       clubs: [],
       items: [],
       details: [],
+      clubSearch: '',
     };
 
     const statusEl = document.getElementById('status');
-    const crumbsEl = document.getElementById('crumbs');
     const eventsListEl = document.getElementById('eventsList');
     const clubsListEl = document.getElementById('clubsList');
+    const clubSearchEl = document.getElementById('clubSearch');
     const itemsListEl = document.getElementById('itemsList');
     const detailsListEl = document.getElementById('detailsList');
 
@@ -316,13 +339,7 @@
       return [event.event_title || '', event.event_location || '', event.event_date || ''].join('||');
     }
 
-    function updateCrumbs() {
-      crumbsEl.innerHTML = `
-        <div class="crumb">Event: ${state.event ? esc(state.event.event_title || '—') : 'none'}</div>
-        <div class="crumb">Club: ${state.club ? esc(state.club.club_raw || '—') : 'none'}</div>
-        <div class="crumb">Item: ${state.item ? esc(`${state.item.stroke} ${state.item.distance}m ${state.item.serie || ''}`.trim()) : 'none'}</div>
-      `;
-    }
+    /* crumbs removed */
 
     function renderEvents() {
       if (!state.events.length) {
@@ -335,8 +352,8 @@
           <button class="card-btn ${active}" data-key="${esc(eventKey(event))}">
             <div class="card-title">${esc(event.event_title || 'Untitled event')}</div>
             <div class="meta">
-              <span class="chip">${esc(event.event_location || 'Unknown location')}</span>
-              <span class="chip">${esc(event.event_date || 'Unknown date')}</span>
+              <span class="chip">${esc(event.event_location || 'Unknown location' )} ${esc(event.event_date || 'Unknown date')}</span>
+       
             </div>
           </button>
         `;
@@ -350,7 +367,6 @@
           state.item = null;
           state.items = [];
           state.details = [];
-          updateCrumbs();
           await loadClubs();
           renderEvents();
           renderClubs();
@@ -369,14 +385,16 @@
         clubsListEl.innerHTML = '<div class="empty">No clubs found for this event</div>';
         return;
       }
-      clubsListEl.innerHTML = state.clubs.map((club) => {
-        const active = state.club && (state.club.club_raw || '') === (club.club_raw || '') ? 'active' : '';
-        return `
-          <button class="card-btn ${active}" data-club="${esc(club.club_raw || '')}">
-            <div class="card-title">${esc(club.club_raw || 'Unknown club')}</div>
-          </button>
-        `;
-      }).join('');
+        const q = String(state.clubSearch || '').trim().toLowerCase();
+        const displayClubs = q ? state.clubs.filter((c) => (c.club_raw || '').toLowerCase().includes(q)) : state.clubs;
+        clubsListEl.innerHTML = displayClubs.map((club) => {
+          const active = state.club && (state.club.club_raw || '') === (club.club_raw || '') ? 'active' : '';
+          return `
+            <button class="card-btn ${active}" data-club="${esc(club.club_raw || '')}">
+              <div class="card-title">${esc(club.club_raw || 'Unknown club')}</div>
+            </button>
+          `;
+        }).join('');
 
       clubsListEl.querySelectorAll('button[data-club]').forEach((button) => {
         button.addEventListener('click', async () => {
@@ -384,7 +402,6 @@
           state.club = state.clubs.find((club) => (club.club_raw || '') === clubRaw) || null;
           state.item = null;
           state.details = [];
-          updateCrumbs();
           await loadItems();
           renderClubs();
           renderItems();
@@ -392,6 +409,19 @@
         });
       });
     }
+
+    // club search input: debounce and trigger render
+    (function setupClubSearch(){
+      if (!clubSearchEl) return;
+      let timer = null;
+      clubSearchEl.addEventListener('input', (e) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          state.clubSearch = String(e.target.value || '');
+          renderClubs();
+        }, 180);
+      });
+    })();
 
     function renderItems() {
       if (!state.club) {
@@ -417,7 +447,6 @@
           const raw = button.getAttribute('data-item');
           const item = JSON.parse(raw);
           state.item = item;
-          updateCrumbs();
           await loadDetails();
           renderItems();
           renderDetails();
@@ -437,7 +466,7 @@
       detailsListEl.innerHTML = state.details.map((detail) => `
         <div class="detail-row">
           <strong>${esc(detail.name_raw || 'Unknown swimmer')}</strong>
-          <span>Serie: ${esc(detail.serie || '—')} | Start line: ${esc(detail.start_line || '—')} | Time: ${esc(detail.entry_time_txt || '—')} | Time: ${esc(detail.time_txt || '—')}</span>
+          <span>Seri: ${esc(detail.serie || '—')} | Kulvar: ${esc(detail.start_line || '—')} | ${esc(detail.entry_time_txt || '—')} | Sonuç: ${esc(detail.time_txt || '—')}</span>
         </div>
       `).join('');
     }
@@ -454,9 +483,9 @@
     async function loadEvents() {
       setStatus('Loading events...');
       state.events = await fetchJson('/api/results/start-list/events/');
-      setStatus(`Loaded ${state.events.length} events`);
+      setStatus(`Yüklenen yarışlar: ${state.events.length}`);
       renderEvents();
-      updateCrumbs();
+      // crumbs removed
     }
 
     async function loadClubs() {
@@ -464,6 +493,9 @@
         state.clubs = [];
         return;
       }
+      // reset any previous club search when loading clubs for a new event
+      state.clubSearch = '';
+      if (clubSearchEl) clubSearchEl.value = '';
       const params = new URLSearchParams({
         event_title: state.event.event_title || '',
         event_location: state.event.event_location || '',
