@@ -206,7 +206,7 @@ class ResultImportAPIView(APIView):
    
         parsed_entries = serializer.validated_data.get("parsed_entries")
         replace_existing = serializer.validated_data["replace_existing"]
-
+        found=0
         for result in parsed_entries:
             #print("Processing result:", result)
 
@@ -224,7 +224,7 @@ class ResultImportAPIView(APIView):
                 race_number=result_race_number,
                 club_raw=result_club_raw,
                 event_url=result_event_url,)
-            print("Matching start entries found:", start.count())
+            found=found+1
             if start.exists():
                 start_entry = start.first()
                 start_entry.time_sec = result_time_sec
@@ -235,6 +235,6 @@ class ResultImportAPIView(APIView):
             
     
         return Response(
-                    {'message': f'{start.count()} Result import completed.' },
+                    {'message': f'{found} Result import completed.' },
                     status=status.HTTP_200_OK,
                         )
