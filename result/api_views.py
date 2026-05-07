@@ -188,11 +188,23 @@ class LastResultListAPIView(APIView):
     def post(self, request):
         requested_event_url = request.POST.get("event_url")
         print("Received event_url:", requested_event_url)
-        queryset = StartListEntry.objects.filter(event_url=requested_event_url,time_txt__isnull=False,time_txt__gt="").order_by("-race_number")[:1]
-        queryset = queryset.values(
-         "race_number",
-        )
-        return Response(list(queryset))
+        # 1. Get the latest entry dictionary or None
+        latest_entry = StartListEntry.objects.filter(
+            event_url=requested_event_url,
+            time_txt__isnull=False
+        ).exclude(
+            time_txt=""
+        ).order_by("-race_number").values("race_number").first()
+
+        # 2. Handle the fallback and response
+        if not latest_entry:
+            # Return the same structure as a successful query
+            latest_entry = [{"race_number": 0}]
+        else:
+            latest_entry = list(latest_entry)
+        
+        # Since latest_entry is already a dict, we just return it
+        return Response(latest_entry, status=status.HTTP_200_OK)
 
 
 class ResultImportAPIView(APIView):
