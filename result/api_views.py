@@ -107,7 +107,7 @@ class StartListEntryListAPIView(APIView):
             "entry_time_txt",
             "time_txt",
             "race_number",
-        ).distinct().order_by("start_line","name_raw", )
+        ).distinct().order_by('serie',"start_line","name_raw", )
         return Response(list(queryset))
 
 
