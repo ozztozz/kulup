@@ -188,11 +188,14 @@ class LastResultListAPIView(APIView):
     def post(self, request):
         requested_event_url = request.POST.get("event_url")
         print("Received event_url:", requested_event_url)
-        queryset = StartListEntry.objects.filter(event_url=requested_event_url).order_by("-race_number")[:1]
+        queryset = StartListEntry.objects.filter(event_url=requested_event_url,
+                                                 time_txt__isnull=False).exclude(time_txt__exact="").order_by("-race_number")[:1]
         queryset = queryset.values(
          "race_number",
         )
-        return Response(list(queryset))
+        if not queryset:
+            queryset=[{"race_number": 0}]
+        return Response(queryset)
 
 
 class ResultImportAPIView(APIView):
