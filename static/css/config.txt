@@ -1,4 +1,5 @@
 email=fkalpha_academy@outlook.com
+gmail=fkalphaacademy25@gmail.com
 pass=Alpha.123!
 
 pythonanywhere:
