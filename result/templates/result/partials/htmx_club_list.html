@@ -1,0 +1,5 @@
+{% for club in clubs %}
+    <div class="result-item">{{ club.club_raw }}</div>
+{% empty %}
+    <p>No results found.</p>
+{% endfor %}

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Start List Explorer</title>
+  <style>
+    :root {
+      --bg: #0e1320;
+      --panel: #151d2f;
+      --panel-2: #101726;
+      --line: rgba(255,255,255,.08);
+      --text: #f2f5ff;
+      --muted: #9aa7c2;
+      --accent: #79b8ff;
+      --accent-2: #8df0c8;
+      --chip: #20304a;
+      --danger: #ff8f8f;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(121,184,255,.22), transparent 32%),
+        radial-gradient(circle at top right, rgba(141,240,200,.18), transparent 28%),
+        linear-gradient(180deg, #0d1220 0%, #0b1020 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(28px, 3vw, 42px);
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .status {
+      font-size: 13px;
+      color: var(--muted);
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.03);
+      white-space: nowrap;
+    }
+
+    /* crumbs removed: compact filter UI used instead */
+
+    .filters {
+      display: flex;
+      gap: 16px;
+      margin: 12px 0 20px;
+      align-items: stretch;
+    }
+
+    .panel.filter {
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px;
+      min-height: 64px;
+      flex: 1 1 0;
+      overflow: hidden;
+    }
+
+    .panel.filter .panel-head { padding: 8px 10px; }
+    .panel.filter .panel-body { padding: 8px; max-height:160px; overflow:auto; }
+
+    .club-search {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.02);
+      color: var(--text);
+      margin-bottom: 8px;
+      outline: none;
+    }
+    .club-search::placeholder { color: var(--muted); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 16px;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+      min-height: 72vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-head {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(0,0,0,.16);
+    }
+
+    .panel-head h2 {
+      margin: 0;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+    }
+
+    .panel-head small {
+      color: var(--muted);
+      display: block;
+      margin-top: 4px;
+    }
+
+    .panel-body {
+      padding: 14px;
+      overflow: auto;
+      flex: 1;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+
+    /* Fixed height for items list with scroll */
+    #itemsList {
+      max-height: 520px;
+      overflow: auto;
+      padding-right: 6px; /* give room for scrollbar */
+    }
+
+    .card-btn {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      background: rgba(16,23,38,.9);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 6px;
+      cursor: pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+
+    .card-btn:hover,
+    .card-btn.active {
+      transform: translateY(-1px);
+      border-color: rgba(121,184,255,.45);
+      background: rgba(32,48,74,.92);
+    }
+
+    .card-title {
+      font-size: 10px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .meta {
+      font-size: 8px;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2px;
+    }
+
+    .chip {
+      padding: 4px 9px;
+      background: var(--chip);
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .empty {
+      color: var(--muted);
+      text-align: center;
+      padding: 32px 12px;
+      border: 1px dashed var(--line);
+      border-radius: 18px;
+      background: rgba(0,0,0,.12);
+    }
+
+    .detail-box {
+      display: grid;
+      gap: 10px;
+    }
+
+    .detail-row {
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(16,23,38,.9);
+    }
+
+    .detail-row strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .detail-row span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .loading {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1300px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+      #itemsList { max-height: 200px; }
+      .panel { min-height: auto; }
+    }
+
+    @media (max-width: 760px) {
+      .page { padding: 16px; }
+      .hero { flex-direction: column; align-items: start; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="hero">
+      <div>
+        <h1>Yarış Listesi</h1>
+        
+      </div>
+      <div class="status" id="status">Loading events...</div>
+    </div>
+
+    <!-- crumbs removed -->
+    <div class="filters">
+      <section class="panel filter">
+        <div class="panel-head">
+          <h2>Yarışlar</h2>
+        </div>
+        <div class="panel-body">
+          <div id="eventsList" class="list"></div>
+        </div>
+      </section>
+
+      <section class="panel filter">
+        <div class="panel-head">
+          <h2>Takımlar</h2>
+        </div>
+        <div class="panel-body">
+          <input id="clubSearch" class="club-search" placeholder="Search clubs..." aria-label="Search clubs">
+          <div id="clubsList" class="list">
+            <div class="empty">Select an event first</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="grid">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Seriler</h2>
+
+        </div>
+        <div class="panel-body">
+          <div id="itemsList" class="list">
+            <div class="empty">Kulüp seçiniz</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Yüzücüler</h2>
+
+        </div>
+        <div class="panel-body">
+          <div id="detailsList" class="detail-box">
+            <div class="empty">Önce bir kulüp ve seri seçiniz</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const state = {
+      event: null,
+      club: null,
+      item: null,
+      events: [],
+      clubs: [],
+      items: [],
+      details: [],
+      clubSearch: '',
+    };
+
+    const statusEl = document.getElementById('status');
+    const eventsListEl = document.getElementById('eventsList');
+    const clubsListEl = document.getElementById('clubsList');
+    const clubSearchEl = document.getElementById('clubSearch');
+    const itemsListEl = document.getElementById('itemsList');
+    const detailsListEl = document.getElementById('detailsList');
+
+    function setStatus(message) {
+      statusEl.textContent = message;
+    }
+
+    function esc(value) {
+      return String(value ?? '').replace(/[&<>"]+/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;'
+      }[char] || char));
+    }
+
+    function eventKey(event) {
+      return [event.event_title || '', event.event_location || '', event.event_date || ''].join('||');
+    }
+
+    /* crumbs removed */
+
+    function renderEvents() {
+      if (!state.events.length) {
+        eventsListEl.innerHTML = '<div class="empty">No events found</div>';
+        return;
+      }
+      eventsListEl.innerHTML = state.events.map((event) => {
+        const active = state.event && eventKey(state.event) === eventKey(event) ? 'active' : '';
+        return `
+          <button class="card-btn ${active}" data-key="${esc(eventKey(event))}">
+            <div class="card-title">${esc(event.event_title || 'Untitled event')}</div>
+            <div class="meta">
+              <span class="chip">${esc(event.event_location || 'Unknown location' )} ${esc(event.event_date || 'Unknown date')}</span>
+       
+            </div>
+          </button>
+        `;
+      }).join('');
+
+      eventsListEl.querySelectorAll('button[data-key]').forEach((button) => {
+        button.addEventListener('click', async () => {
+          const key = button.getAttribute('data-key');
+          state.event = state.events.find((event) => eventKey(event) === key) || null;
+          state.club = null;
+          state.item = null;
+          state.items = [];
+          state.details = [];
+          await loadClubs();
+          renderEvents();
+          renderClubs();
+          renderItems();
+          renderDetails();
+        });
+      });
+    }
+
+    function renderClubs() {
+      if (!state.event) {
+        clubsListEl.innerHTML = '<div class="empty">Select an event first</div>';
+        return;
+      }
+      if (!state.clubs.length) {
+        clubsListEl.innerHTML = '<div class="empty">No clubs found for this event</div>';
+        return;
+      }
+        const q = String(state.clubSearch || '').trim().toLowerCase();
+        const displayClubs = q ? state.clubs.filter((c) => (c.club_raw || '').toLowerCase().includes(q)) : state.clubs;
+        clubsListEl.innerHTML = displayClubs.map((club) => {
+          const active = state.club && (state.club.club_raw || '') === (club.club_raw || '') ? 'active' : '';
+          return `
+            <button class="card-btn ${active}" data-club="${esc(club.club_raw || '')}">
+              <div class="card-title">${esc(club.club_raw || 'Unknown club')}</div>
+            </button>
+          `;
+        }).join('');
+
+      clubsListEl.querySelectorAll('button[data-club]').forEach((button) => {
+        button.addEventListener('click', async () => {
+          const clubRaw = button.getAttribute('data-club');
+          state.club = state.clubs.find((club) => (club.club_raw || '') === clubRaw) || null;
+          state.item = null;
+          state.details = [];
+          await loadItems();
+          renderClubs();
+          renderItems();
+          renderDetails();
+        });
+      });
+    }
+
+    // club search input: debounce and trigger render
+    (function setupClubSearch(){
+      if (!clubSearchEl) return;
+      let timer = null;
+      clubSearchEl.addEventListener('input', (e) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          state.clubSearch = String(e.target.value || '');
+          renderClubs();
+        }, 180);
+      });
+    })();
+
+    function renderItems() {
+      if (!state.club) {
+        itemsListEl.innerHTML = '<div class="empty">Select a club first</div>';
+        return;
+      }
+      if (!state.items.length) {
+        itemsListEl.innerHTML = '<div class="empty">No event groups found for this club</div>';
+        return;
+      }
+      itemsListEl.innerHTML = state.items.map((item) => {
+        const active = state.item && state.item.stroke === item.stroke && String(state.item.distance) === String(item.distance)  ? 'active' : '';
+        return `
+          <button class="card-btn ${active}" data-item="${esc(JSON.stringify(item))}">
+            <div class="card-title">${esc(item.race_number || 'Unknown race number')}-${esc(item.cinsiyet || 'Unknown gender')} -${esc(item.stroke || 'Unknown stroke')} - ${esc(item.distance)}m</div>
+
+          </button>
+        `;
+      }).join('');
+
+      itemsListEl.querySelectorAll('button[data-item]').forEach((button) => {
+        button.addEventListener('click', async () => {
+          const raw = button.getAttribute('data-item');
+          const item = JSON.parse(raw);
+          state.item = item;
+          await loadDetails();
+          renderItems();
+          renderDetails();
+        });
+      });
+    }
+
+    function renderDetails() {
+      if (!state.item) {
+        detailsListEl.innerHTML = '<div class="empty">Select an item first</div>';
+        return;
+      }
+      if (!state.details.length) {
+        detailsListEl.innerHTML = '<div class="empty">No swimmers found for this item</div>';
+        return;
+      }
+      detailsListEl.innerHTML = state.details.map((detail) => `
+        <div class="detail-row">
+          <strong>${esc(detail.name_raw || 'Unknown swimmer')}</strong>
+          <span>Seri: ${esc(detail.serie || '—')} | Kulvar: ${esc(detail.start_line || '—')} | ${esc(detail.entry_time_txt || '—')} | Sonuç: ${esc(detail.time_txt || '—')}</span>
+        </div>
+      `).join('');
+    }
+
+    async function fetchJson(url) {
+      const response = await fetch(url, { credentials: 'same-origin' });
+      if (!response.ok) {
+        const body = await response.text();
+        throw new Error(`${response.status} ${response.statusText}: ${body}`);
+      }
+      return response.json();
+    }
+
+    async function loadEvents() {
+      setStatus('Loading events...');
+      state.events = await fetchJson('/api/results/start-list/events/');
+      setStatus(`Yüklenen yarışlar: ${state.events.length}`);
+      renderEvents();
+      // crumbs removed
+    }
+
+    async function loadClubs() {
+      if (!state.event) {
+        state.clubs = [];
+        return;
+      }
+      // reset any previous club search when loading clubs for a new event
+      state.clubSearch = '';
+      if (clubSearchEl) clubSearchEl.value = '';
+      const params = new URLSearchParams({
+        event_title: state.event.event_title || '',
+        event_location: state.event.event_location || '',
+        event_date: state.event.event_date || '',
+      });
+      state.clubs = await fetchJson(`/api/results/start-list/clubs/?${params.toString()}`);
+    }
+
+    async function loadItems() {
+      if (!state.event || !state.club) {
+        state.items = [];
+        return;
+      }
+      const params = new URLSearchParams({
+        event_title: state.event.event_title || '',
+        event_location: state.event.event_location || '',
+        event_date: state.event.event_date || '',
+        club_raw: state.club.club_raw || '',
+      });
+      state.items = await fetchJson(`/api/results/start-list/items/?${params.toString()}`);
+    }
+
+    async function loadDetails() {
+      if (!state.event || !state.club || !state.item) {
+        state.details = [];
+        return;
+      }
+      const params = new URLSearchParams({
+        event_title: state.event.event_title || '',
+        event_location: state.event.event_location || '',
+        event_date: state.event.event_date || '',
+        club_raw: state.club.club_raw || '',
+        stroke: state.item.stroke || '',
+        distance: String(state.item.distance || ''),
+        serie: state.item.serie || '',
+        gender: state.item.gender || '',
+      });
+      state.details = await fetchJson(`/api/results/start-list/entries/?${params.toString()}`);
+    }
+
+    (async () => {
+      try {
+        await loadEvents();
+      } catch (error) {
+        console.error(error);
+        setStatus('Failed to load start list data');
+        eventsListEl.innerHTML = `<div class="empty">${esc(error.message)}</div>`;
+      }
+    })();
+  </script>
+</body>
+</html>
