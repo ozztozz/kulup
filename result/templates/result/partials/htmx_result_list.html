@@ -15,7 +15,7 @@
       {% ifchanged result.race_number %}
 
         <tr class="border-b-2 border-gray-500">
-    <th colspan="4" >{{ result.get_gender_display }} {{ result.distance}} {{ result.stroke}} - {{ result.series_total }} Seri</th>
+    <th colspan="4" >{{ result.race_number }}. Yarış {{ result.get_gender_display }} {{ result.distance}} {{ result.stroke}} - {{ result.series_total }} Seri</th>
   </tr>
 
       {% endifchanged %}
