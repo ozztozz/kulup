@@ -5,7 +5,10 @@
     <input class="btn hover:bg-amber-200" type="radio" 
     name="club_list" 
     aria-label="{{ club.club_raw }}"
-    onclick="clubInputHandler('{{ club.club_raw }}')">
+    hx-get="{% url 'result:htmx_result_list' %}?club_search={{ club.club_raw|urlencode }}"
+    hx-trigger="click"
+    hx-target="#result-list"/>
     {% endfor %}
+   
 </div>
 </div>

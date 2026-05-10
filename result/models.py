@@ -5,8 +5,8 @@ class StartListEntry(models.Model):
         GENDER_MALE = "M"
         GENDER_FEMALE = "F"
         GENDER_CHOICES = (
-                (GENDER_MALE, "Erkek"),
-                (GENDER_FEMALE, "Kadın"),
+                (GENDER_MALE, "Erkekler"),
+                (GENDER_FEMALE, "Kadınlar"),
         )
         event_url = models.URLField(max_length=2048, null=True, blank=True)
         event_title = models.CharField(max_length=255,null=True, blank=True)
@@ -20,7 +20,7 @@ class StartListEntry(models.Model):
         race_number = models.PositiveSmallIntegerField(max_length=16, blank=True, default=0)
         serie = models.PositiveSmallIntegerField(max_length=16, blank=True, default=0)
         series_total = models.PositiveSmallIntegerField(max_length=16, blank=True, default=0)
-        start_line = models.PositiveSmallIntegerField(max_length=16, blank=True, default="")
+        start_line = models.PositiveSmallIntegerField(max_length=16, blank=True, default=0)
         club_raw = models.CharField(max_length=255, blank=True, default="")
         entry_time_sec = models.FloatField(null=True, blank=True)
         entry_time_txt = models.CharField(max_length=32, blank=True, default="")

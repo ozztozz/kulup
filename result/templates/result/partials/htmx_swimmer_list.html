@@ -1,0 +1,11 @@
+<div class="filter grid grid-cols-[30px_1fr] ">
+  <input class="btn filter-reset" type="radio" name="swimmer_list" aria-label="×"/>
+  <div>
+  {% for swimmer in swimmers %}
+     <input class="btn hover:bg-amber-200" type="radio" 
+    name="swimmer_list" 
+    aria-label="{{ swimmer.name_raw }}"
+    onclick="swimmerInputHandler('{{ swimmer.name_raw }}')">
+    {% endfor %}
+</div>
+</div>

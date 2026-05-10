@@ -1,0 +1,35 @@
+  <table class="table table-zebra">
+    <!-- head -->
+    <thead>
+      <tr>
+        
+        <th>Adi</th>
+        <th>Seri-Kulvar</th>
+        <th>Giris</th>
+        <th>Sonuc</th>
+      </tr>
+    </thead>
+    <tbody>
+   
+{% for result in results %}
+      {% ifchanged result.race_number %}
+
+        <tr class="border-b-2 border-gray-500">
+    <th colspan="4" >{{ result.get_gender_display }} {{ result.distance}} {{ result.stroke}} - {{ result.series_total }} Seri</th>
+  </tr>
+
+      {% endifchanged %}
+      <tr>
+
+        <td>{{ result.name_raw }}</td>
+        <td>{{ result.serie}}-{{result.start_line}}</td>
+        <td>{{ result.entry_time_txt}}</td>
+        <td {% if result.entry_time_sec > result.time_sec %}
+           class="text-emerald-500 font-bold" {% endif %}>
+           {{ result.time_txt}}</td>
+      
+      </tr>
+      {% endfor %}
+   
+    </tbody>
+  </table>

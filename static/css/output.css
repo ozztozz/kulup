@@ -1,4 +1,4 @@
-/*! tailwindcss v4.2.4 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.2.0 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -16,8 +16,13 @@
     --color-orange-400: oklch(75% 0.183 55.934);
     --color-orange-600: oklch(64.6% 0.222 41.116);
     --color-orange-700: oklch(55.3% 0.195 38.402);
+    --color-amber-50: oklch(98.7% 0.022 95.277);
+    --color-amber-100: oklch(96.2% 0.059 95.617);
+    --color-amber-200: oklch(92.4% 0.12 95.746);
+    --color-green-200: oklch(92.5% 0.084 155.995);
     --color-green-500: oklch(72.3% 0.219 149.579);
     --color-green-600: oklch(62.7% 0.194 149.214);
+    --color-emerald-500: oklch(69.6% 0.17 162.48);
     --color-sky-500: oklch(68.5% 0.169 237.323);
     --color-sky-700: oklch(50% 0.134 242.749);
     --color-blue-300: oklch(80.9% 0.105 251.813);
@@ -35,7 +40,9 @@
     --color-slate-900: oklch(20.8% 0.042 265.755);
     --color-gray-50: oklch(98.5% 0.002 247.839);
     --color-gray-200: oklch(92.8% 0.006 264.531);
+    --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-gray-400: oklch(70.7% 0.022 261.325);
+    --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
@@ -803,89 +810,6 @@
   }
   .pointer-events-none {
     pointer-events: none;
-  }
-  .tabs-lift {
-    @layer daisyui.l1.l2 {
-      --tabs-height: auto;
-      --tabs-direction: row;
-      > .tab {
-        --tab-border: 0 0 var(--border) 0;
-        --tab-radius-ss: var(--tab-radius-limit);
-        --tab-radius-se: var(--tab-radius-limit);
-        --tab-radius-es: 0;
-        --tab-radius-ee: 0;
-        --tab-paddings: var(--border) var(--tab-p) 0 var(--tab-p);
-        --tab-border-colors: #0000 #0000 var(--tab-border-color) #0000;
-        --tab-corner-width: calc(100% + var(--tab-radius-limit) * 2);
-        --tab-corner-height: var(--tab-radius-limit);
-        --tab-corner-position: top left, top right;
-        border-width: var(--tab-border);
-        border-start-start-radius: var(--tab-radius-ss);
-        border-start-end-radius: var(--tab-radius-se);
-        border-end-start-radius: var(--tab-radius-es);
-        border-end-end-radius: var(--tab-radius-ee);
-        padding: var(--tab-paddings);
-        border-color: var(--tab-border-colors);
-        &:is(.tab-active, [aria-selected="true"], [aria-current="true"], [aria-current="page"]):not( .tab-disabled, [disabled] ), &:is(input:checked, label:has(:checked)) {
-          --tab-border: var(--border) var(--border) 0 var(--border);
-          --tab-border-colors: var(--tab-border-color) var(--tab-border-color) #0000
-          var(--tab-border-color);
-          --tab-paddings: 0 calc(var(--tab-p) - var(--border)) var(--border)
-          calc(var(--tab-p) - var(--border));
-          --tab-inset: auto auto 0 auto;
-          --radius-start: radial-gradient(circle at top left, var(--tab-radius-grad));
-          --radius-end: radial-gradient(circle at top right, var(--tab-radius-grad));
-          background-color: var(--tab-bg);
-          &:before {
-            z-index: 1;
-            content: "";
-            display: block;
-            position: absolute;
-            width: var(--tab-corner-width);
-            height: var(--tab-corner-height);
-            background-position: var(--tab-corner-position);
-            background-image: var(--radius-start), var(--radius-end);
-            background-size: var(--tab-radius-limit) var(--tab-radius-limit);
-            background-repeat: no-repeat;
-            inset: var(--tab-inset);
-          }
-          &:first-child:before {
-            --radius-start: none;
-          }
-          [dir="rtl"] &:first-child:before {
-            transform: rotateY(180deg);
-          }
-          &:last-child:before {
-            --radius-end: none;
-          }
-          [dir="rtl"] &:last-child:before {
-            transform: rotateY(180deg);
-          }
-        }
-      }
-      &:has(> .tab-content) {
-        > .tab:first-child {
-          &:not(.tab-active, [aria-selected="true"], [aria-current="true"], [aria-current="page"]) {
-            --tab-border-colors: var(--tab-border-color) var(--tab-border-color) #0000
-            var(--tab-border-color);
-          }
-        }
-      }
-      > .tab-content {
-        --tabcontent-margin: calc(-1 * var(--border)) 0 0 0;
-        --tabcontent-radius-ss: 0;
-        --tabcontent-radius-se: var(--radius-box);
-        --tabcontent-radius-es: var(--radius-box);
-        --tabcontent-radius-ee: var(--radius-box);
-      }
-      :checked, label:has(:checked), :is(.tab-active, [aria-selected="true"], [aria-current="true"], [aria-current="page"]) {
-        & + .tab-content {
-          &:nth-child(1), &:nth-child(n + 3) {
-            --tabcontent-radius-ss: var(--radius-box);
-          }
-        }
-      }
-    }
   }
   .list {
     @layer daisyui.l1.l2.l3 {
@@ -1777,6 +1701,76 @@
   .left-10 {
     left: calc(var(--spacing) * 10);
   }
+  .join {
+    display: inline-flex;
+    align-items: stretch;
+    --join-ss: 0;
+    --join-se: 0;
+    --join-es: 0;
+    --join-ee: 0;
+    :where(.join-item) {
+      border-start-start-radius: var(--join-ss, 0);
+      border-start-end-radius: var(--join-se, 0);
+      border-end-start-radius: var(--join-es, 0);
+      border-end-end-radius: var(--join-ee, 0);
+      * {
+        --join-ss: var(--radius-field);
+        --join-se: var(--radius-field);
+        --join-es: var(--radius-field);
+        --join-ee: var(--radius-field);
+      }
+    }
+    > .join-item:where(:first-child) {
+      --join-ss: var(--radius-field);
+      --join-se: 0;
+      --join-es: var(--radius-field);
+      --join-ee: 0;
+    }
+    :first-child:not(:last-child) {
+      :where(.join-item) {
+        --join-ss: var(--radius-field);
+        --join-se: 0;
+        --join-es: var(--radius-field);
+        --join-ee: 0;
+      }
+    }
+    > .join-item:where(:last-child) {
+      --join-ss: 0;
+      --join-se: var(--radius-field);
+      --join-es: 0;
+      --join-ee: var(--radius-field);
+    }
+    :last-child:not(:first-child) {
+      :where(.join-item) {
+        --join-ss: 0;
+        --join-se: var(--radius-field);
+        --join-es: 0;
+        --join-ee: var(--radius-field);
+      }
+    }
+    > .join-item:where(:only-child) {
+      --join-ss: var(--radius-field);
+      --join-se: var(--radius-field);
+      --join-es: var(--radius-field);
+      --join-ee: var(--radius-field);
+    }
+    :only-child {
+      :where(.join-item) {
+        --join-ss: var(--radius-field);
+        --join-se: var(--radius-field);
+        --join-es: var(--radius-field);
+        --join-ee: var(--radius-field);
+      }
+    }
+    > :where(:focus, :has(:focus)) {
+      z-index: 1;
+    }
+    @media (hover: hover) {
+      > :where(.btn:hover, :has(.btn:hover)) {
+        isolation: isolate;
+      }
+    }
+  }
   .textarea {
     @layer daisyui.l1.l2.l3 {
       border: var(--border) solid #0000;
@@ -2032,9 +2026,6 @@
   .ms-2 {
     margin-inline-start: calc(var(--spacing) * 2);
   }
-  .me-2 {
-    margin-inline-end: calc(var(--spacing) * 2);
-  }
   .mt-0 {
     margin-top: calc(var(--spacing) * 0);
   }
@@ -2164,17 +2155,6 @@
       --size: calc(var(--size-selector, 0.25rem) * 6);
       height: var(--size);
       padding-inline: calc(var(--size) / 2 - var(--border));
-    }
-  }
-  .tabs {
-    @layer daisyui.l1.l2.l3 {
-      display: flex;
-      flex-wrap: wrap;
-      --tabs-height: auto;
-      --tabs-direction: row;
-      --tab-height: calc(var(--size-field, 0.25rem) * 10);
-      height: var(--tabs-height);
-      flex-direction: var(--tabs-direction);
     }
   }
   .stat {
@@ -2321,9 +2301,12 @@
   .table {
     display: table;
   }
-  .size-4 {
-    width: calc(var(--spacing) * 4);
-    height: calc(var(--spacing) * 4);
+  .btn-square {
+    @layer daisyui.l1.l2 {
+      padding-inline: calc(0.25rem * 0);
+      width: var(--size);
+      height: var(--size);
+    }
   }
   .h-1 {
     height: calc(var(--spacing) * 1);
@@ -2601,6 +2584,9 @@
   .grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .grid-cols-\[30px_1fr\] {
+    grid-template-columns: 30px 1fr;
+  }
   .flex-col {
     flex-direction: column;
   }
@@ -2860,6 +2846,12 @@
   .border-error {
     border-color: var(--color-error);
   }
+  .border-gray-300 {
+    border-color: var(--color-gray-300);
+  }
+  .border-gray-500 {
+    border-color: var(--color-gray-500);
+  }
   .border-info {
     border-color: var(--color-info);
   }
@@ -2928,6 +2920,38 @@
     box-shadow: 0 0 0 1px oklch(100% 0 0 / var(--glass-border-opacity, 20%)) inset, 0 0 0 2px oklch(0% 0 0 / 5%);
     text-shadow: 0 1px oklch(0% 0 0 / var(--glass-text-shadow-opacity, 5%));
   }
+  .table-zebra {
+    @layer daisyui.l1.l2 {
+      tbody {
+        tr {
+          &:where(:nth-child(even)) {
+            background-color: var(--color-base-200);
+            :where(.table-pin-cols tr th) {
+              background-color: var(--color-base-200);
+            }
+          }
+          &.row-hover {
+            &, &:where(:nth-child(even)) {
+              &:hover {
+                @media (hover: hover) {
+                  background-color: var(--color-base-300);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .bg-amber-50 {
+    background-color: var(--color-amber-50);
+  }
+  .bg-amber-100 {
+    background-color: var(--color-amber-100);
+  }
+  .bg-amber-200 {
+    background-color: var(--color-amber-200);
+  }
   .bg-base-100 {
     background-color: var(--color-base-100);
   }
@@ -2978,6 +3002,12 @@
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-error) 30%, transparent);
     }
+  }
+  .bg-gray-200 {
+    background-color: var(--color-gray-200);
+  }
+  .bg-green-200 {
+    background-color: var(--color-green-200);
   }
   .bg-info {
     background-color: var(--color-info);
@@ -3662,6 +3692,9 @@
       color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
     }
   }
+  .text-emerald-500 {
+    color: var(--color-emerald-500);
+  }
   .text-error {
     color: var(--color-error);
   }
@@ -3978,13 +4011,6 @@
       --size: calc(var(--size-field, 0.25rem) * 8);
     }
   }
-  .btn-xs {
-    @layer daisyui.l1.l2 {
-      --fontsize: 0.6875rem;
-      --btn-p: 0.5rem;
-      --size: calc(var(--size-field, 0.25rem) * 6);
-    }
-  }
   .btn-error {
     @layer daisyui.l1.l2.l3 {
       --btn-color: var(--color-error);
@@ -4196,6 +4222,13 @@
         @supports (color: color-mix(in lab, red, red)) {
           border-color: color-mix(in oklab, var(--color-white) 50%, transparent);
         }
+      }
+    }
+  }
+  .hover\:bg-amber-200 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-amber-200);
       }
     }
   }
@@ -4653,6 +4686,11 @@
   .md\:flex {
     @media (width >= 48rem) {
       display: flex;
+    }
+  }
+  .md\:grid {
+    @media (width >= 48rem) {
+      display: grid;
     }
   }
   .md\:hidden {
