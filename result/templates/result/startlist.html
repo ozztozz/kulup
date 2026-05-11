@@ -18,58 +18,67 @@
 
 <!-- sporcu ve kulüp ara -->
 <div class="join m-4 flex flex-col md:grid md:grid-cols-2 gap-2">
-    <!-- kulüp ara -->
-    <div >
-      
-        <input type="text" 
-              minlength="3" 
-              required 
-              hx-validate="true"
-              name="club_search" 
-              placeholder="Kulüp Adı..." 
-              hx-get="{% url 'result:htmx_club_list' %}" 
-              hx-trigger="keyup changed delay:500ms"
-              hx-target="#club-results"
-              label="Kulüp Ara..."
-              class="input input-bordered w-full"
-              >
-        
-        <div id="club-results">
-          
-            <!-- Results will appear here -->
-        </div>
 
+<form
+hx-get="{% url 'result:htmx_result_list' %}"
+hx-target="#result-list"
+hx-trigger="submit"
+>
+
+  <label class="input w-full">
+    <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <g
+        stroke-linejoin="round"
+        stroke-linecap="round"
+        stroke-width="2.5"
+        fill="none"
+        stroke="currentColor"
+      >
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </g>
+    </svg>
+    <input 
+    id="club-search-input"
+      minlength="3"
+    hx-validate="true"
+    hx-get="{% url 'result:htmx_club_list' %}"
+    hx-target="#club-result"
+    hx-trigger="keyup changed delay:500ms"
+    name="club_search" type="search"  placeholder="Kulüp Ara" />
     
-    </div>
-    <!-- sporcu ara -->
-    <div id="swimmer-search">
-        <input type="search" 
-              name="swimmer_search" 
-              minlength="3" 
-              required 
-              hx-validate="true"
-              placeholder="Sporcu Adı..." 
-              hx-get="{% url 'result:htmx_swimmer_list' %}" 
-              hx-trigger="keyup changed delay:500ms" 
-              hx-target="#swimmer-results"
-              label="Sporcu Ara..."
-              class="input input-bordered w-full">
-
-        <div id="swimmer-results">
-            <!-- Results will appear here -->
-        </div>
-    </div>
-</div>
-  <form id="result-form" 
-        hx-get="{% url 'result:htmx_result_list' %}" 
-        hx-trigger="click" 
-        hx-target="#result-list">
-  <input id="club-search-input" type="text" hidden name="club_search" >
-  <input id="swimmer-search-input" type="text" hidden name="swimmer_search" >
-  <input id="event-search-input" type="text" hidden name="event_search" >
-  <button class="btn" type="submit">ara</button>
-
+  </label>
+  <div id="club-result"></div>
+  <div>
+      <label class="input w-full m-2">
+    <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <g
+        stroke-linejoin="round"
+        stroke-linecap="round"
+        stroke-width="2.5"
+        fill="none"
+        stroke="currentColor"
+      >
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </g>
+    </svg>
+    <input 
+    id="swimmer-search-input"
+    minlength="3"
+    hx-validate="true"
+    hx-get="{% url 'result:htmx_swimmer_list' %}"
+    hx-target="#swimmer-result"
+    hx-trigger="keyup changed delay:500ms"
+    name="swimmer_search" type="search"  placeholder="Yarışçı Ara" />
+    
+  </label>
+  <div id="swimmer-result"></div>
+  <div>
+  <input type="submit" class="btn" value="Ara" />
+  </div>
 </form>
+</div>
 
 <div  id="result-list">
 
@@ -85,11 +94,13 @@
     const clubSearchInput = document.getElementById('club-search-input');
     clubSearchInput.value=null
     clubSearchInput.value = club_name;
+    document.getElementById('club-result').innerHTML = ''
   }
   function swimmerInputHandler(swimmer_name) {
     const swimmerSearchInput = document.getElementById('swimmer-search-input');
     swimmerSearchInput.value=null
     swimmerSearchInput.value = swimmer_name;  
+    document.getElementById('swimmer-result').innerHTML = ''
   }
   function eventInputHandler(event_name) {
     const eventSearchInput = document.getElementById('event-search-input');
@@ -102,5 +113,8 @@
 
 
 <div id="results"></div>
+
+
+
 
 {% endblock %}

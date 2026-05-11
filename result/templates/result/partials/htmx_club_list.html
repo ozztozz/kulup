@@ -1,11 +1,10 @@
-<div class="filter grid grid-cols-[30px_1fr] ">
-  <input class="btn filter-reset" type="radio" name="club_list" aria-label="×"/>
-  <div>
+
   {% for club in clubs %}
-    <input class="btn hover:bg-amber-200" type="radio" 
+    <option  class="btn hover:bg-amber-200" type="radio" 
     name="club_list" 
-    aria-label="{{ club.club_raw }}"
+    value="{{ club.club_raw }}"
     onclick="clubInputHandler('{{ club.club_raw }}')">
+      {{ club.club_raw }}
+    </option>
+
     {% endfor %}
-</div>
-</div>
